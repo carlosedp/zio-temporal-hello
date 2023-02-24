@@ -11,12 +11,15 @@ The idea is to set a modern template project using the latest versions of the fo
 - [zio-temporal](https://github.com/vitaliihonta/zio-temporal)
 - [zio-logging](https://zio.dev/ecosystem/officials/zio-logging/)
 - [zio-metrics](https://zio.dev/ecosystem/officials/zio-metrics/)
+- [zio-http](https://github.com/zio/zio-http)
 
 ## Organization
 
 The app currently have a single project called [`hello`](./hello/src/) where both the client and worker code is hosted.
 
 Since the workflows can be shared between client and worker which could be split in the future, it's code is in the  [`shared`](./shared/src/) directory.
+
+The app uses `zio-http` to publish Prometheus metrics from `zio-metrics` library.
 
 ## Usage
 

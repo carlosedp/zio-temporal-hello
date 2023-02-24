@@ -17,12 +17,10 @@ val clientOptions: ULayer[ZWorkflowClientOptions] = ZLayer.succeed {
   // )
 }
 
-val helloWorker: URLayer[ZWorkerFactory, Unit] = ZLayer.fromZIO {
-  ZIO.serviceWithZIO[ZWorkerFactory] { workerFactory =>
+val helloWorker: URLayer[ZWorkerFactory, Unit] = ZLayer.fromZIO:
+  ZIO.serviceWithZIO[ZWorkerFactory]: workerFactory =>
     for
       _      <- ZIO.logInfo("Started sample-worker")
       worker <- workerFactory.newWorker("sample-worker")
       _       = worker.addWorkflow[EchoWorkflow].from(new EchoWorkflowImpl)
     yield ()
-  }
-}

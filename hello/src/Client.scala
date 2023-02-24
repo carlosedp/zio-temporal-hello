@@ -1,9 +1,8 @@
 import java.util.UUID
 
-import zio._
-import zio.temporal._
-import zio.temporal.worker._
-import zio.temporal.workflow._
+import zio.*
+import zio.temporal.*
+import zio.temporal.workflow.*
 
 val workflowStubZIO = ZIO.serviceWithZIO[ZWorkflowClient] { workflowClient =>
   workflowClient

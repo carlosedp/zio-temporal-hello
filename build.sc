@@ -10,6 +10,7 @@ object versions {
   val scala3          = "3.3.0-RC3"
   val organizeimports = "0.6.0"
   val zio             = "2.0.9"
+  val ziohttp         = "0.0.4+6-79413b91-SNAPSHOT"
   val ziotemporal     = "0.1.0-RC6"
   val ziometrics      = "2.0.6"
   val ziologging      = "2.1.10"
@@ -22,6 +23,9 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
     millSourcePath / "src",
     millSourcePath / os.up / "shared" / "src",
   )
+  // override def scalacOptions = T {
+  //   super.scalacOptions() ++ Seq("-Wunused:imports") // Can be removed once it's integrated into tpolecat
+  // }
   def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:${versions.organizeimports}")
   def repositoriesTask = T.task { // Add snapshot repositories in case needed
     super.repositoriesTask() ++ Seq("oss", "s01.oss")
@@ -30,7 +34,8 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
   }
   def ivyDeps = super.ivyDeps() ++ Agg(
     ivy"dev.zio::zio:${versions.zio}",
-    // ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
+    ivy"dev.zio::zio-http:${versions.ziohttp}",
+    ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
     ivy"dev.zio::zio-logging:${versions.ziologging}",
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}",
     // ivy"dev.vhonta::zio-temporal-protobuf:${versions.ziotemporal}",
