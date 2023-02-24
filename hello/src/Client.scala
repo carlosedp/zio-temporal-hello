@@ -4,15 +4,17 @@ import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
 
+val clientOptions: ULayer[ZWorkflowClientOptions] = ZLayer.succeed {
+  ZWorkflowClientOptions.default
+}
+
 val workflowStubZIO = ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
   workflowClient
     .newWorkflowStub[EchoWorkflow]
     .withTaskQueue("echo-queue")
     .withWorkflowId("echo-" + UUID.randomUUID().toString)
     .withWorkflowRunTimeout(2.seconds)
-    .withRetryOptions(
-      ZRetryOptions.default.withMaximumAttempts(3),
-    )
+    .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3))
     .build
 
 val msg = "Hello there"
