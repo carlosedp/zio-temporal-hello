@@ -4,7 +4,7 @@ import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
 
-val workflowStubZIO = ZIO.serviceWithZIO[ZWorkflowClient] { workflowClient =>
+val workflowStubZIO = ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
   workflowClient
     .newWorkflowStub[EchoWorkflow]
     .withTaskQueue("echo-queue")
@@ -14,7 +14,6 @@ val workflowStubZIO = ZIO.serviceWithZIO[ZWorkflowClient] { workflowClient =>
       ZRetryOptions.default.withMaximumAttempts(3),
     )
     .build
-}
 
 val msg = "Hello there"
 val workflowResultZIO =

@@ -1,4 +1,4 @@
-import zio._
+import zio.*
 import zio.temporal.*
 
 // This is our workflow interface
@@ -10,10 +10,8 @@ trait EchoWorkflow {
 }
 
 // And here the workflow implementation
-class EchoWorkflowImpl extends EchoWorkflow {
-  override def echo(str: String): String = {
+class EchoWorkflowImpl extends EchoWorkflow:
+  override def echo(str: String): String =
     // Log message and increase metric counter
     ZIO.logInfo(s"Echo: $str") @@ MetricsApp.helloCalls(str)
     str
-  }
-}

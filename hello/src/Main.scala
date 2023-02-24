@@ -3,7 +3,7 @@ import zio.logging.{console, LogFormat, logMetrics}
 import zio.http.*
 import zio.temporal.*
 import zio.temporal.worker.*
-import zio.temporal.workflow._
+import zio.temporal.workflow.*
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 

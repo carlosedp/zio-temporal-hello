@@ -1,7 +1,7 @@
-import zio._
-import zio.temporal._
-import zio.temporal.worker._
-import zio.temporal.workflow._
+import zio.*
+import zio.temporal.*
+import zio.temporal.worker.*
+import zio.temporal.workflow.*
 // import zio.temporal.protobuf.ProtobufDataConverter
 
 val workerFactoryOptions: ULayer[ZWorkerFactoryOptions] = ZLayer.succeed {
