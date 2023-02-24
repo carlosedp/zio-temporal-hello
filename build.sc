@@ -14,7 +14,6 @@ object versions {
   val ziotemporal     = "0.1.0-RC6"
   val ziometrics      = "2.0.6"
   val ziologging      = "2.1.10"
-  val scalatest       = "3.2.15"
 }
 
 trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with ScalafixModule {
@@ -24,7 +23,7 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
     millSourcePath / os.up / "shared" / "src",
   )
   // override def scalacOptions = T {
-  //   super.scalacOptions() ++ Seq("-Wunused:imports") // Can be removed once it's integrated into tpolecat
+  //   super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard") // Can be removed once it's integrated into tpolecat
   // }
   def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:${versions.organizeimports}")
   def repositoriesTask = T.task { // Add snapshot repositories in case needed

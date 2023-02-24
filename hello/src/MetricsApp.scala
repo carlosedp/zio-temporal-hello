@@ -12,7 +12,7 @@ object MetricsApp {
       .counter("httphits")
       .fromConst(1)
       .tagged(MetricLabel("method", method), MetricLabel("path", path))
-  def helloCalls(msg: String) =
+  def echoCalls(msg: String) =
     Metric
       .counter("hellocall")
       .fromConst(1)
