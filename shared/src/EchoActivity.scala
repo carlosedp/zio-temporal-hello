@@ -15,5 +15,7 @@ trait EchoActivity:
 class EchoActivityImpl(implicit options: ZActivityOptions[Any]) extends EchoActivity:
   override def echo(msg: String): String =
     ZActivity.run:
-      for _ <- ZIO.logDebug(s"Echo: $msg") @@ MetricsApp.echoCalls(msg)
-      yield msg
+      for
+        newMsg <- ZIO.succeed(s"ACK: $msg")
+        _      <- ZIO.logDebug(s"Echo: $newMsg") @@ MetricsApp.echoCalls(msg)
+      yield newMsg

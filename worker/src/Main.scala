@@ -31,7 +31,7 @@ val server: ZIO[Any, Throwable, Nothing] = Server
 object Main extends ZIOAppDefault:
   // Configure ZIO Logging
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
-    Runtime.removeDefaultLoggers >>> console(LogFormat.colored) ++ logMetrics
+    Runtime.removeDefaultLoggers >>> console(LogFormat.colored, LogLevel.Debug) ++ logMetrics
 
   def run: ZIO[ZIOAppArgs with Scope, Any, Any] =
     val program =
