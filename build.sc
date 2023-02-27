@@ -12,7 +12,7 @@ object versions {
   val zio             = "2.0.9"
   val ziohttp         = "0.0.4+6-79413b91-SNAPSHOT"
   val ziotemporal     = "0.1.0-RC6"
-  val ziometrics      = "2.0.6"
+  val ziometrics      = "2.0.7"
   val ziologging      = "2.1.10"
 }
 

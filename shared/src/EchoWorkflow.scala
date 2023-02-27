@@ -1,17 +1,20 @@
 import zio.*
 import zio.temporal.*
+import zio.temporal.workflow.*
 
 // This is our workflow interface
 @workflowInterface
-trait EchoWorkflow {
+trait EchoWorkflow:
 
   @workflowMethod
-  def echo(str: String): String
-}
+  def getEcho(str: String): String
 
 // And here the workflow implementation
 class EchoWorkflowImpl extends EchoWorkflow:
-  override def echo(str: String): String =
-    // Log message and increase metric counter
-    ZIO.logInfo(s"Echo: $str") @@ MetricsApp.echoCalls(str)
-    str
+  private val echoActivity = ZWorkflow
+    .newActivityStub[EchoActivity]
+    .withStartToCloseTimeout(5.seconds)
+    .build
+
+  override def getEcho(str: String): String =
+    echoActivity.echo(str)

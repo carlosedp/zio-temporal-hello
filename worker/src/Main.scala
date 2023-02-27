@@ -4,6 +4,7 @@ import zio.http.*
 import zio.temporal.*
 import zio.temporal.worker.*
 import zio.temporal.workflow.*
+import zio.temporal.activity.*
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 
@@ -27,12 +28,12 @@ val server: ZIO[Any, Throwable, Nothing] = Server
     ZLayer.succeed(MetricsConfig(200.millis)), // Metrics pull interval from internal store
   )
 
-object Main extends ZIOAppDefault {
+object Main extends ZIOAppDefault:
   // Configure ZIO Logging
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
     Runtime.removeDefaultLoggers >>> console(LogFormat.colored) ++ logMetrics
 
-  def run: ZIO[ZIOAppArgs with Scope, Any, Any] = {
+  def run: ZIO[ZIOAppArgs with Scope, Any, Any] =
     val program =
       for
         _             <- ZIO.logInfo(s"HTTP Server started at http://localhost:$httpPort")
@@ -46,9 +47,9 @@ object Main extends ZIOAppDefault {
         WorkerModule.stubOptions,
         WorkerModule.workerFactoryOptions,
         WorkerModule.worker,
-        ZWorkflowClient.make,
         ZWorkflowServiceStubs.make,
+        ZWorkflowClient.make,
         ZWorkerFactory.make,
+        ZActivityOptions.default,
+        activityLayer,
       )
-  }
-}
