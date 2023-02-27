@@ -14,7 +14,7 @@ object MetricsApp:
       .tagged(MetricLabel("method", method), MetricLabel("path", path))
   def echoCalls(msg: String) =
     Metric
-      .counter("hellocall")
+      .counter("echocall")
       .fromConst(1)
       .tagged(MetricLabel("msg", msg))
 

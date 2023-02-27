@@ -37,8 +37,8 @@ object Main extends ZIOAppDefault:
     val program =
       for
         _             <- ZIO.logInfo(s"HTTP Server started at http://localhost:$httpPort")
-        _             <- server.forkDaemon
         workerFactory <- ZIO.service[ZWorkerFactory]
+        _             <- workerFactory.use(server)
       yield ExitCode.success
 
     program
