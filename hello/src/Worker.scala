@@ -18,6 +18,6 @@ object WorkerModule:
     ZIO.serviceWithZIO[ZWorkerFactory]: workerFactory =>
       for
         _      <- ZIO.logInfo("Started sample-worker")
-        worker <- workerFactory.newWorker("sample-worker")
+        worker <- workerFactory.newWorker("echo-queue")
         _       = worker.addWorkflow[EchoWorkflow].from(new EchoWorkflowImpl)
       yield ()
