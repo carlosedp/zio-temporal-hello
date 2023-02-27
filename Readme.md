@@ -23,7 +23,7 @@ The app uses `zio-http` to publish Prometheus metrics from `zio-metrics` library
 
 ## Usage
 
-Start the Temporal stack using the provided docker-compose file:
+Start the Temporal complete stack using the provided docker-compose file:
 
 ```sh
 docker-compose up -d
@@ -32,12 +32,26 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-Run the workflow (client and worker) with:
+or use Temporalite, an "all-in-one" binary for Temporal development and testing:
 
 ```sh
-./mill hello.run
+# Download latest version from https://github.com/temporalio/temporalite/releases/latest
+# Unpack and run the binary on another terminal
+./temporalite start --namespace default
 ```
 
-Watch the logs and follow the workflow using the Temporal UI at [http://localhost:8080](http://localhost:8080).
+Run the workflow worker with:
+
+```sh
+./mill worker.run
+```
+
+And on another shell, run the client with:
+
+```sh
+./mill client.run
+```
+
+Watch the logs and follow the workflow using the Temporal UI at [http://localhost:8233](http://localhost:8233).
 
 
