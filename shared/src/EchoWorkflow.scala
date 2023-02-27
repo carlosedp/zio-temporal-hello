@@ -14,4 +14,4 @@ class EchoWorkflowImpl extends EchoWorkflow:
   override def echo(str: String): String =
     // Log message and increase metric counter
     ZIO.logInfo(s"Echo: $str") @@ MetricsApp.echoCalls(str)
-    str
+    s"ACK: $str"
