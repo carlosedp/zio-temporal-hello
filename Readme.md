@@ -15,9 +15,9 @@ The idea is to set a modern template project using the latest versions of the fo
 
 ## Organization
 
-The app currently have a single project called [`hello`](./hello/src/) where both the client and worker code is hosted.
+The app have a two projects, one called [`worker`](./worker/src/) which is the worker that attaches and polls the Temporal queue and a project called [`client`](./client/src/) that generates the calls to the Temporal workflows.
 
-Since the workflows can be shared between client and worker which could be split in the future, it's code is in the  [`shared`](./shared/src/) directory.
+Since the workflows and activities are shared between client and worker, it's code is in the  [`shared`](./shared/src/) directory.
 
 The app uses `zio-http` to publish Prometheus metrics from `zio-metrics` library.
 
@@ -35,7 +35,7 @@ docker-compose logs -f
 or use [Temporalite](https://github.com/temporalio/temporalite), an "all-in-one" binary for Temporal development and testing which is much lighter on resources:
 
 ```sh
-# Download latest version from https://github.com/temporalio/temporalite/releases/latest
+# Download latest version from https://github.com/temporalio/temporalite/releases/latest for your platform
 # Unpack and run the binary on another terminal
 ./temporalite start --namespace default
 ```
