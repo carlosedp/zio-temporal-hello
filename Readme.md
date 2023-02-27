@@ -40,12 +40,19 @@ or use [Temporalite](https://github.com/temporalio/temporalite), an "all-in-one"
 ./temporalite start --namespace default
 ```
 
-Run the workflow (client and worker) with:
+Run the workflow worker with:
 
 ```sh
-./mill hello.run
+./mill worker.run
+```
+
+And on another shell, run the client with:
+
+```sh
+./mill client.run
 ```
 
 Watch the logs and follow the workflow using the Temporal UI at [http://localhost:8233](http://localhost:8233).
 
+The worker publishes Prometheus metrics at [http://localhost:8082/metrics](http://localhost:8082/metrics).
 
