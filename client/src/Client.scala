@@ -3,6 +3,17 @@ import java.util.UUID
 import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
+import zio.temporal.worker.*
+
+val stubOptions: ULayer[ZWorkflowServiceStubsOptions] = ZLayer.succeed {
+  ZWorkflowServiceStubsOptions.default
+}
+val clientOptions: ULayer[ZWorkflowClientOptions] = ZLayer.succeed {
+  ZWorkflowClientOptions.default
+}
+val workerFactoryOptions: ULayer[ZWorkerFactoryOptions] = ZLayer.succeed {
+  ZWorkerFactoryOptions.default
+}
 
 val workflowStubZIO = ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
   workflowClient

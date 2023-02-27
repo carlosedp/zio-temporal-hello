@@ -46,10 +46,9 @@ object Main extends ZIOAppDefault {
 
     program
       .provide(
-        WorkerModule.clientOptions,
-        WorkerModule.stubOptions,
-        WorkerModule.workerFactoryOptions,
-        WorkerModule.worker,
+        clientOptions,
+        stubOptions,
+        workerFactoryOptions,
         ZWorkflowClient.make,
         ZWorkflowServiceStubs.make,
         ZWorkerFactory.make,
