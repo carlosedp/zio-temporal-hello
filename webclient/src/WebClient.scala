@@ -24,5 +24,8 @@ object WebClient:
     for
       _            <- ZIO.logDebug(s"Will submit message \"$msg\"")
       echoWorkflow <- workflowStubZIO(client)
-      result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, client)).orElseSucceed("Error calling workflow")
+      result <- ZWorkflowStub
+                  .execute(echoWorkflow.getEcho(msg, client))
+                  .measureTimeConsole("getEcho")
+                  .orElseSucceed("Error calling workflow")
     yield result

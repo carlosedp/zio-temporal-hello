@@ -28,5 +28,5 @@ val workflowResultZIO =
     msg          <- ZIO.succeed("Hello there")
     echoWorkflow <- workflowStubZIO("client")
     _            <- ZIO.logInfo(s"Will submit message \"$msg\"")
-    result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, "client"))
+    result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, "client")).measureTimeConsole("getEcho")
   yield result
