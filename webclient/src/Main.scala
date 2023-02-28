@@ -7,9 +7,10 @@ import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 
 // ZIO-http server config
+val httpPort = 8083
 val httpRoutes =
   (MetricsApp() ++ FrontEndApp()) @@ Middleware.metrics(MetricsApp.pathLabelMapper) @@ Middleware.timeout(5.seconds)
-val httpPort = 8083
+
 val config: ServerConfig =
   ServerConfig.default
     .port(httpPort)

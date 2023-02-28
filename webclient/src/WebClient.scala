@@ -17,12 +17,12 @@ object WebClient:
       .withTaskQueue(TemporalQueues.echoQueue)
       .withWorkflowId(s"web-${UUID.randomUUID().toString}")
       .withWorkflowRunTimeout(2.seconds)
-      .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(0.5))
+      .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
       .build
 
-  def callEchoWorkflow(msg: String) =
+  def callEchoWorkflow(msg: String): ZIO[ZWorkflowClient, Nothing, String] =
     for
-      _            <- ZIO.logInfo(s"Will submit message \"$msg\"")
+      _            <- ZIO.logDebug(s"Will submit message \"$msg\"")
       echoWorkflow <- workflowStubZIO
-      result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg)).orElse(ZIO.succeed("Error calling workflow"))
+      result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg)).orElseSucceed("Error calling workflow")
     yield result

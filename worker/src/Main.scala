@@ -9,8 +9,8 @@ import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 
 // ZIO-http server config
-val httpRoutes = (MetricsApp()) @@ Middleware.metrics(MetricsApp.pathLabelMapper) @@ Middleware.timeout(5.seconds)
 val httpPort   = 8082
+val httpRoutes = (MetricsApp()) @@ Middleware.metrics(MetricsApp.pathLabelMapper) @@ Middleware.timeout(5.seconds)
 val config: ServerConfig =
   ServerConfig.default
     .port(httpPort)
@@ -36,7 +36,7 @@ object Main extends ZIOAppDefault:
   def run: ZIO[ZIOAppArgs with Scope, Any, Any] =
     val program =
       for
-        _             <- ZIO.logInfo(s"HTTP Server started at http://localhost:$httpPort")
+        _             <- ZIO.logInfo(s"HTTP Metrics Server started at http://localhost:$httpPort/metrics")
         workerFactory <- ZIO.service[ZWorkerFactory]
         _             <- workerFactory.use(server)
       yield ExitCode.success

@@ -12,14 +12,15 @@ import zio.temporal.workflow.*
   *   - Does not use the environment
   */
 object FrontEndApp:
-  def apply() =
+  def apply(): Http[ZWorkflowClient, Nothing, Request, Response] =
     Http.collectZIO[Request]:
       // GET /echo/:msg
       case Method.GET -> !! / "echo" / msg =>
         for
-          workflowResponse <- WebClient.callEchoWorkflow(msg) // @@ MetricsApp.httpHitsMetric("GET", s"/echo")
-          r                <- ZIO.succeed(Response.text(workflowResponse))
-        yield r
+          workflowResponse <- WebClient.callEchoWorkflow(msg) @@ MetricsApp.httpHitsMetric("GET", s"/echo")
+          _                <- ZIO.logDebug(s"Received message \"$workflowResponse\"")
+          res              <- ZIO.succeed(Response.text(workflowResponse))
+        yield res
 
       // GET /echo
       case Method.GET -> !! / "echo" =>
