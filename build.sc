@@ -49,8 +49,9 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
   }
 }
 
-object worker extends Common
-object client extends Common
+object worker    extends Common
+object client    extends Common
+object webclient extends Common
 
 // -----------------------------------------------------------------------------
 // Command Aliases

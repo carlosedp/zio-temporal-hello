@@ -21,6 +21,8 @@ Since the workflows and activities are shared between client and worker, it's co
 
 The app uses `zio-http` to publish Prometheus metrics from `zio-metrics` library.
 
+For a simple app with only workflows and integrated worker/client, check the [simple](https://github.com/carlosedp/zio-temporal-hello/tree/simple) tag. This is similar to the example from Temporal Java [tutorial](https://learn.temporal.io/getting_started/java/hello_world_in_java).
+
 ## Usage
 
 Start the Temporal full stack using the provided docker-compose file:

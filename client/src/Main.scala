@@ -6,12 +6,12 @@ import zio.temporal.workflow.*
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 
-object Main extends ZIOAppDefault {
+object Main extends ZIOAppDefault:
   // Configure ZIO Logging
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
     Runtime.removeDefaultLoggers >>> console(LogFormat.colored) ++ logMetrics
 
-  def run: ZIO[ZIOAppArgs with Scope, Any, Any] = {
+  def run: ZIO[ZIOAppArgs with Scope, Any, Any] =
     val program =
       for
         workerFactory <- ZIO.service[ZWorkerFactory]
@@ -30,5 +30,3 @@ object Main extends ZIOAppDefault {
         ZWorkflowServiceStubs.make,
         ZWorkerFactory.make,
       )
-  }
-}
