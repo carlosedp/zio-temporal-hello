@@ -5,7 +5,6 @@ import zio.http.*
 import zio.http.model.Method
 import zio.temporal.*
 import zio.temporal.workflow.*
-import zio.temporal.worker.*
 
 /** An http app that:
   *   - Accepts a `Request` and returns a `Response`
@@ -18,7 +17,7 @@ object FrontEndApp:
       // GET /echo/:msg
       case Method.GET -> !! / "echo" / msg =>
         for
-          workflowResponse <- callWorkflow(msg) // @@ MetricsApp.httpHitsMetric("GET", s"/echo")
+          workflowResponse <- WebClient.callEchoWorkflow(msg) // @@ MetricsApp.httpHitsMetric("GET", s"/echo")
           r                <- ZIO.succeed(Response.text(workflowResponse))
         yield r
 
