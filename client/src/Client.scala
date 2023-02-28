@@ -20,7 +20,7 @@ def workflowStubZIO(client: String) = ZIO.serviceWithZIO[ZWorkflowClient]: workf
     .withTaskQueue(TemporalQueues.echoQueue)
     .withWorkflowId(s"$client-${UUID.randomUUID().toString}")
     .withWorkflowRunTimeout(2.seconds)
-    .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3))
+    .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
     .build
 
 val workflowResultZIO =
