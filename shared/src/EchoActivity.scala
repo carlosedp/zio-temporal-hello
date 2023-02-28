@@ -10,12 +10,13 @@ val activityLayer: URLayer[ZActivityOptions[Any], EchoActivity] =
 @activityInterface
 trait EchoActivity:
   @activityMethod
-  def echo(msg: String): String
+  def echo(msg: String, client: String): String
 
 class EchoActivityImpl(implicit options: ZActivityOptions[Any]) extends EchoActivity:
-  override def echo(msg: String): String =
+  override def echo(msg: String, client: String = "default"): String =
     ZActivity.run:
       for
         newMsg <- ZIO.succeed(s"ACK: $msg")
-        _      <- ZIO.logDebug(s"Echo: $newMsg") @@ MetricsApp.echoCalls(msg)
+        _      <- ZIO.logDebug(s"Received from $client, message: $msg") @@ MetricsApp.echoCalls(client)
+        _      <- ZIO.logDebug(s"Reply with: $newMsg")
       yield newMsg

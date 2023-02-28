@@ -7,7 +7,7 @@ import zio.temporal.workflow.*
 trait EchoWorkflow:
 
   @workflowMethod
-  def getEcho(str: String): String
+  def getEcho(str: String, client: String): String
 
 // And here the workflow implementation
 class EchoWorkflowImpl extends EchoWorkflow:
@@ -16,5 +16,5 @@ class EchoWorkflowImpl extends EchoWorkflow:
     .withStartToCloseTimeout(5.seconds)
     .build
 
-  override def getEcho(str: String): String =
-    echoActivity.echo(str)
+  override def getEcho(str: String, client: String = "default"): String =
+    echoActivity.echo(str, client)

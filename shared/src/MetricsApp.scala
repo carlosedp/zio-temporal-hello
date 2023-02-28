@@ -13,11 +13,11 @@ object MetricsApp:
       .fromConst(1)
       .tagged(MetricLabel("method", method), MetricLabel("path", path))
 
-  def echoCalls(msg: String) =
+  def echoCalls(client: String) =
     Metric
       .counter("echocall")
       .fromConst(1)
-      .tagged(MetricLabel("msg", msg))
+      .tagged(MetricLabel("client", client))
 
   // Map calls to "/greet/some_name" to "/greet/:person" for metric aggregation
   def pathLabelMapper: PartialFunction[Request, String] =

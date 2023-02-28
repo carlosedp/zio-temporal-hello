@@ -17,7 +17,7 @@ object FrontEndApp:
       // GET /echo/:msg
       case Method.GET -> !! / "echo" / msg =>
         for
-          workflowResponse <- WebClient.callEchoWorkflow(msg) @@ MetricsApp.httpHitsMetric("GET", s"/echo")
+          workflowResponse <- WebClient.callEchoWorkflow(msg, "web") @@ MetricsApp.httpHitsMetric("GET", s"/echo")
           _                <- ZIO.logDebug(s"Received message \"$workflowResponse\"")
           res              <- ZIO.succeed(Response.text(workflowResponse))
         yield res

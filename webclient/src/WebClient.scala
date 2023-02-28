@@ -11,18 +11,18 @@ object WebClient:
   val clientOptions: ULayer[ZWorkflowClientOptions] = ZLayer.succeed:
     ZWorkflowClientOptions.default
 
-  val workflowStubZIO = ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
+  def workflowStubZIO(client: String) = ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
     workflowClient
       .newWorkflowStub[EchoWorkflow]
       .withTaskQueue(TemporalQueues.echoQueue)
-      .withWorkflowId(s"web-${UUID.randomUUID().toString}")
+      .withWorkflowId(s"$client-${UUID.randomUUID().toString}")
       .withWorkflowRunTimeout(2.seconds)
       .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
       .build
 
-  def callEchoWorkflow(msg: String): ZIO[ZWorkflowClient, Nothing, String] =
+  def callEchoWorkflow(msg: String, client: String = "default"): ZIO[ZWorkflowClient, Nothing, String] =
     for
       _            <- ZIO.logDebug(s"Will submit message \"$msg\"")
-      echoWorkflow <- workflowStubZIO
-      result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg)).orElseSucceed("Error calling workflow")
+      echoWorkflow <- workflowStubZIO(client)
+      result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, client)).orElseSucceed("Error calling workflow")
     yield result
