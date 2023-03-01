@@ -6,11 +6,12 @@ import zio.http.model.Method
 import zio.temporal.*
 import zio.temporal.workflow.*
 
-/** An http app that:
-  *   - Accepts a `Request` and returns a `Response`
-  *   - Does not fail
-  *   - Does not use the environment
-  */
+/**
+ * An http app that:
+ *   - Accepts a `Request` and returns a `Response`
+ *   - Does not fail
+ *   - Does not use the environment
+ */
 object FrontEndApp:
   def apply(): Http[ZWorkflowClient, Nothing, Request, Response] =
     Http.collectZIO[Request]:

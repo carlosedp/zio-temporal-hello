@@ -59,7 +59,7 @@ object webclient extends Common
 // Alias commands are run like `./mill run [alias]`
 // Define the alias as a map element containing the alias name and a Seq with the tasks to be executed
 val aliases: Map[String, Seq[String]] = Map(
-  "lint"     -> Seq("__.fix", "mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources"),
+  "lint"     -> Seq("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources", "__.fix"),
   "checkfmt" -> Seq("mill.scalalib.scalafmt.ScalafmtModule/checkFormatAll __.sources"),
   "deps"     -> Seq("mill.scalalib.Dependency/showUpdates"),
   "testall"  -> Seq("__.test"),
