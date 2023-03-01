@@ -23,9 +23,9 @@ def workflowStubZIO(client: String) = ZIO.serviceWithZIO[ZWorkflowClient]: workf
     .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
     .build
 
+val msg = "Hello there"
 val workflowResultZIO =
   for
-    msg          <- ZIO.succeed("Hello there")
     echoWorkflow <- workflowStubZIO("client")
     _            <- ZIO.logInfo(s"Will submit message \"$msg\"")
     result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, "client")).measureTimeConsole("getEcho")

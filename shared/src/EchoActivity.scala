@@ -1,7 +1,5 @@
 import zio.*
 import zio.temporal.*
-import zio.temporal.worker.*
-import zio.temporal.workflow.*
 import zio.temporal.activity.*
 
 val activityLayer: URLayer[ZActivityOptions[Any], EchoActivity] =
@@ -14,9 +12,9 @@ trait EchoActivity:
 
 class EchoActivityImpl(implicit options: ZActivityOptions[Any]) extends EchoActivity:
   override def echo(msg: String, client: String = "default"): String =
+    val newMsg = s"ACK: $msg"
     ZActivity.run:
       for
-        newMsg <- ZIO.succeed(s"ACK: $msg")
-        _      <- ZIO.logDebug(s"Received from $client, message: $msg") @@ MetricsApp.echoCalls(client)
-        _      <- ZIO.logDebug(s"Reply with: $newMsg")
+        _ <- ZIO.logDebug(s"Received from $client, message: $msg") @@ MetricsApp.echoCalls(client)
+        _ <- ZIO.logDebug(s"Reply with: $newMsg")
       yield newMsg

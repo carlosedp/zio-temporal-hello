@@ -1,10 +1,8 @@
 import zio.*
-import zio.logging.{console, LogFormat, logMetrics}
+import zio.logging.{LogFormat, console, logMetrics}
 import zio.temporal.*
 import zio.temporal.worker.*
 import zio.temporal.workflow.*
-import zio.metrics.connectors.MetricsConfig
-import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 
 object Main extends ZIOAppDefault:
   // Configure ZIO Logging
