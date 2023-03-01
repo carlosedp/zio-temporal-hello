@@ -10,7 +10,9 @@ trait EchoActivity:
   @activityMethod
   def echo(msg: String, client: String): String
 
-class EchoActivityImpl(implicit options: ZActivityOptions[Any]) extends EchoActivity:
+class EchoActivityImpl(
+  implicit options: ZActivityOptions[Any],
+) extends EchoActivity:
   override def echo(msg: String, client: String = "default"): String =
     val newMsg = s"ACK: $msg"
     ZActivity.run:
