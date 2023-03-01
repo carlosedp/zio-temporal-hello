@@ -39,7 +39,7 @@ object Main extends ZIOAppDefault:
 
   // Run the application
   def run: ZIO[Scope, Any, ExitCode] =
-    for {
+    for
       _ <- ZIO.logInfo(s"Server started at http://localhost:$httpPort")
       _ <- server
-    } yield ExitCode.success
+    yield ExitCode.success

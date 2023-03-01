@@ -3,7 +3,7 @@ import zio.*
 /**
  * Custom extension methods for ZIO Effects
  */
-extension [R, E, A](z: ZIO[R, E, A]) {
+extension [R, E, A](z: ZIO[R, E, A])
 
   /**
    * Measure the execution time for the wrapped effect. Returns a tuple
@@ -44,4 +44,3 @@ extension [R, E, A](z: ZIO[R, E, A]) {
       logMsg    = s"⏲ Execution of \"$d\" took $t milis."
       _        <- ZIO.logDebug(logMsg)
     yield r
-}
