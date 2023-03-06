@@ -29,10 +29,12 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
         val sampleOut = s"ACK: $sampleIn"
         val client    = testEnv.workflowClient
 
+        import testEnv.activityOptions
         testEnv
           .newWorker(taskQueue, options = ZWorkerOptions.default)
           .addWorkflow[EchoWorkflowImpl]
           .fromClass
+          .addActivityImplementation(new EchoActivityImpl())
 
         withWorkflow {
           testEnv.use() {
