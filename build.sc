@@ -14,6 +14,7 @@ object versions {
   val ziotemporal     = "0.1.0-RC6"
   val ziometrics      = "2.0.7"
   val ziologging      = "2.1.10"
+  val logback         = "1.4.5"
 }
 
 trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with ScalafixModule {
@@ -21,6 +22,10 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
   def sources = T.sources(
     millSourcePath / "src",
     millSourcePath / os.up / "shared" / "src",
+  )
+  def resources = T.sources(
+    millSourcePath / "resources",
+    millSourcePath / os.up / "shared" / "resources",
   )
   // override def scalacOptions = T {
   //   super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard") // Can be removed once it's integrated into tpolecat
@@ -36,6 +41,7 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
     ivy"dev.zio::zio-http:${versions.ziohttp}",
     ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
     ivy"dev.zio::zio-logging:${versions.ziologging}",
+    ivy"ch.qos.logback:logback-classic:${versions.logback}",
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}",
   )
   object test extends Tests {
