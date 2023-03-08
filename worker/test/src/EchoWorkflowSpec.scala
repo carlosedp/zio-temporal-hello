@@ -1,5 +1,3 @@
-import java.util.UUID
-
 import zio.*
 import zio.temporal.*
 import zio.temporal.activity.ZActivityOptions
@@ -21,8 +19,8 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
   private def withWorkflow[R, E, A](f: ZIO[R, TemporalError[E], A]): RIO[R, A] =
     f.mapError(e => new RuntimeException(s"IO failed with $e"))
 
-  def spec = suite("ZWorkflow")(
-    test("runs simple workflow") {
+  def spec = suite("Workflows")(
+    test("runs echo workflow") {
       ZIO.serviceWithZIO[ZTestWorkflowEnvironment[Any]] { testEnv =>
         val taskQueue = TemporalQueues.echoQueue
         val sampleIn  = "Msg"
@@ -42,7 +40,7 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
               echoWorkflow <- client
                                 .newWorkflowStub[EchoWorkflow]
                                 .withTaskQueue(taskQueue)
-                                .withWorkflowId(UUID.randomUUID().toString)
+                                .withWorkflowId(genSnowflake)
                                 .withWorkflowRunTimeout(10.seconds)
                                 .build
               result <- ZWorkflowStub.execute(echoWorkflow.getEcho(sampleIn, "test"))

@@ -14,16 +14,16 @@ object Main extends ZIOAppDefault:
       for
         workerFactory <- ZIO.service[ZWorkerFactory]
         workflowResult <- workerFactory.use {
-                            workflowResultZIO
+                            Client.workflowResultZIO
                           }
         _ <- ZIO.log(s"The workflow result: $workflowResult")
       yield ExitCode.success
 
     program
       .provide(
-        clientOptions,
-        stubOptions,
-        workerFactoryOptions,
+        Client.clientOptions,
+        Client.stubOptions,
+        Client.workerFactoryOptions,
         ZWorkflowClient.make,
         ZWorkflowServiceStubs.make,
         ZWorkerFactory.make,

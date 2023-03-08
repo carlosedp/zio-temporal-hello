@@ -10,11 +10,12 @@ object versions {
   val scala3          = "3.3.0-RC3"
   val organizeimports = "0.6.0"
   val zio             = "2.0.10"
-  val ziohttp         = "0.0.4+6-79413b91-SNAPSHOT"
+  val ziohttp         = "0.0.4+9-66d4e892-SNAPSHOT"
   val ziotemporal     = "0.1.0-RC6"
   val ziometrics      = "2.0.7"
   val ziologging      = "2.1.10"
   val logback         = "1.4.5"
+  val idgenerator     = "1.4.0"
 }
 
 trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with ScalafixModule {
@@ -43,6 +44,7 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
     ivy"dev.zio::zio-logging:${versions.ziologging}",
     ivy"ch.qos.logback:logback-classic:${versions.logback}",
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}",
+    ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )
   object test extends Tests {
     def ivyDeps = Agg(

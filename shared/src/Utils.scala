@@ -1,4 +1,5 @@
 import zio.*
+import com.softwaremill.id.pretty.{PrettyIdGenerator, StringIdGenerator}
 
 /**
  * Custom extension methods for ZIO Effects
@@ -44,3 +45,10 @@ extension [R, E, A](z: ZIO[R, E, A])
       logMsg    = s"⏲ Execution of \"$d\" took $t milis."
       _        <- ZIO.logDebug(logMsg)
     yield r
+
+/**
+ * Generate a Snowflake ID which can be sorted
+ */
+def genSnowflake =
+  lazy val generator: StringIdGenerator = PrettyIdGenerator.singleNode
+  generator.nextId()

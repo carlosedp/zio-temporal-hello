@@ -1,5 +1,3 @@
-import java.util.UUID
-
 import zio.*
 import zio.http.*
 import zio.http.model.Method
