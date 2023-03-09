@@ -78,6 +78,32 @@ Then, submit an API request to the `echo` path which will be sent to the Tempora
 ACK: testmsg%
 ```
 
+Another option is using [Temporal.io tctl](https://github.com/temporalio/tctl) command line utility which can among many other functions, start and observe a workflow:
+
+```sh
+❯ tctl workflow start --workflow_type EchoWorkflow --taskqueue echo-queue --workflow_id testID01 --input '"CLI Msg"'
+Started Workflow Id: testID01, run Id: dcb60763-f14b-4763-9a36-7a08423214ad
+
+❯ tctl workflow observe --workflow_id testID01
+Progress:
+  1, 2023-03-09T14:36:09Z, WorkflowExecutionStarted
+  2, 2023-03-09T14:36:09Z, WorkflowTaskScheduled
+  3, 2023-03-09T14:36:09Z, WorkflowTaskStarted
+  4, 2023-03-09T14:36:09Z, WorkflowTaskCompleted
+  5, 2023-03-09T14:36:09Z, ActivityTaskScheduled
+  6, 2023-03-09T14:36:09Z, ActivityTaskStarted
+  7, 2023-03-09T14:36:09Z, ActivityTaskCompleted
+  8, 2023-03-09T14:36:09Z, WorkflowTaskScheduled
+  9, 2023-03-09T14:36:09Z, WorkflowTaskStarted
+  10, 2023-03-09T14:36:09Z, WorkflowTaskCompleted
+  11, 2023-03-09T14:36:09Z, WorkflowExecutionCompleted
+
+Result:
+  Run Time: 1 seconds
+  Status: COMPLETED
+  Output: ["ACK: CLI Msg"]
+```
+
 Watch the logs and follow the workflow using the Temporal UI at [http://localhost:8233](http://localhost:8233).
 
 The worker publishes Prometheus metrics at [http://localhost:8082/metrics](http://localhost:8082/metrics).
