@@ -43,14 +43,14 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
     ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
     ivy"dev.zio::zio-logging:${versions.ziologging}",
     ivy"ch.qos.logback:logback-classic:${versions.logback}",
-    ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}",
+    ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}".exclude("$com.google.protobuf" -> "protobuf-java"),
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )
   object test extends Tests {
     def ivyDeps = Agg(
       ivy"dev.zio::zio-test:${versions.zio}",
       ivy"dev.zio::zio-test-sbt:${versions.zio}",
-      ivy"dev.vhonta::zio-temporal-testkit:${versions.ziotemporal}",
+      ivy"dev.vhonta::zio-temporal-testkit:${versions.ziotemporal}".exclude("$com.google.protobuf" -> "protobuf-java"),
     )
     def testFramework = T("zio.test.sbt.ZTestFramework")
   }
