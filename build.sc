@@ -20,14 +20,6 @@ object versions {
 
 trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with ScalafixModule {
   def scalaVersion = versions.scala3
-  def sources = T.sources(
-    millSourcePath / "src",
-    millSourcePath / os.up / "shared" / "src",
-  )
-  def resources = T.sources(
-    millSourcePath / "resources",
-    millSourcePath / os.up / "shared" / "resources",
-  )
   // override def scalacOptions = T {
   //   super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard") // Can be removed once it's integrated into tpolecat
   // }
