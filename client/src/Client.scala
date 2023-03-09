@@ -18,7 +18,7 @@ object Client:
     workflowClient
       .newWorkflowStub[EchoWorkflow]
       .withTaskQueue(TemporalQueues.echoQueue)
-      .withWorkflowId(s"$client-${workflowID}")
+      .withWorkflowId(s"client-$workflowID")
       .withWorkflowRunTimeout(2.seconds)
       .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
       .build

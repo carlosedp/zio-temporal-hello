@@ -56,9 +56,14 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
   }
 }
 
-object worker    extends Common
-object client    extends Common
-object webclient extends Common
+trait SharedCode extends ScalaModule {
+  override def moduleDeps: Seq[JavaModule] = Seq(shared)
+}
+
+object shared    extends Common
+object worker    extends Common with SharedCode
+object client    extends Common with SharedCode
+object webclient extends Common with SharedCode
 
 // -----------------------------------------------------------------------------
 // Command Aliases
