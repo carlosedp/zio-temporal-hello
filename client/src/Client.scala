@@ -13,20 +13,20 @@ object Client:
   val workerFactoryOptions: ULayer[ZWorkerFactoryOptions] = ZLayer.succeed:
     ZWorkerFactoryOptions.default
 
-  val workflowID = genSnowflake
-  def workflowStubZIO(client: String) = ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
+  def workflowStubZIO(client: String, workflowID: String) = ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
     workflowClient
       .newWorkflowStub[EchoWorkflow]
       .withTaskQueue(TemporalQueues.echoQueue)
-      .withWorkflowId(s"client-$workflowID")
+      .withWorkflowId(s"$client-$workflowID")
       .withWorkflowRunTimeout(2.seconds)
       .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
       .build
 
-  val msg = "Hello there"
-  val workflowResultZIO =
+  def workflowResultZIO(msg: String) =
+    val workflowID = genSnowflake
+    val client     = "client"
     for
-      echoWorkflow <- workflowStubZIO("client")
-      _            <- ZIO.logInfo(s"Will submit message \"$msg\" with workflowID client-$workflowID")
-      result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, "client")).measureTimeConsole("getEcho")
+      echoWorkflow <- workflowStubZIO(client, workflowID)
+      _            <- ZIO.logInfo(s"Will submit message \"$msg\" with workflowID $client-$workflowID")
+      result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, client)).measureTimeConsole("getEcho")
     yield result

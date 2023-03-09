@@ -9,18 +9,18 @@ object Main extends ZIOAppDefault:
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
     Runtime.removeDefaultLoggers >>> console(LogFormat.colored) ++ logMetrics
 
-  def run: ZIO[ZIOAppArgs with Scope, Any, Any] =
+  def run =
     val program =
       for
-        workerFactory <- ZIO.service[ZWorkerFactory]
-        workflowResult <- workerFactory.use {
-                            Client.workflowResultZIO
-                          }
-        _ <- ZIO.log(s"The workflow result: $workflowResult")
+        args           <- getArgs
+        msg             = if args.isEmpty then "testMsg" else args.mkString(" ")
+        workerFactory  <- ZIO.service[ZWorkerFactory]
+        workflowResult <- workerFactory.use(Client.workflowResultZIO(msg))
+        _              <- ZIO.log(s"The workflow result: $workflowResult")
       yield ExitCode.success
 
     program
-      .provide(
+      .provideSome[ZIOAppArgs](
         Client.clientOptions,
         Client.stubOptions,
         Client.workerFactoryOptions,

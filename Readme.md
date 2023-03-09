@@ -57,7 +57,7 @@ Run the workflow worker with:
 And on another shell, run the CLI client with:
 
 ```sh
-./mill client.run
+./mill client.run "My Message"
 ```
 
 To start the Web client, run:
