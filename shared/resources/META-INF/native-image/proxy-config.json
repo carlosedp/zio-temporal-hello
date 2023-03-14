@@ -1,0 +1,29 @@
+[
+  {
+    "interfaces": [
+      "io.temporal.client.WorkflowClient"
+    ]
+  },
+  {
+    "interfaces": [
+      "io.temporal.client.ActivityCompletionClient"
+    ]
+  },
+  {
+    "interfaces": [
+      "io.temporal.serviceclient.WorkflowServiceStubs"
+    ]
+  },
+  {
+    "interfaces": [
+      "EchoWorkflow",
+      "io.temporal.internal.sync.StubMarker"
+    ]
+  },
+  {
+    "interfaces": [
+      "EchoActivity",
+      "io.temporal.internal.sync.AsyncInternal$AsyncMarker"
+    ]
+  }
+]

@@ -5,9 +5,14 @@ import $ivy.`com.goyeau::mill-scalafix::0.2.11`
 import com.goyeau.mill.scalafix.ScalafixModule
 import $ivy.`io.github.davidgregory084::mill-tpolecat::0.3.2`
 import io.github.davidgregory084.TpolecatModule
+import $ivy.`io.github.alexarchambault.mill::mill-native-image::0.1.23`
+import io.github.alexarchambault.millnativeimage.NativeImage
+import $ivy.`com.carlosedp::mill-docker-nativeimage::0.5.0`
+import com.carlosedp.milldockernative.DockerNative
 
 object versions {
   val scala3          = "3.3.0-RC3"
+  val graalvm         = "graalvm-java17:22.3.1"
   val organizeimports = "0.6.0"
   val zio             = "2.0.10"
   val ziohttp         = "0.0.4+9-66d4e892-SNAPSHOT"
@@ -18,13 +23,20 @@ object versions {
   val idgenerator     = "1.4.0"
 }
 
-trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with ScalafixModule {
-  def scalaVersion = versions.scala3
+trait Common
+  extends ScalaModule
+  with TpolecatModule
+  with ScalafmtModule
+  with ScalafixModule
+  with NativeImageConfig
+  with DockerNative {
+  def scalaVersion         = versions.scala3
+  def nativeImageClassPath = runClasspath()
   // override def scalacOptions = T {
-  //   super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard") // Can be removed once it's integrated into tpolecat
+  //   super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard")
   // }
   def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:${versions.organizeimports}")
-  def repositoriesTask = T.task { // Add snapshot repositories in case needed
+  def repositoriesTask = T.task {
     super.repositoriesTask() ++ Seq("oss", "s01.oss")
       .map(r => s"https://$r.sonatype.org/content/repositories/snapshots")
       .map(MavenRepository(_))
@@ -39,23 +51,46 @@ trait Common extends ScalaModule with TpolecatModule with ScalafmtModule with Sc
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )
   object test extends Tests {
+    def testFramework = T("zio.test.sbt.ZTestFramework")
     def ivyDeps = Agg(
       ivy"dev.zio::zio-test:${versions.zio}",
       ivy"dev.zio::zio-test-sbt:${versions.zio}",
       ivy"dev.vhonta::zio-temporal-testkit:${versions.ziotemporal}".exclude("$com.google.protobuf" -> "protobuf-java"),
     )
-    def testFramework = T("zio.test.sbt.ZTestFramework")
   }
 }
 
+trait NativeImageConfig extends NativeImage {
+  def nativeImageMainClass    = "Main"
+  def nativeImageGraalVmJvmId = T(versions.graalvm)
+}
+
+object shared extends Common
 trait SharedCode extends ScalaModule {
   override def moduleDeps: Seq[JavaModule] = Seq(shared)
 }
 
-object shared    extends Common
-object worker    extends Common with SharedCode
-object client    extends Common with SharedCode
-object webclient extends Common with SharedCode
+object worker extends Common with SharedCode with NativeImageConfig with DockerNative {
+  def nativeImageName = "ziotemporalworker"
+  object dockerNative extends DockerNativeConfig with NativeImageConfig {
+    def nativeImageClassPath = runClasspath()
+    def baseImage            = "ubuntu:22.04"
+    def tags                 = List("docker.io/carlosedp/ziotemporal-worker-native")
+    def exposedPorts         = Seq(8082)
+  }
+}
+
+object webclient extends Common with SharedCode with NativeImageConfig with DockerNative {
+  def nativeImageName = "ziotemporalwebclient"
+  object dockerNative extends DockerNativeConfig with NativeImageConfig {
+    def nativeImageClassPath = runClasspath()
+    def baseImage            = "ubuntu:22.04"
+    def tags                 = List("docker.io/carlosedp/ziotemporal-webclient-native")
+    def exposedPorts         = Seq(8083)
+  }
+}
+
+object client extends Common with SharedCode
 
 // -----------------------------------------------------------------------------
 // Command Aliases
