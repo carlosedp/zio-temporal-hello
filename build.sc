@@ -19,7 +19,6 @@ object versions {
   val ziotemporal     = "0.1.0-RC6"
   val ziometrics      = "2.0.7"
   val ziologging      = "2.1.10"
-  val logback         = "1.4.5"
   val idgenerator     = "1.4.0"
 }
 
@@ -46,7 +45,6 @@ trait Common
     ivy"dev.zio::zio-http:${versions.ziohttp}",
     ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
     ivy"dev.zio::zio-logging:${versions.ziologging}",
-    ivy"ch.qos.logback:logback-classic:${versions.logback}",
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}".exclude("$com.google.protobuf" -> "protobuf-java"),
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )
