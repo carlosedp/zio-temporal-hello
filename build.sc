@@ -63,6 +63,8 @@ trait Common
 trait NativeImageConfig extends NativeImage {
   def nativeImageMainClass    = "Main"
   def nativeImageGraalVmJvmId = T(versions.graalvm)
+  def nativeImageOptions = super.nativeImageOptions() ++
+    (if (sys.props.get("os.name").contains("Linux")) Seq("--static") else Seq.empty)
 }
 
 object shared extends Common
