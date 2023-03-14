@@ -4,7 +4,9 @@ import zio.temporal.workflow.*
 
 object WebClient:
   val stubOptions: ULayer[ZWorkflowServiceStubsOptions] = ZLayer.succeed:
-    ZWorkflowServiceStubsOptions.default
+    ZWorkflowServiceStubsOptions.default.withServiceUrl(
+      scala.util.Properties.envOrElse("TEMPORAL_SERVER", "127.0.0.1:7233"),
+    )
 
   val clientOptions: ULayer[ZWorkflowClientOptions] = ZLayer.succeed:
     ZWorkflowClientOptions.default
