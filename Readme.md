@@ -40,12 +40,14 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-or use [Temporalite](https://github.com/temporalio/temporalite) (recommended for development), an "all-in-one" binary for Temporal development and testing which is much lighter on resources:
+or use [Temporal cli](https://github.com/temporalio/cli) (recommended for development), an "all-in-one" binary for Temporal development and testing which is much lighter on resources:
 
 ```sh
-# Download latest version from https://github.com/temporalio/temporalite/releases/latest for your platform
-# Unpack and run the binary on another terminal
-./temporalite start --namespace default
+# Install with:
+curl -sSf https://temporal.download/cli.sh | sh
+
+# and run the dev server listening on all IPs (by default, it listens on localhost only)
+$HOME/.temporalio/bin/temporal server start-dev --ip 0.0.0.0
 ```
 
 Run the workflow worker with:
@@ -107,3 +109,74 @@ Result:
 Watch the logs and follow the workflow using the Temporal UI at [http://localhost:8233](http://localhost:8233).
 
 The worker publishes Prometheus metrics at [http://localhost:8082/metrics](http://localhost:8082/metrics).
+
+### Generating module binaries (GraalVM Native-Image)
+
+The build can also generate native image binaries for almost instant startup and resource consumption. To generate the binaries, do:
+
+```sh
+# For the worker:
+./mill show worker.nativeImage
+
+# The binary name will be printed at the end:
+...
+Produced artifacts:
+ /home/carlosedp/repos/zio-temporal-hello/out/worker/nativeImage.dest/ziotemporalworker (executable)
+ /home/carlosedp/repos/zio-temporal-hello/out/worker/nativeImage.dest/ziotemporalworker.build_artifacts.txt (txt)
+========================================================================================================================
+Finished generating 'ziotemporalworker' in 3m 47s.
+"ref:362fb41c:/home/carlosedp/repos/zio-temporal-hello/out/worker/nativeImage.dest/ziotemporalworker"
+
+# For the webclient:
+./mill show webclient.nativeImage
+
+# The binary name will be printed at the end:
+...
+Finished generating 'ziotemporalwebclient' in 4m 26s.
+"ref:3b33c0f0:/home/carlosedp/repos/zio-temporal-hello/out/webclient/nativeImage.dest/ziotemporalwebclient"
+```
+
+### Generating Docker images with binary (GraalVM Native-Image)
+
+It's also possible to generate a Docker image containing the binary for cloud deployment. To generate the images, do:
+
+```sh
+# For the worker:
+./mill worker.dockerNative.build
+
+# The image name will be printed:
+...
+#7 exporting layers 0.5s done
+#7 writing image sha256:b2711446b07e8a89c62c8a4b886652d006e328715e8cdb4e3c2ea9e4014dc92d done
+#7 naming to docker.io/carlosedp/ziotemporal-worker-native done
+#7 DONE 0.5s
+
+# For the webclient:
+./mill webclient.dockerNative.build
+
+# The image name will be printed:
+...
+#7 exporting layers 0.9s done
+#7 writing image sha256:d30fcd5dbb115e015be878c4eff363d95d13c00027c41292a386fe7dbba5f037 done
+#7 naming to docker.io/carlosedp/ziotemporal-webclient-native done
+#7 DONE 0.9s
+```
+
+Run the images with:
+
+```sh
+# Running the worker (Temporal or Temporalite should be running too on another shell)
+# Use your temporal server IP address in the environment variable below
+docker run -d -e TEMPORAL_SERVER="192.168.1.10:7233" -p 8082:8082 --name ziotemporalite-worker docker.io/carlosedp/ziotemporal-worker-native
+
+# Follow the logs with
+docker logs -f ziotemporalite-worker
+
+# Run in a similar way the webclient
+docker run -d -e TEMPORAL_SERVER="192.168.1.10:7233" -p 8083:8083 --name ziotemporalite-webclient docker.io/carlosedp/ziotemporal-webclient-native
+
+# Follow the logs with
+docker logs -f ziotemporalite-webclient
+```
+
+And generate requests like the previous section, via web, `tctl` cli or the client module. Eg. `curl http://192.168.1.10:8083/echo/testmsg`.
