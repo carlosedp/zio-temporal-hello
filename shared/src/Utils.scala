@@ -1,5 +1,6 @@
-import zio.*
 import com.softwaremill.id.pretty.{PrettyIdGenerator, StringIdGenerator}
+import zio.*
+import zio.logging.{console, LogFormat, LogFilter, logMetrics}
 
 /**
  * Custom extension methods for ZIO Effects
@@ -46,9 +47,23 @@ extension [R, E, A](z: ZIO[R, E, A])
       _        <- ZIO.logDebug(logMsg)
     yield r
 
-/**
- * Generate a Snowflake ID which can be sorted
- */
-def genSnowflake =
-  lazy val generator: StringIdGenerator = PrettyIdGenerator.singleNode
-  generator.nextId()
+object SharedUtils:
+  /**
+   * Generate a Snowflake ID which can be sorted
+   */
+  def genSnowflake =
+    lazy val generator: StringIdGenerator = PrettyIdGenerator.singleNode
+    generator.nextId()
+
+  /**
+   * Set the shared config for ZIO Log filter
+   */
+  val logFilter: LogFilter[String] = LogFilter.logLevelByName(
+    LogLevel.Debug,
+    "SLF4J-LOGGER"                                -> LogLevel.Warning,
+    "io.grpc.netty"                               -> LogLevel.Warning,
+    "io.grpc.netty.shaded.io.netty.util.internal" -> LogLevel.Warning,
+    "io.netty"                                    -> LogLevel.Warning,
+    "io.temporal"                                 -> LogLevel.Warning,
+    "io.temporal.internal.worker.Poller"          -> LogLevel.Error,
+  )

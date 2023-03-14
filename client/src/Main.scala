@@ -7,7 +7,7 @@ import zio.temporal.workflow.*
 object Main extends ZIOAppDefault:
   // Configure ZIO Logging
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
-    Runtime.removeDefaultLoggers >>> console(LogFormat.colored) ++ logMetrics
+    Runtime.removeDefaultLoggers >>> console(LogFormat.colored, SharedUtils.logFilter) ++ logMetrics
 
   def run =
     val program =

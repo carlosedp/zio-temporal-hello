@@ -1,5 +1,6 @@
 import zio.*
-import zio.logging.{console, LogFormat, logMetrics}
+import zio.logging.{console, LogFormat, LogFilter, logMetrics}
+import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.http.*
 import zio.temporal.*
 import zio.temporal.worker.*
@@ -30,8 +31,9 @@ val server: ZIO[Any, Throwable, Nothing] = Server
 
 object Main extends ZIOAppDefault:
   // Configure ZIO Logging
+
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
-    Runtime.removeDefaultLoggers >>> console(LogFormat.colored, LogLevel.Debug) ++ logMetrics
+    Runtime.removeDefaultLoggers >>> console(LogFormat.colored, SharedUtils.logFilter) ++ logMetrics
 
   def run: ZIO[ZIOAppArgs with Scope, Any, Any] =
     val program =
@@ -52,4 +54,5 @@ object Main extends ZIOAppDefault:
         ZWorkerFactory.make,
         ZActivityOptions.default,
         activityLayer,
+        Slf4jBridge.initialize,
       )

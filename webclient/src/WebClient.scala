@@ -9,14 +9,15 @@ object WebClient:
   val clientOptions: ULayer[ZWorkflowClientOptions] = ZLayer.succeed:
     ZWorkflowClientOptions.default
 
-  def workflowStubZIO(client: String) = ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
-    workflowClient
-      .newWorkflowStub[EchoWorkflow]
-      .withTaskQueue(TemporalQueues.echoQueue)
-      .withWorkflowId(s"$client-${genSnowflake}")
-      .withWorkflowRunTimeout(2.seconds)
-      .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
-      .build
+  def workflowStubZIO(client: String): ZIO[ZWorkflowClient, Nothing, ZWorkflowStub.Of[EchoWorkflow]] =
+    ZIO.serviceWithZIO[ZWorkflowClient]: workflowClient =>
+      workflowClient
+        .newWorkflowStub[EchoWorkflow]
+        .withTaskQueue(TemporalQueues.echoQueue)
+        .withWorkflowId(s"$client-${SharedUtils.genSnowflake}")
+        .withWorkflowRunTimeout(2.seconds)
+        .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
+        .build
 
   def callEchoWorkflow(msg: String, client: String = "default"): ZIO[ZWorkflowClient, Nothing, String] =
     for

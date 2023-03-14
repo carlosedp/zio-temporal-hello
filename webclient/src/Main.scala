@@ -35,11 +35,12 @@ val server: ZIO[Any, Throwable, Nothing] = Server
 object Main extends ZIOAppDefault:
   // Configure ZIO Logging
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
-    Runtime.removeDefaultLoggers >>> console(LogFormat.colored, LogLevel.Debug) ++ logMetrics
+    Runtime.removeDefaultLoggers >>> console(LogFormat.colored, SharedUtils.logFilter) ++ logMetrics
 
   // Run the application
   def run: ZIO[Scope, Any, ExitCode] =
     for
-      _ <- ZIO.logInfo(s"Server started at http://localhost:$httpPort")
+      _ <- ZIO.logInfo(s"HTTP Metrics Server started at http://localhost:$httpPort/metrics")
+      _ <- ZIO.logInfo(s"HTTP Server started at http://localhost:$httpPort")
       _ <- server
     yield ExitCode.success

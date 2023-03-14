@@ -1,7 +1,5 @@
 import zio.*
 import zio.temporal.*
-import zio.temporal.activity.ZActivityOptions
-import zio.temporal.signal.*
 import zio.temporal.testkit.ZTestEnvironmentOptions
 import zio.temporal.testkit.ZTestWorkflowEnvironment
 import zio.temporal.worker.ZWorkerOptions

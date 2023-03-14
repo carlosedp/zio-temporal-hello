@@ -23,7 +23,7 @@ object Client:
       .build
 
   def workflowResultZIO(msg: String) =
-    val workflowID = genSnowflake
+    val workflowID = SharedUtils.genSnowflake
     val client     = "client"
     for
       echoWorkflow <- workflowStubZIO(client, workflowID)

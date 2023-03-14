@@ -13,6 +13,13 @@ import zio.temporal.workflow.*
 object FrontEndApp:
   def apply(): Http[ZWorkflowClient, Nothing, Request, Response] =
     Http.collectZIO[Request]:
+      // GET /
+      case Method.GET -> !! =>
+        ZIO.succeed(Response.html(s"""
+          Available Endpoints:<br><br>
+            - <a href=/metrics>/metrics</a> - Prometheus Metrics<br>
+            - <a href=/echo>/echo</a> - Echo Workflow<br>
+        """.stripMargin))
       // GET /echo/:msg
       case Method.GET -> !! / "echo" / msg =>
         for
@@ -23,4 +30,6 @@ object FrontEndApp:
 
       // GET /echo
       case Method.GET -> !! / "echo" =>
-        ZIO.succeed(Response.text("Send message to be echoed")) // @@ MetricsApp.httpHitsMetric("GET", "/echoblank")
+        ZIO.succeed(
+          Response.text("Send message to be echoed as /echo/yourmessage"),
+        ) // @@ MetricsApp.httpHitsMetric("GET", "/echoblank")
