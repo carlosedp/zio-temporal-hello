@@ -17,7 +17,7 @@
     <logger name="io.temporal" level="WARN"/>
     <logger name="io.temporal.internal.worker.Poller" level="ERROR"/>
 
-    <root level="debug">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
     <logger name="ch.qos.logback" level="OFF" additivity="false" />

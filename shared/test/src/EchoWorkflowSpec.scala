@@ -38,7 +38,7 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
               echoWorkflow <- client
                                 .newWorkflowStub[EchoWorkflow]
                                 .withTaskQueue(taskQueue)
-                                .withWorkflowId(genSnowflake)
+                                .withWorkflowId(SharedUtils.genSnowflake)
                                 .withWorkflowRunTimeout(10.seconds)
                                 .build
               result <- ZWorkflowStub.execute(echoWorkflow.getEcho(sampleIn, "test"))
