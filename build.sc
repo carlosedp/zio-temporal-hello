@@ -34,6 +34,12 @@ trait Common
   // override def scalacOptions = T {
   //   super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard")
   // }
+  def forkArgs = T {
+    if (sys.env.get("NATIVEGEN").nonEmpty)
+      Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
+    else Seq.empty
+  }
+
   def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:${versions.organizeimports}")
   def repositoriesTask = T.task {
     super.repositoriesTask() ++ Seq("oss", "s01.oss")
@@ -45,6 +51,7 @@ trait Common
     ivy"dev.zio::zio-http:${versions.ziohttp}",
     ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
     ivy"dev.zio::zio-logging:${versions.ziologging}",
+    ivy"dev.zio::zio-logging-slf4j2-bridge:${versions.ziologging}",
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}".exclude("$com.google.protobuf" -> "protobuf-java"),
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )

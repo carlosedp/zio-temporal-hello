@@ -37,4 +37,6 @@ coursier
 index.scip
 
 # Custom
-temporalite
+/temporalite
+/config
+shared/resources/META-INF/native-image/.lock

@@ -1,29 +1,17 @@
 [
   {
-    "interfaces": [
-      "io.temporal.client.WorkflowClient"
-    ]
+    "interfaces":["EchoActivity","io.temporal.internal.sync.AsyncInternal$AsyncMarker"]
   },
   {
-    "interfaces": [
-      "io.temporal.client.ActivityCompletionClient"
-    ]
+    "interfaces":["EchoWorkflow","io.temporal.internal.sync.StubMarker"]
   },
   {
-    "interfaces": [
-      "io.temporal.serviceclient.WorkflowServiceStubs"
-    ]
+    "interfaces":["io.temporal.client.ActivityCompletionClient"]
   },
   {
-    "interfaces": [
-      "EchoWorkflow",
-      "io.temporal.internal.sync.StubMarker"
-    ]
+    "interfaces":["io.temporal.client.WorkflowClient"]
   },
   {
-    "interfaces": [
-      "EchoActivity",
-      "io.temporal.internal.sync.AsyncInternal$AsyncMarker"
-    ]
+    "interfaces":["io.temporal.serviceclient.WorkflowServiceStubs"]
   }
 ]

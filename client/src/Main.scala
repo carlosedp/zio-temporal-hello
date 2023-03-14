@@ -1,5 +1,6 @@
 import zio.*
 import zio.logging.{LogFormat, console, logMetrics}
+import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.temporal.*
 import zio.temporal.worker.*
 import zio.temporal.workflow.*
@@ -27,4 +28,5 @@ object Main extends ZIOAppDefault:
         ZWorkflowClient.make,
         ZWorkflowServiceStubs.make,
         ZWorkerFactory.make,
+        Slf4jBridge.initialize,
       )

@@ -1,5 +1,6 @@
 import zio.*
 import zio.logging.{console, LogFormat, logMetrics}
+import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.http.*
 import zio.temporal.*
 import zio.temporal.workflow.*
@@ -30,6 +31,7 @@ val server: ZIO[Any, Throwable, Nothing] = Server
     ZWorkflowClient.make,
     ZWorkflowServiceStubs.make,
     ZLayer.succeed(MetricsConfig(200.millis)), // Metrics pull interval from internal store
+    Slf4jBridge.initialize,
   )
 
 object Main extends ZIOAppDefault:
