@@ -183,8 +183,8 @@ And generate requests like the previous section, via web, `tctl` cli or the clie
 
 ## Generating GraalVM Native Image config
 
-GraalVM Native image requires reflected and proxied classes to be declared beforehand. This is is eased by the native-image-agent which can be run for each application using the `NATIVEGEN=true` environment variable in the `run` task. This appends to the configs in [./shared/resources/META-INF/native-image](./shared/resources/META-INF/native-image).
+GraalVM Native image requires reflected and proxied classes to be declared beforehand. This is is eased by the native-image-agent which can be run for each application using the `NATIVECONFIG_GEN=true` environment variable in the `run` task. This appends to the configs in [./shared/resources/META-INF/native-image](./shared/resources/META-INF/native-image).
 
-After using new libraries that might require update, run each module as `NATIVEGEN=true ./mill worker.run`, `NATIVEGEN=true ./mill webclient.run`, etc to regenerate the config files.
+After using new libraries that might require update, run each module as `NATIVECONFIG_GEN=true ./mill worker.run`, `NATIVECONFIG_GEN=true ./mill webclient.run`, etc to regenerate the config files.
 
 Initialization arguments which go into [native-image.properties](./shared/resources/META-INF/native-image/native-image.properties) are not generated automatically.

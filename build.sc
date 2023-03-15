@@ -34,9 +34,9 @@ trait Common
   // override def scalacOptions = T {
   //   super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard")
   // }
+  def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
   def forkArgs = T {
-    if (sys.env.get("NATIVEGEN").nonEmpty)
-      Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
+    if (useNativeConfig()) Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
     else Seq.empty
   }
 
