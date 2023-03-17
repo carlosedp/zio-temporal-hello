@@ -17,8 +17,6 @@ object WebClient:
         .newWorkflowStub[EchoWorkflow]
         .withTaskQueue(TemporalQueues.echoQueue)
         .withWorkflowId(s"$client-${SharedUtils.genSnowflake}")
-        .withWorkflowRunTimeout(2.seconds)
-        .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
         .build
 
   def callEchoWorkflow(msg: String, client: String = "default"): ZIO[ZWorkflowClient, Nothing, String] =

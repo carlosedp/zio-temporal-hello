@@ -21,14 +21,16 @@ object Client:
       .withTaskQueue(TemporalQueues.echoQueue)
       .withWorkflowId(s"$client-$workflowID")
       .withWorkflowRunTimeout(2.seconds)
-      .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
       .build
 
   def workflowResultZIO(msg: String) =
     val workflowID = SharedUtils.genSnowflake
     val client     = "client"
-    for
+    val clientFlow = for
       echoWorkflow <- workflowStubZIO(client, workflowID)
       _            <- ZIO.logInfo(s"Will submit message \"$msg\" with workflowID $client-$workflowID")
       result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, client)).measureTimeConsole("getEcho")
     yield result
+
+    clientFlow.catchAll: error =>
+      ZIO.logError(s"Error processing transaction: $error")
