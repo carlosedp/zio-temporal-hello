@@ -36,13 +36,23 @@
   "name":"[Lio.temporal.common.interceptors.WorkflowClientInterceptor;"
 },
 {
+  "name":"[Ljava.lang.StackTraceElement;"
+},
+{
   "name":"[Ljava.lang.String;"
+},
+{
+  "name":"[Ljava.lang.Throwable;"
 },
 {
   "name":"[Lzio.ZIO$EvaluationStep;"
 },
 {
   "name":"[Lzio.metrics.MetricListener;"
+},
+{
+  "name":"com.fasterxml.jackson.databind.ext.Java7HandlersImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.fasterxml.jackson.databind.ext.Java7SupportImpl",
@@ -752,7 +762,21 @@
 },
 {
   "name":"io.temporal.api.command.v1.FailWorkflowExecutionCommandAttributes",
-  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+  "methods":[
+    {"name":"getFailure","parameterTypes":[] }, 
+    {"name":"hasFailure","parameterTypes":[] }, 
+    {"name":"newBuilder","parameterTypes":[] }
+  ]
+},
+{
+  "name":"io.temporal.api.command.v1.FailWorkflowExecutionCommandAttributes$Builder",
+  "methods":[
+    {"name":"clearFailure","parameterTypes":[] }, 
+    {"name":"getFailure","parameterTypes":[] }, 
+    {"name":"getFailureBuilder","parameterTypes":[] }, 
+    {"name":"hasFailure","parameterTypes":[] }, 
+    {"name":"setFailure","parameterTypes":["io.temporal.api.failure.v1.Failure"] }
+  ]
 },
 {
   "name":"io.temporal.api.command.v1.RecordMarkerCommandAttributes",
@@ -1069,7 +1093,142 @@
   ]
 },
 {
+  "name":"io.temporal.api.failure.v1.ActivityFailureInfo",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.failure.v1.ApplicationFailureInfo",
+  "methods":[
+    {"name":"getDetails","parameterTypes":[] }, 
+    {"name":"getNonRetryable","parameterTypes":[] }, 
+    {"name":"getType","parameterTypes":[] }, 
+    {"name":"getTypeBytes","parameterTypes":[] }, 
+    {"name":"hasDetails","parameterTypes":[] }, 
+    {"name":"newBuilder","parameterTypes":[] }
+  ]
+},
+{
+  "name":"io.temporal.api.failure.v1.ApplicationFailureInfo$Builder",
+  "methods":[
+    {"name":"clearDetails","parameterTypes":[] }, 
+    {"name":"clearNonRetryable","parameterTypes":[] }, 
+    {"name":"clearType","parameterTypes":[] }, 
+    {"name":"getDetails","parameterTypes":[] }, 
+    {"name":"getDetailsBuilder","parameterTypes":[] }, 
+    {"name":"getNonRetryable","parameterTypes":[] }, 
+    {"name":"getType","parameterTypes":[] }, 
+    {"name":"getTypeBytes","parameterTypes":[] }, 
+    {"name":"hasDetails","parameterTypes":[] }, 
+    {"name":"setDetails","parameterTypes":["io.temporal.api.common.v1.Payloads"] }, 
+    {"name":"setNonRetryable","parameterTypes":["boolean"] }, 
+    {"name":"setType","parameterTypes":["java.lang.String"] }, 
+    {"name":"setTypeBytes","parameterTypes":["com.google.protobuf.ByteString"] }
+  ]
+},
+{
+  "name":"io.temporal.api.failure.v1.CanceledFailureInfo",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.failure.v1.ChildWorkflowExecutionFailureInfo",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
   "name":"io.temporal.api.failure.v1.Failure",
+  "methods":[
+    {"name":"getActivityFailureInfo","parameterTypes":[] }, 
+    {"name":"getApplicationFailureInfo","parameterTypes":[] }, 
+    {"name":"getCanceledFailureInfo","parameterTypes":[] }, 
+    {"name":"getCause","parameterTypes":[] }, 
+    {"name":"getChildWorkflowExecutionFailureInfo","parameterTypes":[] }, 
+    {"name":"getFailureInfoCase","parameterTypes":[] }, 
+    {"name":"getMessage","parameterTypes":[] }, 
+    {"name":"getMessageBytes","parameterTypes":[] }, 
+    {"name":"getResetWorkflowFailureInfo","parameterTypes":[] }, 
+    {"name":"getServerFailureInfo","parameterTypes":[] }, 
+    {"name":"getSource","parameterTypes":[] }, 
+    {"name":"getSourceBytes","parameterTypes":[] }, 
+    {"name":"getStackTrace","parameterTypes":[] }, 
+    {"name":"getStackTraceBytes","parameterTypes":[] }, 
+    {"name":"getTerminatedFailureInfo","parameterTypes":[] }, 
+    {"name":"getTimeoutFailureInfo","parameterTypes":[] }, 
+    {"name":"hasCause","parameterTypes":[] }, 
+    {"name":"newBuilder","parameterTypes":[] }
+  ]
+},
+{
+  "name":"io.temporal.api.failure.v1.Failure$Builder",
+  "methods":[
+    {"name":"clearActivityFailureInfo","parameterTypes":[] }, 
+    {"name":"clearApplicationFailureInfo","parameterTypes":[] }, 
+    {"name":"clearCanceledFailureInfo","parameterTypes":[] }, 
+    {"name":"clearCause","parameterTypes":[] }, 
+    {"name":"clearChildWorkflowExecutionFailureInfo","parameterTypes":[] }, 
+    {"name":"clearFailureInfo","parameterTypes":[] }, 
+    {"name":"clearMessage","parameterTypes":[] }, 
+    {"name":"clearResetWorkflowFailureInfo","parameterTypes":[] }, 
+    {"name":"clearServerFailureInfo","parameterTypes":[] }, 
+    {"name":"clearSource","parameterTypes":[] }, 
+    {"name":"clearStackTrace","parameterTypes":[] }, 
+    {"name":"clearTerminatedFailureInfo","parameterTypes":[] }, 
+    {"name":"clearTimeoutFailureInfo","parameterTypes":[] }, 
+    {"name":"getActivityFailureInfo","parameterTypes":[] }, 
+    {"name":"getActivityFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"getApplicationFailureInfo","parameterTypes":[] }, 
+    {"name":"getApplicationFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"getCanceledFailureInfo","parameterTypes":[] }, 
+    {"name":"getCanceledFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"getCause","parameterTypes":[] }, 
+    {"name":"getCauseBuilder","parameterTypes":[] }, 
+    {"name":"getChildWorkflowExecutionFailureInfo","parameterTypes":[] }, 
+    {"name":"getChildWorkflowExecutionFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"getFailureInfoCase","parameterTypes":[] }, 
+    {"name":"getMessage","parameterTypes":[] }, 
+    {"name":"getMessageBytes","parameterTypes":[] }, 
+    {"name":"getResetWorkflowFailureInfo","parameterTypes":[] }, 
+    {"name":"getResetWorkflowFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"getServerFailureInfo","parameterTypes":[] }, 
+    {"name":"getServerFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"getSource","parameterTypes":[] }, 
+    {"name":"getSourceBytes","parameterTypes":[] }, 
+    {"name":"getStackTrace","parameterTypes":[] }, 
+    {"name":"getStackTraceBytes","parameterTypes":[] }, 
+    {"name":"getTerminatedFailureInfo","parameterTypes":[] }, 
+    {"name":"getTerminatedFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"getTimeoutFailureInfo","parameterTypes":[] }, 
+    {"name":"getTimeoutFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"hasCause","parameterTypes":[] }, 
+    {"name":"setActivityFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ActivityFailureInfo"] }, 
+    {"name":"setApplicationFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ApplicationFailureInfo"] }, 
+    {"name":"setCanceledFailureInfo","parameterTypes":["io.temporal.api.failure.v1.CanceledFailureInfo"] }, 
+    {"name":"setCause","parameterTypes":["io.temporal.api.failure.v1.Failure"] }, 
+    {"name":"setChildWorkflowExecutionFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ChildWorkflowExecutionFailureInfo"] }, 
+    {"name":"setMessage","parameterTypes":["java.lang.String"] }, 
+    {"name":"setMessageBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
+    {"name":"setResetWorkflowFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ResetWorkflowFailureInfo"] }, 
+    {"name":"setServerFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ServerFailureInfo"] }, 
+    {"name":"setSource","parameterTypes":["java.lang.String"] }, 
+    {"name":"setSourceBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
+    {"name":"setStackTrace","parameterTypes":["java.lang.String"] }, 
+    {"name":"setStackTraceBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
+    {"name":"setTerminatedFailureInfo","parameterTypes":["io.temporal.api.failure.v1.TerminatedFailureInfo"] }, 
+    {"name":"setTimeoutFailureInfo","parameterTypes":["io.temporal.api.failure.v1.TimeoutFailureInfo"] }
+  ]
+},
+{
+  "name":"io.temporal.api.failure.v1.ResetWorkflowFailureInfo",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.failure.v1.ServerFailureInfo",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.failure.v1.TerminatedFailureInfo",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.failure.v1.TimeoutFailureInfo",
   "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
 {
@@ -2679,7 +2838,17 @@
   "name":"java.io.IOException"
 },
 {
+  "name":"java.io.Serializable",
+  "queryAllDeclaredMethods":true
+},
+{
   "name":"java.lang.ClassValue"
+},
+{
+  "name":"java.lang.Exception",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true
 },
 {
   "name":"java.lang.Object",
@@ -2697,6 +2866,34 @@
 },
 {
   "name":"java.lang.RuntimeException"
+},
+{
+  "name":"java.lang.StackTraceElement",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"getClassLoaderName","parameterTypes":[] }, 
+    {"name":"getClassName","parameterTypes":[] }, 
+    {"name":"getFileName","parameterTypes":[] }, 
+    {"name":"getLineNumber","parameterTypes":[] }, 
+    {"name":"getMethodName","parameterTypes":[] }, 
+    {"name":"getModuleName","parameterTypes":[] }, 
+    {"name":"getModuleVersion","parameterTypes":[] }, 
+    {"name":"isNativeMethod","parameterTypes":[] }
+  ]
+},
+{
+  "name":"java.lang.Throwable",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[
+    {"name":"getCause","parameterTypes":[] }, 
+    {"name":"getLocalizedMessage","parameterTypes":[] }, 
+    {"name":"getMessage","parameterTypes":[] }, 
+    {"name":"getStackTrace","parameterTypes":[] }, 
+    {"name":"getSuppressed","parameterTypes":[] }
+  ]
 },
 {
   "name":"java.lang.invoke.VarHandle",
@@ -2760,6 +2957,30 @@
 {
   "name":"jdk.internal.misc.Unsafe",
   "methods":[{"name":"getUnsafe","parameterTypes":[] }]
+},
+{
+  "name":"scala.Equals",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"scala.Product",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"scala.util.Either",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true
+},
+{
+  "name":"scala.util.Left",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"isLeft","parameterTypes":[] }, 
+    {"name":"isRight","parameterTypes":[] }
+  ]
 },
 {
   "name":"sun.misc.Unsafe",

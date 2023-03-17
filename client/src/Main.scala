@@ -1,5 +1,5 @@
 import zio.*
-import zio.logging.{LogFormat, console, logMetrics}
+import zio.logging.*
 import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.temporal.*
 import zio.temporal.worker.*
@@ -8,7 +8,9 @@ import zio.temporal.workflow.*
 object Main extends ZIOAppDefault:
   // Configure ZIO Logging
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
-    Runtime.removeDefaultLoggers >>> console(LogFormat.colored, SharedUtils.logFilter) ++ logMetrics
+    Runtime.removeDefaultLoggers >>> consoleLogger(
+      ConsoleLoggerConfig(LogFormat.colored, SharedUtils.logFilter),
+    ) ++ logMetrics
 
   def run =
     val program =

@@ -11,15 +11,14 @@ import $ivy.`com.carlosedp::mill-docker-nativeimage::0.5.0`
 import com.carlosedp.milldockernative.DockerNative
 
 object versions {
-  val scala3          = "3.3.0-RC3"
-  val graalvm         = "graalvm-java17:22.3.1"
-  val organizeimports = "0.6.0"
-  val zio             = "2.0.10"
-  val ziohttp         = "0.0.4+9-66d4e892-SNAPSHOT"
-  val ziotemporal     = "0.1.0-RC6"
-  val ziometrics      = "2.0.7"
-  val ziologging      = "2.1.10"
-  val idgenerator     = "1.4.0"
+  val scala3      = "3.3.0-RC3"
+  val graalvm     = "graalvm-java17:22.3.1"
+  val zio         = "2.0.10"
+  val ziohttp     = "0.0.5"
+  val ziotemporal = "0.1.0-RC6"
+  val ziometrics  = "2.0.7"
+  val ziologging  = "2.1.11"
+  val idgenerator = "1.4.0"
 }
 
 trait Common
@@ -31,16 +30,16 @@ trait Common
   with DockerNative {
   def scalaVersion         = versions.scala3
   def nativeImageClassPath = runClasspath()
-  // override def scalacOptions = T {
-  //   super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard")
-  // }
+  override def scalacOptions = T {
+    super.scalacOptions() ++ Seq("-Wunused:imports", "-Wvalue-discard")
+  }
   def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
   def forkArgs = T {
     if (useNativeConfig()) Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
     else Seq.empty
   }
 
-  def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:${versions.organizeimports}")
+  def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:0.6.0")
   def repositoriesTask = T.task {
     super.repositoriesTask() ++ Seq("oss", "s01.oss")
       .map(r => s"https://$r.sonatype.org/content/repositories/snapshots")

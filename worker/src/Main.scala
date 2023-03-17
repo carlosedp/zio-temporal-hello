@@ -1,5 +1,5 @@
 import zio.*
-import zio.logging.{console, LogFormat, LogFilter, logMetrics}
+import zio.logging.*
 import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.http.*
 import zio.temporal.*
@@ -10,12 +10,12 @@ import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 
 // ZIO-http server config
-val httpPort   = 8082
-val httpRoutes = (MetricsApp()) @@ Middleware.metrics(MetricsApp.pathLabelMapper) @@ Middleware.timeout(5.seconds)
+val httpPort = 8082
+val httpRoutes =
+  (MetricsApp()) @@ HttpAppMiddleware.metrics(MetricsApp.pathLabelMapper) @@ HttpAppMiddleware.timeout(5.seconds)
 val config: ServerConfig =
   ServerConfig.default
     .port(httpPort)
-    .leakDetection(ServerConfig.LeakDetectionLevel.PARANOID)
     .maxThreads(2)
 
 // Define ZIO-http server
@@ -33,9 +33,8 @@ object Main extends ZIOAppDefault:
   // Configure ZIO Logging
 
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
-    Runtime.removeDefaultLoggers >>> console(
-      LogFormat.colored,
-      SharedUtils.logFilter,
+    Runtime.removeDefaultLoggers >>> consoleLogger(
+      ConsoleLoggerConfig(LogFormat.colored, SharedUtils.logFilter),
     ) ++ logMetrics
 
   def run: ZIO[ZIOAppArgs with Scope, Any, Any] =
