@@ -19,6 +19,7 @@ object SharedUtils:
     "io.grpc.netty"                               -> LogLevel.Warning,
     "io.grpc.netty.shaded.io.netty.util.internal" -> LogLevel.Warning,
     "io.netty"                                    -> LogLevel.Warning,
-    "io.temporal"                                 -> LogLevel.Warning,
+    "io.temporal"                                 -> LogLevel.Error,
     "io.temporal.internal.worker.Poller"          -> LogLevel.Error,
+    "zio.temporal.internal"                       -> LogLevel.Info,
   )

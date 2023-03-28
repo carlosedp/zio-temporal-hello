@@ -3,6 +3,11 @@ import zio.temporal.*
 import zio.temporal.workflow.*
 import zio.temporal.worker.*
 
+// TODO: This can be removed after new version of zio-temporal is released with PR #37
+import com.fasterxml.jackson.databind.json.JsonMapper
+import com.fasterxml.jackson.module.scala.*
+import io.temporal.common.converter.*
+
 object Client:
   val stubOptions: ULayer[ZWorkflowServiceStubsOptions] = ZLayer.succeed:
     ZWorkflowServiceStubsOptions.default.withServiceUrl(
@@ -11,6 +16,22 @@ object Client:
 
   val clientOptions: ULayer[ZWorkflowClientOptions] = ZLayer.succeed:
     ZWorkflowClientOptions.default
+      // TODO: Below this line can be removed once https://github.com/vitaliihonta/zio-temporal/pull/37 is merged
+      .withDataConverter(
+        new DefaultDataConverter(
+          Seq(
+            new NullPayloadConverter(),
+            new ByteArrayPayloadConverter(),
+            new ProtobufJsonPayloadConverter(),
+            new JacksonJsonPayloadConverter(
+              JsonMapper
+                .builder()
+                .addModule(DefaultScalaModule)
+                .build(),
+            ),
+          )*,
+        ),
+      )
 
   val workerFactoryOptions: ULayer[ZWorkerFactoryOptions] = ZLayer.succeed:
     ZWorkerFactoryOptions.default
@@ -21,7 +42,6 @@ object Client:
       .withTaskQueue(TemporalQueues.echoQueue)
       .withWorkflowId(s"$client-$workflowID")
       .withWorkflowRunTimeout(2.seconds)
-      .withRetryOptions(ZRetryOptions.default.withMaximumAttempts(3).withBackoffCoefficient(1))
       .build
 
   def workflowResultZIO(msg: String) =
@@ -30,5 +50,12 @@ object Client:
     for
       echoWorkflow <- workflowStubZIO(client, workflowID)
       _            <- ZIO.logInfo(s"Will submit message \"$msg\" with workflowID $client-$workflowID")
-      result       <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, client)).measureTimeConsole("getEcho")
+      result <- ZWorkflowStub
+                  .execute(echoWorkflow.getEcho(msg, client))
+                  .measureTimeConsole("getEcho")
+                  .catchSome:
+                    case _: zio.temporal.TemporalClientError =>
+                      ZIO.logError("Client: Exceeded retries") *> ZIO.succeed(
+                        "Exceeded retries",
+                      )
     yield result

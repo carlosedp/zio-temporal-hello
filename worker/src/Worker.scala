@@ -3,6 +3,11 @@ import zio.temporal.*
 import zio.temporal.worker.*
 import zio.temporal.workflow.*
 
+// TODO: This can be removed after new version of zio-temporal is released with PR #37
+import com.fasterxml.jackson.databind.json.JsonMapper
+import com.fasterxml.jackson.module.scala.*
+import io.temporal.common.converter.*
+
 object WorkerModule:
   val stubOptions: ULayer[ZWorkflowServiceStubsOptions] = ZLayer.succeed:
     ZWorkflowServiceStubsOptions.default.withServiceUrl(
@@ -11,6 +16,22 @@ object WorkerModule:
 
   val clientOptions: ULayer[ZWorkflowClientOptions] = ZLayer.succeed:
     ZWorkflowClientOptions.default
+      // TODO: Below this line can be removed once https://github.com/vitaliihonta/zio-temporal/pull/37 is merged
+      .withDataConverter(
+        new DefaultDataConverter(
+          Seq(
+            new NullPayloadConverter(),
+            new ByteArrayPayloadConverter(),
+            new ProtobufJsonPayloadConverter(),
+            new JacksonJsonPayloadConverter(
+              JsonMapper
+                .builder()
+                .addModule(DefaultScalaModule)
+                .build(),
+            ),
+          )*,
+        ),
+      )
 
   val workerFactoryOptions: ULayer[ZWorkerFactoryOptions] = ZLayer.succeed:
     ZWorkerFactoryOptions.default
