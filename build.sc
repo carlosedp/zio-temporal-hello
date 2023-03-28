@@ -53,6 +53,9 @@ trait Common
     ivy"dev.zio::zio-logging-slf4j2-bridge:${versions.ziologging}",
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}".exclude("$com.google.protobuf" -> "protobuf-java"),
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
+    // Deps below are required until zio-temporal-core is published with the default client dataconverter fix
+    ivy"com.fasterxml.jackson.module::jackson-module-scala:2.14.1",
+    ivy"io.temporal:temporal-sdk:1.18.2",
   )
   object test extends Tests {
     def testFramework = T("zio.test.sbt.ZTestFramework")

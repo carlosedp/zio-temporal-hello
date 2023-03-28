@@ -16,11 +16,9 @@ class EchoActivityImpl(
   override def echo(msg: String, client: String = "default"): Either[Exception, String] =
     ZActivity.run:
       for
-        _ <- ZIO.logDebug(s"Received from $client, message: $msg") @@ MetricsApp.echoCalls(client)
-        // The build of new message might eventually fail
-        newMsg <- eventuallyFail(s"ACK: $msg")
-      // newMsg <- ZIO.succeed(s"ACK: $msg")
-      // _ <- ZIO.logDebug(s"Reply with: $newMsg")
+        _      <- ZIO.logDebug(s"Received from $client, message: $msg") @@ MetricsApp.echoCalls(client)
+        newMsg <- eventuallyFail(s"ACK: $msg", 20) // The build of new message might eventually fail
+        _      <- ZIO.logDebug(s"Worker: Reply with: $newMsg")
       yield newMsg
 
   /**
@@ -37,7 +35,11 @@ class EchoActivityImpl(
     require(successPercent >= 0 && successPercent <= 100)
     for
       percent <- Random.nextIntBetween(0, 100)
-      r <- percent match
-             case p if p < successPercent  => ZIO.succeed(msg)
-             case p if p >= successPercent => ZIO.fail(new Exception(msg))
+      _       <- ZIO.logDebug(s"Worker: Generated percent is $percent")
+      _ <- ZIO.when(percent > successPercent):
+             ZIO.logError("Worker: eventuallyFail - Failed to process message") *> ZIO.die(
+               Exception(s"Worker: ERROR: $msg"),
+             )
+      _ <- ZIO.logInfo("Worker: Success processing message")
+      r  = msg
     yield r

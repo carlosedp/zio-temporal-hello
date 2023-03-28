@@ -7,7 +7,7 @@ import zio.temporal.workflow.*
 trait EchoWorkflow:
 
   @workflowMethod
-  def getEcho(str: String, client: String): Either[Exception, String]
+  def getEcho(msg: String, client: String): Either[Exception, String]
 
 // And here the workflow implementation
 class EchoWorkflowImpl extends EchoWorkflow:
@@ -22,5 +22,6 @@ class EchoWorkflowImpl extends EchoWorkflow:
     )
     .build
 
-  override def getEcho(str: String, client: String = "default"): Either[Exception, String] =
-    echoActivity.echo(str, client)
+  override def getEcho(msg: String, client: String = "default"): Either[Exception, String] =
+    ZIO.logInfo(s"Worker: Received message in the workflow: \"$msg\"")
+    echoActivity.echo(msg, client)
