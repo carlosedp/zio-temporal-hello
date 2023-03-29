@@ -30,6 +30,9 @@
   "name":"[Lcom.fasterxml.jackson.databind.ser.Serializers;"
 },
 {
+  "name":"[Lio.temporal.common.converter.PayloadConverter;"
+},
+{
   "name":"[Lio.temporal.common.interceptors.WorkerInterceptor;"
 },
 {
@@ -45,10 +48,19 @@
   "name":"[Ljava.lang.Throwable;"
 },
 {
+  "name":"[Lscala.Tuple2;"
+},
+{
   "name":"[Lzio.ZIO$EvaluationStep;"
 },
 {
   "name":"[Lzio.metrics.MetricListener;"
+},
+{
+  "name":"com.fasterxml.jackson.databind.deser.std.StackTraceElementDeserializer$Adapter",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true
 },
 {
   "name":"com.fasterxml.jackson.databind.ext.Java7HandlersImpl",
@@ -57,6 +69,22 @@
 {
   "name":"com.fasterxml.jackson.databind.ext.Java7SupportImpl",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.fasterxml.jackson.module.scala.JacksonModule$",
+  "fields":[{"name":"0bitmap$1"}]
+},
+{
+  "name":"com.fasterxml.jackson.module.scala.deser.UntypedObjectDeserializerResolver$",
+  "fields":[{"name":"0bitmap$1"}]
+},
+{
+  "name":"com.fasterxml.jackson.module.scala.util.ClassW$$anon$1",
+  "fields":[{"name":"0bitmap$1"}]
+},
+{
+  "name":"com.fasterxml.jackson.module.scala.util.OptionW$$anon$1",
+  "fields":[{"name":"0bitmap$1"}]
 },
 {
   "name":"com.google.common.util.concurrent.AbstractFuture",
@@ -645,6 +673,10 @@
   "fields":[{"name":"producerLimit"}]
 },
 {
+  "name":"io.temporal.api.command.v1.AcceptWorkflowUpdateCommandAttributes",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
   "name":"io.temporal.api.command.v1.CancelTimerCommandAttributes",
   "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
@@ -655,14 +687,17 @@
 {
   "name":"io.temporal.api.command.v1.Command",
   "methods":[
+    {"name":"getAcceptWorkflowUpdateCommandAttributes","parameterTypes":[] }, 
     {"name":"getAttributesCase","parameterTypes":[] }, 
     {"name":"getCancelTimerCommandAttributes","parameterTypes":[] }, 
     {"name":"getCancelWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
     {"name":"getCommandType","parameterTypes":[] }, 
     {"name":"getCommandTypeValue","parameterTypes":[] }, 
     {"name":"getCompleteWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
+    {"name":"getCompleteWorkflowUpdateCommandAttributes","parameterTypes":[] }, 
     {"name":"getContinueAsNewWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
     {"name":"getFailWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
+    {"name":"getModifyWorkflowPropertiesCommandAttributes","parameterTypes":[] }, 
     {"name":"getRecordMarkerCommandAttributes","parameterTypes":[] }, 
     {"name":"getRequestCancelActivityTaskCommandAttributes","parameterTypes":[] }, 
     {"name":"getRequestCancelExternalWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
@@ -677,13 +712,16 @@
 {
   "name":"io.temporal.api.command.v1.Command$Builder",
   "methods":[
+    {"name":"clearAcceptWorkflowUpdateCommandAttributes","parameterTypes":[] }, 
     {"name":"clearAttributes","parameterTypes":[] }, 
     {"name":"clearCancelTimerCommandAttributes","parameterTypes":[] }, 
     {"name":"clearCancelWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
     {"name":"clearCommandType","parameterTypes":[] }, 
     {"name":"clearCompleteWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
+    {"name":"clearCompleteWorkflowUpdateCommandAttributes","parameterTypes":[] }, 
     {"name":"clearContinueAsNewWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
     {"name":"clearFailWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
+    {"name":"clearModifyWorkflowPropertiesCommandAttributes","parameterTypes":[] }, 
     {"name":"clearRecordMarkerCommandAttributes","parameterTypes":[] }, 
     {"name":"clearRequestCancelActivityTaskCommandAttributes","parameterTypes":[] }, 
     {"name":"clearRequestCancelExternalWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
@@ -692,6 +730,8 @@
     {"name":"clearStartChildWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
     {"name":"clearStartTimerCommandAttributes","parameterTypes":[] }, 
     {"name":"clearUpsertWorkflowSearchAttributesCommandAttributes","parameterTypes":[] }, 
+    {"name":"getAcceptWorkflowUpdateCommandAttributes","parameterTypes":[] }, 
+    {"name":"getAcceptWorkflowUpdateCommandAttributesBuilder","parameterTypes":[] }, 
     {"name":"getAttributesCase","parameterTypes":[] }, 
     {"name":"getCancelTimerCommandAttributes","parameterTypes":[] }, 
     {"name":"getCancelTimerCommandAttributesBuilder","parameterTypes":[] }, 
@@ -701,10 +741,14 @@
     {"name":"getCommandTypeValue","parameterTypes":[] }, 
     {"name":"getCompleteWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
     {"name":"getCompleteWorkflowExecutionCommandAttributesBuilder","parameterTypes":[] }, 
+    {"name":"getCompleteWorkflowUpdateCommandAttributes","parameterTypes":[] }, 
+    {"name":"getCompleteWorkflowUpdateCommandAttributesBuilder","parameterTypes":[] }, 
     {"name":"getContinueAsNewWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
     {"name":"getContinueAsNewWorkflowExecutionCommandAttributesBuilder","parameterTypes":[] }, 
     {"name":"getFailWorkflowExecutionCommandAttributes","parameterTypes":[] }, 
     {"name":"getFailWorkflowExecutionCommandAttributesBuilder","parameterTypes":[] }, 
+    {"name":"getModifyWorkflowPropertiesCommandAttributes","parameterTypes":[] }, 
+    {"name":"getModifyWorkflowPropertiesCommandAttributesBuilder","parameterTypes":[] }, 
     {"name":"getRecordMarkerCommandAttributes","parameterTypes":[] }, 
     {"name":"getRecordMarkerCommandAttributesBuilder","parameterTypes":[] }, 
     {"name":"getRequestCancelActivityTaskCommandAttributes","parameterTypes":[] }, 
@@ -721,13 +765,16 @@
     {"name":"getStartTimerCommandAttributesBuilder","parameterTypes":[] }, 
     {"name":"getUpsertWorkflowSearchAttributesCommandAttributes","parameterTypes":[] }, 
     {"name":"getUpsertWorkflowSearchAttributesCommandAttributesBuilder","parameterTypes":[] }, 
+    {"name":"setAcceptWorkflowUpdateCommandAttributes","parameterTypes":["io.temporal.api.command.v1.AcceptWorkflowUpdateCommandAttributes"] }, 
     {"name":"setCancelTimerCommandAttributes","parameterTypes":["io.temporal.api.command.v1.CancelTimerCommandAttributes"] }, 
     {"name":"setCancelWorkflowExecutionCommandAttributes","parameterTypes":["io.temporal.api.command.v1.CancelWorkflowExecutionCommandAttributes"] }, 
     {"name":"setCommandType","parameterTypes":["io.temporal.api.enums.v1.CommandType"] }, 
     {"name":"setCommandTypeValue","parameterTypes":["int"] }, 
     {"name":"setCompleteWorkflowExecutionCommandAttributes","parameterTypes":["io.temporal.api.command.v1.CompleteWorkflowExecutionCommandAttributes"] }, 
+    {"name":"setCompleteWorkflowUpdateCommandAttributes","parameterTypes":["io.temporal.api.command.v1.CompleteWorkflowUpdateCommandAttributes"] }, 
     {"name":"setContinueAsNewWorkflowExecutionCommandAttributes","parameterTypes":["io.temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes"] }, 
     {"name":"setFailWorkflowExecutionCommandAttributes","parameterTypes":["io.temporal.api.command.v1.FailWorkflowExecutionCommandAttributes"] }, 
+    {"name":"setModifyWorkflowPropertiesCommandAttributes","parameterTypes":["io.temporal.api.command.v1.ModifyWorkflowPropertiesCommandAttributes"] }, 
     {"name":"setRecordMarkerCommandAttributes","parameterTypes":["io.temporal.api.command.v1.RecordMarkerCommandAttributes"] }, 
     {"name":"setRequestCancelActivityTaskCommandAttributes","parameterTypes":["io.temporal.api.command.v1.RequestCancelActivityTaskCommandAttributes"] }, 
     {"name":"setRequestCancelExternalWorkflowExecutionCommandAttributes","parameterTypes":["io.temporal.api.command.v1.RequestCancelExternalWorkflowExecutionCommandAttributes"] }, 
@@ -757,6 +804,10 @@
   ]
 },
 {
+  "name":"io.temporal.api.command.v1.CompleteWorkflowUpdateCommandAttributes",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
   "name":"io.temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes",
   "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
@@ -777,6 +828,10 @@
     {"name":"hasFailure","parameterTypes":[] }, 
     {"name":"setFailure","parameterTypes":["io.temporal.api.failure.v1.Failure"] }
   ]
+},
+{
+  "name":"io.temporal.api.command.v1.ModifyWorkflowPropertiesCommandAttributes",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
 {
   "name":"io.temporal.api.command.v1.RecordMarkerCommandAttributes",
@@ -1141,6 +1196,7 @@
     {"name":"getCanceledFailureInfo","parameterTypes":[] }, 
     {"name":"getCause","parameterTypes":[] }, 
     {"name":"getChildWorkflowExecutionFailureInfo","parameterTypes":[] }, 
+    {"name":"getEncodedAttributes","parameterTypes":[] }, 
     {"name":"getFailureInfoCase","parameterTypes":[] }, 
     {"name":"getMessage","parameterTypes":[] }, 
     {"name":"getMessageBytes","parameterTypes":[] }, 
@@ -1153,6 +1209,7 @@
     {"name":"getTerminatedFailureInfo","parameterTypes":[] }, 
     {"name":"getTimeoutFailureInfo","parameterTypes":[] }, 
     {"name":"hasCause","parameterTypes":[] }, 
+    {"name":"hasEncodedAttributes","parameterTypes":[] }, 
     {"name":"newBuilder","parameterTypes":[] }
   ]
 },
@@ -1164,6 +1221,7 @@
     {"name":"clearCanceledFailureInfo","parameterTypes":[] }, 
     {"name":"clearCause","parameterTypes":[] }, 
     {"name":"clearChildWorkflowExecutionFailureInfo","parameterTypes":[] }, 
+    {"name":"clearEncodedAttributes","parameterTypes":[] }, 
     {"name":"clearFailureInfo","parameterTypes":[] }, 
     {"name":"clearMessage","parameterTypes":[] }, 
     {"name":"clearResetWorkflowFailureInfo","parameterTypes":[] }, 
@@ -1182,6 +1240,8 @@
     {"name":"getCauseBuilder","parameterTypes":[] }, 
     {"name":"getChildWorkflowExecutionFailureInfo","parameterTypes":[] }, 
     {"name":"getChildWorkflowExecutionFailureInfoBuilder","parameterTypes":[] }, 
+    {"name":"getEncodedAttributes","parameterTypes":[] }, 
+    {"name":"getEncodedAttributesBuilder","parameterTypes":[] }, 
     {"name":"getFailureInfoCase","parameterTypes":[] }, 
     {"name":"getMessage","parameterTypes":[] }, 
     {"name":"getMessageBytes","parameterTypes":[] }, 
@@ -1198,11 +1258,13 @@
     {"name":"getTimeoutFailureInfo","parameterTypes":[] }, 
     {"name":"getTimeoutFailureInfoBuilder","parameterTypes":[] }, 
     {"name":"hasCause","parameterTypes":[] }, 
+    {"name":"hasEncodedAttributes","parameterTypes":[] }, 
     {"name":"setActivityFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ActivityFailureInfo"] }, 
     {"name":"setApplicationFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ApplicationFailureInfo"] }, 
     {"name":"setCanceledFailureInfo","parameterTypes":["io.temporal.api.failure.v1.CanceledFailureInfo"] }, 
     {"name":"setCause","parameterTypes":["io.temporal.api.failure.v1.Failure"] }, 
     {"name":"setChildWorkflowExecutionFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ChildWorkflowExecutionFailureInfo"] }, 
+    {"name":"setEncodedAttributes","parameterTypes":["io.temporal.api.common.v1.Payload"] }, 
     {"name":"setMessage","parameterTypes":["java.lang.String"] }, 
     {"name":"setMessageBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setResetWorkflowFailureInfo","parameterTypes":["io.temporal.api.failure.v1.ResetWorkflowFailureInfo"] }, 
@@ -1229,6 +1291,10 @@
 },
 {
   "name":"io.temporal.api.failure.v1.TimeoutFailureInfo",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.history.v1.ActivityPropertiesModifiedExternallyEventAttributes",
   "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
 {
@@ -1461,6 +1527,7 @@
 {
   "name":"io.temporal.api.history.v1.HistoryEvent",
   "methods":[
+    {"name":"getActivityPropertiesModifiedExternallyEventAttributes","parameterTypes":[] }, 
     {"name":"getActivityTaskCancelRequestedEventAttributes","parameterTypes":[] }, 
     {"name":"getActivityTaskCanceledEventAttributes","parameterTypes":[] }, 
     {"name":"getActivityTaskCompletedEventAttributes","parameterTypes":[] }, 
@@ -1494,6 +1561,7 @@
     {"name":"getTimerStartedEventAttributes","parameterTypes":[] }, 
     {"name":"getUpsertWorkflowSearchAttributesEventAttributes","parameterTypes":[] }, 
     {"name":"getVersion","parameterTypes":[] }, 
+    {"name":"getWorkerMayIgnore","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionCancelRequestedEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionCanceledEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionCompletedEventAttributes","parameterTypes":[] }, 
@@ -1503,11 +1571,16 @@
     {"name":"getWorkflowExecutionStartedEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionTerminatedEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionTimedOutEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowPropertiesModifiedEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowPropertiesModifiedExternallyEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowTaskCompletedEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowTaskFailedEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowTaskScheduledEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowTaskStartedEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowTaskTimedOutEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateAcceptedEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateCompletedEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateRequestedEventAttributes","parameterTypes":[] }, 
     {"name":"hasEventTime","parameterTypes":[] }, 
     {"name":"newBuilder","parameterTypes":[] }
   ]
@@ -1515,6 +1588,7 @@
 {
   "name":"io.temporal.api.history.v1.HistoryEvent$Builder",
   "methods":[
+    {"name":"clearActivityPropertiesModifiedExternallyEventAttributes","parameterTypes":[] }, 
     {"name":"clearActivityTaskCancelRequestedEventAttributes","parameterTypes":[] }, 
     {"name":"clearActivityTaskCanceledEventAttributes","parameterTypes":[] }, 
     {"name":"clearActivityTaskCompletedEventAttributes","parameterTypes":[] }, 
@@ -1547,6 +1621,7 @@
     {"name":"clearTimerStartedEventAttributes","parameterTypes":[] }, 
     {"name":"clearUpsertWorkflowSearchAttributesEventAttributes","parameterTypes":[] }, 
     {"name":"clearVersion","parameterTypes":[] }, 
+    {"name":"clearWorkerMayIgnore","parameterTypes":[] }, 
     {"name":"clearWorkflowExecutionCancelRequestedEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowExecutionCanceledEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowExecutionCompletedEventAttributes","parameterTypes":[] }, 
@@ -1556,11 +1631,18 @@
     {"name":"clearWorkflowExecutionStartedEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowExecutionTerminatedEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowExecutionTimedOutEventAttributes","parameterTypes":[] }, 
+    {"name":"clearWorkflowPropertiesModifiedEventAttributes","parameterTypes":[] }, 
+    {"name":"clearWorkflowPropertiesModifiedExternallyEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowTaskCompletedEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowTaskFailedEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowTaskScheduledEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowTaskStartedEventAttributes","parameterTypes":[] }, 
     {"name":"clearWorkflowTaskTimedOutEventAttributes","parameterTypes":[] }, 
+    {"name":"clearWorkflowUpdateAcceptedEventAttributes","parameterTypes":[] }, 
+    {"name":"clearWorkflowUpdateCompletedEventAttributes","parameterTypes":[] }, 
+    {"name":"clearWorkflowUpdateRequestedEventAttributes","parameterTypes":[] }, 
+    {"name":"getActivityPropertiesModifiedExternallyEventAttributes","parameterTypes":[] }, 
+    {"name":"getActivityPropertiesModifiedExternallyEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"getActivityTaskCancelRequestedEventAttributes","parameterTypes":[] }, 
     {"name":"getActivityTaskCancelRequestedEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"getActivityTaskCanceledEventAttributes","parameterTypes":[] }, 
@@ -1621,6 +1703,7 @@
     {"name":"getUpsertWorkflowSearchAttributesEventAttributes","parameterTypes":[] }, 
     {"name":"getUpsertWorkflowSearchAttributesEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"getVersion","parameterTypes":[] }, 
+    {"name":"getWorkerMayIgnore","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionCancelRequestedEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionCancelRequestedEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionCanceledEventAttributes","parameterTypes":[] }, 
@@ -1639,6 +1722,10 @@
     {"name":"getWorkflowExecutionTerminatedEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionTimedOutEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowExecutionTimedOutEventAttributesBuilder","parameterTypes":[] }, 
+    {"name":"getWorkflowPropertiesModifiedEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowPropertiesModifiedEventAttributesBuilder","parameterTypes":[] }, 
+    {"name":"getWorkflowPropertiesModifiedExternallyEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowPropertiesModifiedExternallyEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"getWorkflowTaskCompletedEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowTaskCompletedEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"getWorkflowTaskFailedEventAttributes","parameterTypes":[] }, 
@@ -1649,7 +1736,14 @@
     {"name":"getWorkflowTaskStartedEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"getWorkflowTaskTimedOutEventAttributes","parameterTypes":[] }, 
     {"name":"getWorkflowTaskTimedOutEventAttributesBuilder","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateAcceptedEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateAcceptedEventAttributesBuilder","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateCompletedEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateCompletedEventAttributesBuilder","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateRequestedEventAttributes","parameterTypes":[] }, 
+    {"name":"getWorkflowUpdateRequestedEventAttributesBuilder","parameterTypes":[] }, 
     {"name":"hasEventTime","parameterTypes":[] }, 
+    {"name":"setActivityPropertiesModifiedExternallyEventAttributes","parameterTypes":["io.temporal.api.history.v1.ActivityPropertiesModifiedExternallyEventAttributes"] }, 
     {"name":"setActivityTaskCancelRequestedEventAttributes","parameterTypes":["io.temporal.api.history.v1.ActivityTaskCancelRequestedEventAttributes"] }, 
     {"name":"setActivityTaskCanceledEventAttributes","parameterTypes":["io.temporal.api.history.v1.ActivityTaskCanceledEventAttributes"] }, 
     {"name":"setActivityTaskCompletedEventAttributes","parameterTypes":["io.temporal.api.history.v1.ActivityTaskCompletedEventAttributes"] }, 
@@ -1682,6 +1776,7 @@
     {"name":"setTimerStartedEventAttributes","parameterTypes":["io.temporal.api.history.v1.TimerStartedEventAttributes"] }, 
     {"name":"setUpsertWorkflowSearchAttributesEventAttributes","parameterTypes":["io.temporal.api.history.v1.UpsertWorkflowSearchAttributesEventAttributes"] }, 
     {"name":"setVersion","parameterTypes":["long"] }, 
+    {"name":"setWorkerMayIgnore","parameterTypes":["boolean"] }, 
     {"name":"setWorkflowExecutionCancelRequestedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowExecutionCancelRequestedEventAttributes"] }, 
     {"name":"setWorkflowExecutionCanceledEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowExecutionCanceledEventAttributes"] }, 
     {"name":"setWorkflowExecutionCompletedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowExecutionCompletedEventAttributes"] }, 
@@ -1691,11 +1786,16 @@
     {"name":"setWorkflowExecutionStartedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowExecutionStartedEventAttributes"] }, 
     {"name":"setWorkflowExecutionTerminatedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowExecutionTerminatedEventAttributes"] }, 
     {"name":"setWorkflowExecutionTimedOutEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowExecutionTimedOutEventAttributes"] }, 
+    {"name":"setWorkflowPropertiesModifiedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowPropertiesModifiedEventAttributes"] }, 
+    {"name":"setWorkflowPropertiesModifiedExternallyEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes"] }, 
     {"name":"setWorkflowTaskCompletedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowTaskCompletedEventAttributes"] }, 
     {"name":"setWorkflowTaskFailedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowTaskFailedEventAttributes"] }, 
     {"name":"setWorkflowTaskScheduledEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowTaskScheduledEventAttributes"] }, 
     {"name":"setWorkflowTaskStartedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowTaskStartedEventAttributes"] }, 
-    {"name":"setWorkflowTaskTimedOutEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowTaskTimedOutEventAttributes"] }
+    {"name":"setWorkflowTaskTimedOutEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowTaskTimedOutEventAttributes"] }, 
+    {"name":"setWorkflowUpdateAcceptedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowUpdateAcceptedEventAttributes"] }, 
+    {"name":"setWorkflowUpdateCompletedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowUpdateCompletedEventAttributes"] }, 
+    {"name":"setWorkflowUpdateRequestedEventAttributes","parameterTypes":["io.temporal.api.history.v1.WorkflowUpdateRequestedEventAttributes"] }
   ]
 },
 {
@@ -1818,6 +1918,8 @@
     {"name":"getParentWorkflowExecution","parameterTypes":[] }, 
     {"name":"getParentWorkflowNamespace","parameterTypes":[] }, 
     {"name":"getParentWorkflowNamespaceBytes","parameterTypes":[] }, 
+    {"name":"getParentWorkflowNamespaceId","parameterTypes":[] }, 
+    {"name":"getParentWorkflowNamespaceIdBytes","parameterTypes":[] }, 
     {"name":"getPrevAutoResetPoints","parameterTypes":[] }, 
     {"name":"getRetryPolicy","parameterTypes":[] }, 
     {"name":"getSearchAttributes","parameterTypes":[] }, 
@@ -1866,6 +1968,7 @@
     {"name":"clearParentInitiatedEventVersion","parameterTypes":[] }, 
     {"name":"clearParentWorkflowExecution","parameterTypes":[] }, 
     {"name":"clearParentWorkflowNamespace","parameterTypes":[] }, 
+    {"name":"clearParentWorkflowNamespaceId","parameterTypes":[] }, 
     {"name":"clearPrevAutoResetPoints","parameterTypes":[] }, 
     {"name":"clearRetryPolicy","parameterTypes":[] }, 
     {"name":"clearSearchAttributes","parameterTypes":[] }, 
@@ -1906,6 +2009,8 @@
     {"name":"getParentWorkflowExecutionBuilder","parameterTypes":[] }, 
     {"name":"getParentWorkflowNamespace","parameterTypes":[] }, 
     {"name":"getParentWorkflowNamespaceBytes","parameterTypes":[] }, 
+    {"name":"getParentWorkflowNamespaceId","parameterTypes":[] }, 
+    {"name":"getParentWorkflowNamespaceIdBytes","parameterTypes":[] }, 
     {"name":"getPrevAutoResetPoints","parameterTypes":[] }, 
     {"name":"getPrevAutoResetPointsBuilder","parameterTypes":[] }, 
     {"name":"getRetryPolicy","parameterTypes":[] }, 
@@ -1964,6 +2069,8 @@
     {"name":"setParentWorkflowExecution","parameterTypes":["io.temporal.api.common.v1.WorkflowExecution"] }, 
     {"name":"setParentWorkflowNamespace","parameterTypes":["java.lang.String"] }, 
     {"name":"setParentWorkflowNamespaceBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
+    {"name":"setParentWorkflowNamespaceId","parameterTypes":["java.lang.String"] }, 
+    {"name":"setParentWorkflowNamespaceIdBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setPrevAutoResetPoints","parameterTypes":["io.temporal.api.workflow.v1.ResetPoints"] }, 
     {"name":"setRetryPolicy","parameterTypes":["io.temporal.api.common.v1.RetryPolicy"] }, 
     {"name":"setSearchAttributes","parameterTypes":["io.temporal.api.common.v1.SearchAttributes"] }, 
@@ -1984,6 +2091,14 @@
   "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
 {
+  "name":"io.temporal.api.history.v1.WorkflowPropertiesModifiedEventAttributes",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
   "name":"io.temporal.api.history.v1.WorkflowTaskCompletedEventAttributes",
   "methods":[
     {"name":"getBinaryChecksum","parameterTypes":[] }, 
@@ -1992,6 +2107,8 @@
     {"name":"getIdentityBytes","parameterTypes":[] }, 
     {"name":"getScheduledEventId","parameterTypes":[] }, 
     {"name":"getStartedEventId","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningId","parameterTypes":[] }, 
+    {"name":"hasWorkerVersioningId","parameterTypes":[] }, 
     {"name":"newBuilder","parameterTypes":[] }
   ]
 },
@@ -2002,18 +2119,23 @@
     {"name":"clearIdentity","parameterTypes":[] }, 
     {"name":"clearScheduledEventId","parameterTypes":[] }, 
     {"name":"clearStartedEventId","parameterTypes":[] }, 
+    {"name":"clearWorkerVersioningId","parameterTypes":[] }, 
     {"name":"getBinaryChecksum","parameterTypes":[] }, 
     {"name":"getBinaryChecksumBytes","parameterTypes":[] }, 
     {"name":"getIdentity","parameterTypes":[] }, 
     {"name":"getIdentityBytes","parameterTypes":[] }, 
     {"name":"getScheduledEventId","parameterTypes":[] }, 
     {"name":"getStartedEventId","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningId","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningIdBuilder","parameterTypes":[] }, 
+    {"name":"hasWorkerVersioningId","parameterTypes":[] }, 
     {"name":"setBinaryChecksum","parameterTypes":["java.lang.String"] }, 
     {"name":"setBinaryChecksumBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setIdentity","parameterTypes":["java.lang.String"] }, 
     {"name":"setIdentityBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setScheduledEventId","parameterTypes":["long"] }, 
-    {"name":"setStartedEventId","parameterTypes":["long"] }
+    {"name":"setStartedEventId","parameterTypes":["long"] }, 
+    {"name":"setWorkerVersioningId","parameterTypes":["io.temporal.api.taskqueue.v1.VersionId"] }
   ]
 },
 {
@@ -2052,34 +2174,54 @@
 {
   "name":"io.temporal.api.history.v1.WorkflowTaskStartedEventAttributes",
   "methods":[
+    {"name":"getHistorySizeBytes","parameterTypes":[] }, 
     {"name":"getIdentity","parameterTypes":[] }, 
     {"name":"getIdentityBytes","parameterTypes":[] }, 
     {"name":"getRequestId","parameterTypes":[] }, 
     {"name":"getRequestIdBytes","parameterTypes":[] }, 
     {"name":"getScheduledEventId","parameterTypes":[] }, 
+    {"name":"getSuggestContinueAsNew","parameterTypes":[] }, 
     {"name":"newBuilder","parameterTypes":[] }
   ]
 },
 {
   "name":"io.temporal.api.history.v1.WorkflowTaskStartedEventAttributes$Builder",
   "methods":[
+    {"name":"clearHistorySizeBytes","parameterTypes":[] }, 
     {"name":"clearIdentity","parameterTypes":[] }, 
     {"name":"clearRequestId","parameterTypes":[] }, 
     {"name":"clearScheduledEventId","parameterTypes":[] }, 
+    {"name":"clearSuggestContinueAsNew","parameterTypes":[] }, 
+    {"name":"getHistorySizeBytes","parameterTypes":[] }, 
     {"name":"getIdentity","parameterTypes":[] }, 
     {"name":"getIdentityBytes","parameterTypes":[] }, 
     {"name":"getRequestId","parameterTypes":[] }, 
     {"name":"getRequestIdBytes","parameterTypes":[] }, 
     {"name":"getScheduledEventId","parameterTypes":[] }, 
+    {"name":"getSuggestContinueAsNew","parameterTypes":[] }, 
+    {"name":"setHistorySizeBytes","parameterTypes":["long"] }, 
     {"name":"setIdentity","parameterTypes":["java.lang.String"] }, 
     {"name":"setIdentityBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setRequestId","parameterTypes":["java.lang.String"] }, 
     {"name":"setRequestIdBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
-    {"name":"setScheduledEventId","parameterTypes":["long"] }
+    {"name":"setScheduledEventId","parameterTypes":["long"] }, 
+    {"name":"setSuggestContinueAsNew","parameterTypes":["boolean"] }
   ]
 },
 {
   "name":"io.temporal.api.history.v1.WorkflowTaskTimedOutEventAttributes",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.history.v1.WorkflowUpdateAcceptedEventAttributes",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.history.v1.WorkflowUpdateCompletedEventAttributes",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.history.v1.WorkflowUpdateRequestedEventAttributes",
   "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
 {
@@ -2141,8 +2283,75 @@
   "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
 {
+  "name":"io.temporal.api.taskqueue.v1.VersionId",
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
   "name":"io.temporal.api.workflow.v1.ResetPoints",
   "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"io.temporal.api.workflowservice.v1.GetSystemInfoResponse",
+  "methods":[
+    {"name":"getCapabilities","parameterTypes":[] }, 
+    {"name":"getServerVersion","parameterTypes":[] }, 
+    {"name":"getServerVersionBytes","parameterTypes":[] }, 
+    {"name":"hasCapabilities","parameterTypes":[] }
+  ]
+},
+{
+  "name":"io.temporal.api.workflowservice.v1.GetSystemInfoResponse$Builder",
+  "methods":[
+    {"name":"clearCapabilities","parameterTypes":[] }, 
+    {"name":"clearServerVersion","parameterTypes":[] }, 
+    {"name":"getCapabilities","parameterTypes":[] }, 
+    {"name":"getCapabilitiesBuilder","parameterTypes":[] }, 
+    {"name":"getServerVersion","parameterTypes":[] }, 
+    {"name":"getServerVersionBytes","parameterTypes":[] }, 
+    {"name":"hasCapabilities","parameterTypes":[] }, 
+    {"name":"setCapabilities","parameterTypes":["io.temporal.api.workflowservice.v1.GetSystemInfoResponse$Capabilities"] }, 
+    {"name":"setServerVersion","parameterTypes":["java.lang.String"] }, 
+    {"name":"setServerVersionBytes","parameterTypes":["com.google.protobuf.ByteString"] }
+  ]
+},
+{
+  "name":"io.temporal.api.workflowservice.v1.GetSystemInfoResponse$Capabilities",
+  "methods":[
+    {"name":"getActivityFailureIncludeHeartbeat","parameterTypes":[] }, 
+    {"name":"getBuildIdBasedVersioning","parameterTypes":[] }, 
+    {"name":"getEncodedFailureAttributes","parameterTypes":[] }, 
+    {"name":"getInternalErrorDifferentiation","parameterTypes":[] }, 
+    {"name":"getSignalAndQueryHeader","parameterTypes":[] }, 
+    {"name":"getSupportsSchedules","parameterTypes":[] }, 
+    {"name":"getUpsertMemo","parameterTypes":[] }, 
+    {"name":"newBuilder","parameterTypes":[] }
+  ]
+},
+{
+  "name":"io.temporal.api.workflowservice.v1.GetSystemInfoResponse$Capabilities$Builder",
+  "methods":[
+    {"name":"clearActivityFailureIncludeHeartbeat","parameterTypes":[] }, 
+    {"name":"clearBuildIdBasedVersioning","parameterTypes":[] }, 
+    {"name":"clearEncodedFailureAttributes","parameterTypes":[] }, 
+    {"name":"clearInternalErrorDifferentiation","parameterTypes":[] }, 
+    {"name":"clearSignalAndQueryHeader","parameterTypes":[] }, 
+    {"name":"clearSupportsSchedules","parameterTypes":[] }, 
+    {"name":"clearUpsertMemo","parameterTypes":[] }, 
+    {"name":"getActivityFailureIncludeHeartbeat","parameterTypes":[] }, 
+    {"name":"getBuildIdBasedVersioning","parameterTypes":[] }, 
+    {"name":"getEncodedFailureAttributes","parameterTypes":[] }, 
+    {"name":"getInternalErrorDifferentiation","parameterTypes":[] }, 
+    {"name":"getSignalAndQueryHeader","parameterTypes":[] }, 
+    {"name":"getSupportsSchedules","parameterTypes":[] }, 
+    {"name":"getUpsertMemo","parameterTypes":[] }, 
+    {"name":"setActivityFailureIncludeHeartbeat","parameterTypes":["boolean"] }, 
+    {"name":"setBuildIdBasedVersioning","parameterTypes":["boolean"] }, 
+    {"name":"setEncodedFailureAttributes","parameterTypes":["boolean"] }, 
+    {"name":"setInternalErrorDifferentiation","parameterTypes":["boolean"] }, 
+    {"name":"setSignalAndQueryHeader","parameterTypes":["boolean"] }, 
+    {"name":"setSupportsSchedules","parameterTypes":["boolean"] }, 
+    {"name":"setUpsertMemo","parameterTypes":["boolean"] }
+  ]
 },
 {
   "name":"io.temporal.api.workflowservice.v1.GetWorkflowExecutionHistoryRequest",
@@ -2235,8 +2444,10 @@
     {"name":"getNamespaceBytes","parameterTypes":[] }, 
     {"name":"getTaskQueue","parameterTypes":[] }, 
     {"name":"getTaskQueueMetadata","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningId","parameterTypes":[] }, 
     {"name":"hasTaskQueue","parameterTypes":[] }, 
-    {"name":"hasTaskQueueMetadata","parameterTypes":[] }
+    {"name":"hasTaskQueueMetadata","parameterTypes":[] }, 
+    {"name":"hasWorkerVersioningId","parameterTypes":[] }
   ]
 },
 {
@@ -2246,6 +2457,7 @@
     {"name":"clearNamespace","parameterTypes":[] }, 
     {"name":"clearTaskQueue","parameterTypes":[] }, 
     {"name":"clearTaskQueueMetadata","parameterTypes":[] }, 
+    {"name":"clearWorkerVersioningId","parameterTypes":[] }, 
     {"name":"getIdentity","parameterTypes":[] }, 
     {"name":"getIdentityBytes","parameterTypes":[] }, 
     {"name":"getNamespace","parameterTypes":[] }, 
@@ -2254,14 +2466,18 @@
     {"name":"getTaskQueueBuilder","parameterTypes":[] }, 
     {"name":"getTaskQueueMetadata","parameterTypes":[] }, 
     {"name":"getTaskQueueMetadataBuilder","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningId","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningIdBuilder","parameterTypes":[] }, 
     {"name":"hasTaskQueue","parameterTypes":[] }, 
     {"name":"hasTaskQueueMetadata","parameterTypes":[] }, 
+    {"name":"hasWorkerVersioningId","parameterTypes":[] }, 
     {"name":"setIdentity","parameterTypes":["java.lang.String"] }, 
     {"name":"setIdentityBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setNamespace","parameterTypes":["java.lang.String"] }, 
     {"name":"setNamespaceBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setTaskQueue","parameterTypes":["io.temporal.api.taskqueue.v1.TaskQueue"] }, 
-    {"name":"setTaskQueueMetadata","parameterTypes":["io.temporal.api.taskqueue.v1.TaskQueueMetadata"] }
+    {"name":"setTaskQueueMetadata","parameterTypes":["io.temporal.api.taskqueue.v1.TaskQueueMetadata"] }, 
+    {"name":"setWorkerVersioningId","parameterTypes":["io.temporal.api.taskqueue.v1.VersionId"] }
   ]
 },
 {
@@ -2398,7 +2614,9 @@
     {"name":"getNamespace","parameterTypes":[] }, 
     {"name":"getNamespaceBytes","parameterTypes":[] }, 
     {"name":"getTaskQueue","parameterTypes":[] }, 
-    {"name":"hasTaskQueue","parameterTypes":[] }
+    {"name":"getWorkerVersioningId","parameterTypes":[] }, 
+    {"name":"hasTaskQueue","parameterTypes":[] }, 
+    {"name":"hasWorkerVersioningId","parameterTypes":[] }
   ]
 },
 {
@@ -2408,6 +2626,7 @@
     {"name":"clearIdentity","parameterTypes":[] }, 
     {"name":"clearNamespace","parameterTypes":[] }, 
     {"name":"clearTaskQueue","parameterTypes":[] }, 
+    {"name":"clearWorkerVersioningId","parameterTypes":[] }, 
     {"name":"getBinaryChecksum","parameterTypes":[] }, 
     {"name":"getBinaryChecksumBytes","parameterTypes":[] }, 
     {"name":"getIdentity","parameterTypes":[] }, 
@@ -2416,14 +2635,18 @@
     {"name":"getNamespaceBytes","parameterTypes":[] }, 
     {"name":"getTaskQueue","parameterTypes":[] }, 
     {"name":"getTaskQueueBuilder","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningId","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningIdBuilder","parameterTypes":[] }, 
     {"name":"hasTaskQueue","parameterTypes":[] }, 
+    {"name":"hasWorkerVersioningId","parameterTypes":[] }, 
     {"name":"setBinaryChecksum","parameterTypes":["java.lang.String"] }, 
     {"name":"setBinaryChecksumBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setIdentity","parameterTypes":["java.lang.String"] }, 
     {"name":"setIdentityBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setNamespace","parameterTypes":["java.lang.String"] }, 
     {"name":"setNamespaceBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
-    {"name":"setTaskQueue","parameterTypes":["io.temporal.api.taskqueue.v1.TaskQueue"] }
+    {"name":"setTaskQueue","parameterTypes":["io.temporal.api.taskqueue.v1.TaskQueue"] }, 
+    {"name":"setWorkerVersioningId","parameterTypes":["io.temporal.api.taskqueue.v1.VersionId"] }
   ]
 },
 {
@@ -2547,6 +2770,68 @@
   ]
 },
 {
+  "name":"io.temporal.api.workflowservice.v1.RespondActivityTaskFailedRequest",
+  "methods":[
+    {"name":"getFailure","parameterTypes":[] }, 
+    {"name":"getIdentity","parameterTypes":[] }, 
+    {"name":"getIdentityBytes","parameterTypes":[] }, 
+    {"name":"getLastHeartbeatDetails","parameterTypes":[] }, 
+    {"name":"getNamespace","parameterTypes":[] }, 
+    {"name":"getNamespaceBytes","parameterTypes":[] }, 
+    {"name":"getTaskToken","parameterTypes":[] }, 
+    {"name":"hasFailure","parameterTypes":[] }, 
+    {"name":"hasLastHeartbeatDetails","parameterTypes":[] }
+  ]
+},
+{
+  "name":"io.temporal.api.workflowservice.v1.RespondActivityTaskFailedRequest$Builder",
+  "methods":[
+    {"name":"clearFailure","parameterTypes":[] }, 
+    {"name":"clearIdentity","parameterTypes":[] }, 
+    {"name":"clearLastHeartbeatDetails","parameterTypes":[] }, 
+    {"name":"clearNamespace","parameterTypes":[] }, 
+    {"name":"clearTaskToken","parameterTypes":[] }, 
+    {"name":"getFailure","parameterTypes":[] }, 
+    {"name":"getFailureBuilder","parameterTypes":[] }, 
+    {"name":"getIdentity","parameterTypes":[] }, 
+    {"name":"getIdentityBytes","parameterTypes":[] }, 
+    {"name":"getLastHeartbeatDetails","parameterTypes":[] }, 
+    {"name":"getLastHeartbeatDetailsBuilder","parameterTypes":[] }, 
+    {"name":"getNamespace","parameterTypes":[] }, 
+    {"name":"getNamespaceBytes","parameterTypes":[] }, 
+    {"name":"getTaskToken","parameterTypes":[] }, 
+    {"name":"hasFailure","parameterTypes":[] }, 
+    {"name":"hasLastHeartbeatDetails","parameterTypes":[] }, 
+    {"name":"setFailure","parameterTypes":["io.temporal.api.failure.v1.Failure"] }, 
+    {"name":"setIdentity","parameterTypes":["java.lang.String"] }, 
+    {"name":"setIdentityBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
+    {"name":"setLastHeartbeatDetails","parameterTypes":["io.temporal.api.common.v1.Payloads"] }, 
+    {"name":"setNamespace","parameterTypes":["java.lang.String"] }, 
+    {"name":"setNamespaceBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
+    {"name":"setTaskToken","parameterTypes":["com.google.protobuf.ByteString"] }
+  ]
+},
+{
+  "name":"io.temporal.api.workflowservice.v1.RespondActivityTaskFailedResponse",
+  "methods":[
+    {"name":"getFailures","parameterTypes":["int"] }, 
+    {"name":"getFailuresCount","parameterTypes":[] }, 
+    {"name":"getFailuresList","parameterTypes":[] }
+  ]
+},
+{
+  "name":"io.temporal.api.workflowservice.v1.RespondActivityTaskFailedResponse$Builder",
+  "methods":[
+    {"name":"addFailures","parameterTypes":["io.temporal.api.failure.v1.Failure"] }, 
+    {"name":"clearFailures","parameterTypes":[] }, 
+    {"name":"getFailures","parameterTypes":["int"] }, 
+    {"name":"getFailuresBuilder","parameterTypes":["int"] }, 
+    {"name":"getFailuresCount","parameterTypes":[] }, 
+    {"name":"getFailuresList","parameterTypes":[] }, 
+    {"name":"setFailures","parameterTypes":["int","io.temporal.api.failure.v1.Failure"] }
+  ]
+},
+{
   "name":"io.temporal.api.workflowservice.v1.RespondWorkflowTaskCompletedRequest",
   "methods":[
     {"name":"getBinaryChecksum","parameterTypes":[] }, 
@@ -2563,7 +2848,9 @@
     {"name":"getReturnNewWorkflowTask","parameterTypes":[] }, 
     {"name":"getStickyAttributes","parameterTypes":[] }, 
     {"name":"getTaskToken","parameterTypes":[] }, 
-    {"name":"hasStickyAttributes","parameterTypes":[] }
+    {"name":"getWorkerVersioningId","parameterTypes":[] }, 
+    {"name":"hasStickyAttributes","parameterTypes":[] }, 
+    {"name":"hasWorkerVersioningId","parameterTypes":[] }
   ]
 },
 {
@@ -2578,6 +2865,7 @@
     {"name":"clearReturnNewWorkflowTask","parameterTypes":[] }, 
     {"name":"clearStickyAttributes","parameterTypes":[] }, 
     {"name":"clearTaskToken","parameterTypes":[] }, 
+    {"name":"clearWorkerVersioningId","parameterTypes":[] }, 
     {"name":"getBinaryChecksum","parameterTypes":[] }, 
     {"name":"getBinaryChecksumBytes","parameterTypes":[] }, 
     {"name":"getCommands","parameterTypes":["int"] }, 
@@ -2593,7 +2881,10 @@
     {"name":"getStickyAttributes","parameterTypes":[] }, 
     {"name":"getStickyAttributesBuilder","parameterTypes":[] }, 
     {"name":"getTaskToken","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningId","parameterTypes":[] }, 
+    {"name":"getWorkerVersioningIdBuilder","parameterTypes":[] }, 
     {"name":"hasStickyAttributes","parameterTypes":[] }, 
+    {"name":"hasWorkerVersioningId","parameterTypes":[] }, 
     {"name":"setBinaryChecksum","parameterTypes":["java.lang.String"] }, 
     {"name":"setBinaryChecksumBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setCommands","parameterTypes":["int","io.temporal.api.command.v1.Command"] }, 
@@ -2604,7 +2895,8 @@
     {"name":"setNamespaceBytes","parameterTypes":["com.google.protobuf.ByteString"] }, 
     {"name":"setReturnNewWorkflowTask","parameterTypes":["boolean"] }, 
     {"name":"setStickyAttributes","parameterTypes":["io.temporal.api.taskqueue.v1.StickyExecutionAttributes"] }, 
-    {"name":"setTaskToken","parameterTypes":["com.google.protobuf.ByteString"] }
+    {"name":"setTaskToken","parameterTypes":["com.google.protobuf.ByteString"] }, 
+    {"name":"setWorkerVersioningId","parameterTypes":["io.temporal.api.taskqueue.v1.VersionId"] }
   ]
 },
 {
@@ -2775,7 +3067,10 @@
 },
 {
   "name":"io.temporal.client.ActivityCompletionClient",
-  "methods":[{"name":"complete","parameterTypes":["byte[]","java.lang.Object"] }]
+  "methods":[
+    {"name":"complete","parameterTypes":["byte[]","java.lang.Object"] }, 
+    {"name":"completeExceptionally","parameterTypes":["byte[]","java.lang.Exception"] }
+  ]
 },
 {
   "name":"io.temporal.client.WorkflowClient",
@@ -2792,6 +3087,7 @@
     {"name":"blockingStub","parameterTypes":[] }, 
     {"name":"connect","parameterTypes":["java.time.Duration"] }, 
     {"name":"futureStub","parameterTypes":[] }, 
+    {"name":"getServerCapabilities","parameterTypes":[] }, 
     {"name":"shutdownNow","parameterTypes":[] }
   ]
 },
@@ -2887,6 +3183,7 @@
   "name":"java.lang.Throwable",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
   "methods":[
     {"name":"getCause","parameterTypes":[] }, 
     {"name":"getLocalizedMessage","parameterTypes":[] }, 
@@ -2938,6 +3235,10 @@
 },
 {
   "name":"java.nio.channels.FileChannel"
+},
+{
+  "name":"java.nio.channels.spi.SelectorProvider",
+  "methods":[{"name":"openSocketChannel","parameterTypes":["java.net.ProtocolFamily"] }]
 },
 {
   "name":"java.security.SecureRandomParameters"
