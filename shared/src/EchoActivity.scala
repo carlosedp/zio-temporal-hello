@@ -16,7 +16,7 @@ class EchoActivityImpl(
   override def echo(msg: String, client: String = "default"): String =
     ZActivity.run:
       for
-        _      <- ZIO.logDebug(s"Received from $client, message: $msg") @@ MetricsApp.echoCalls(client)
+        _      <- ZIO.logDebug(s"Received from $client, message: $msg") @@ MetricsApp.echoActivityCall(client)
         newMsg <- eventuallyFail(s"ACK: $msg", 40) // The build of new message might eventually fail
         _      <- ZIO.logDebug(s"Worker: Reply with: $newMsg")
       yield newMsg
