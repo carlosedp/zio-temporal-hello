@@ -1,5 +1,6 @@
 import com.softwaremill.id.pretty.{PrettyIdGenerator, StringIdGenerator}
 import zio.*
+import zio.temporal.workflow.ZWorkflowServiceStubsOptions
 import zio.logging.LogFilter
 
 object SharedUtils:
@@ -22,4 +23,8 @@ object SharedUtils:
     "io.temporal"                                 -> LogLevel.Error,
     "io.temporal.internal.worker.Poller"          -> LogLevel.Error,
     "zio.temporal.internal"                       -> LogLevel.Info,
+  )
+
+  val stubOptions = ZWorkflowServiceStubsOptions.default.withServiceUrl(
+    scala.util.Properties.envOrElse("TEMPORAL_SERVER", "127.0.0.1:7233")
   )

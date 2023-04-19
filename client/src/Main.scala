@@ -2,33 +2,29 @@ import zio.*
 import zio.logging.*
 import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.temporal.*
-import zio.temporal.worker.*
 import zio.temporal.workflow.*
 
 object Main extends ZIOAppDefault:
   // Configure ZIO Logging
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
     Runtime.removeDefaultLoggers >>> consoleLogger(
-      ConsoleLoggerConfig(LogFormat.colored, SharedUtils.logFilter),
-    ) ++ logMetrics
+      ConsoleLoggerConfig(LogFormat.colored, SharedUtils.logFilter)
+    )
 
   def run =
     val program =
       for
         args           <- getArgs
         msg             = if args.isEmpty then "testMsg" else args.mkString(" ")
-        workerFactory  <- ZIO.service[ZWorkerFactory]
-        workflowResult <- workerFactory.use(Client.workflowResultZIO(msg))
+        workflowResult <- Client.invokeWorkflow(msg)
         _              <- ZIO.log(s"The workflow result: $workflowResult")
       yield ExitCode.success
 
     program
       .provideSome[ZIOAppArgs](
-        Client.clientOptions,
-        Client.stubOptions,
-        Client.workerFactoryOptions,
+        ZLayer.succeed(SharedUtils.stubOptions),
+        ZLayer.succeed(ZWorkflowClientOptions.default),
         ZWorkflowClient.make,
         ZWorkflowServiceStubs.make,
-        ZWorkerFactory.make,
         Slf4jBridge.initialize,
       )

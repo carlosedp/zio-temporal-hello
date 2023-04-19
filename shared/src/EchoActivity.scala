@@ -8,12 +8,12 @@ val activityLayer: URLayer[ZActivityOptions[Any], EchoActivity] =
 @activityInterface
 trait EchoActivity:
   @activityMethod
-  def echo(msg: String, client: String): Either[Exception, String]
+  def echo(msg: String, client: String): String
 
 class EchoActivityImpl(
-  implicit options: ZActivityOptions[Any],
+  implicit options: ZActivityOptions[Any]
 ) extends EchoActivity:
-  override def echo(msg: String, client: String = "default"): Either[Exception, String] =
+  override def echo(msg: String, client: String = "default"): String =
     ZActivity.run:
       for
         _      <- ZIO.logDebug(s"Received from $client, message: $msg") @@ MetricsApp.echoCalls(client)
@@ -37,8 +37,8 @@ class EchoActivityImpl(
       percent <- Random.nextIntBetween(0, 100)
       _       <- ZIO.logDebug(s"Worker: Generated percent is $percent")
       _ <- ZIO.when(percent > successPercent):
-             ZIO.logError("Worker: eventuallyFail - Failed to process message") *> ZIO.die(
-               Exception(s"Worker: ERROR: $msg"),
+             ZIO.logError("Worker: eventuallyFail - Failed to process message") *> ZIO.fail(
+               Exception(s"Worker: ERROR: $msg")
              )
       _ <- ZIO.logInfo("Worker: Success processing message")
       r  = msg

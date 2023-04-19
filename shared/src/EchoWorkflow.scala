@@ -1,13 +1,14 @@
 import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
+import zio.temporal.activity.*
 
 // This is our workflow interface
 @workflowInterface
 trait EchoWorkflow:
 
   @workflowMethod
-  def getEcho(msg: String, client: String): Either[Exception, String]
+  def getEcho(msg: String, client: String): String
 
 // And here the workflow implementation
 class EchoWorkflowImpl extends EchoWorkflow:
@@ -18,10 +19,10 @@ class EchoWorkflowImpl extends EchoWorkflow:
       ZRetryOptions.default
         .withMaximumAttempts(3)
         .withInitialInterval(300.millis)
-        .withBackoffCoefficient(1),
+        .withBackoffCoefficient(1)
     )
     .build
 
-  override def getEcho(msg: String, client: String = "default"): Either[Exception, String] =
-    ZIO.logInfo(s"Worker: Received message in the workflow: \"$msg\"")
-    echoActivity.echo(msg, client)
+  override def getEcho(msg: String, client: String = "default"): String =
+    ZIO.logInfo(s"Worker: Received message in the workflow: \"$msg\"") // TODO: This doesn't print
+    ZActivityStub.execute(echoActivity.echo(msg, client))

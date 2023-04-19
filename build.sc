@@ -1,5 +1,5 @@
 import mill._, mill.scalalib._, mill.scalalib.scalafmt._
-import coursier.maven.MavenRepository
+import coursier.Repositories
 
 import $ivy.`com.goyeau::mill-scalafix::0.2.11`
 import com.goyeau.mill.scalafix.ScalafixModule
@@ -13,11 +13,11 @@ import com.carlosedp.milldockernative.DockerNative
 object versions {
   val scala3      = "3.3.0-RC3"
   val graalvm     = "graalvm-java17:22.3.1"
-  val zio         = "2.0.10"
-  val ziohttp     = "0.0.5"
-  val ziotemporal = "0.1.0-RC6"
-  val ziometrics  = "2.0.7"
-  val ziologging  = "2.1.11"
+  val zio         = "2.0.13"
+  val ziohttp     = "3.0.0-RC1"
+  val ziotemporal = "0.2.0-M3"
+  val ziometrics  = "2.0.8"
+  val ziologging  = "2.1.12"
   val idgenerator = "1.4.0"
 }
 
@@ -41,9 +41,7 @@ trait Common
 
   def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:0.6.0")
   def repositoriesTask = T.task {
-    super.repositoriesTask() ++ Seq("oss", "s01.oss")
-      .map(r => s"https://$r.sonatype.org/content/repositories/snapshots")
-      .map(MavenRepository(_))
+    super.repositoriesTask() ++ Seq(Repositories.sonatype("snapshots"), Repositories.sonatypeS01("snapshots"))
   }
   def ivyDeps = super.ivyDeps() ++ Agg(
     ivy"dev.zio::zio:${versions.zio}",
@@ -51,18 +49,15 @@ trait Common
     ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
     ivy"dev.zio::zio-logging:${versions.ziologging}",
     ivy"dev.zio::zio-logging-slf4j2-bridge:${versions.ziologging}",
-    ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}".exclude("$com.google.protobuf" -> "protobuf-java"),
+    ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}",
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
-    // Deps below are required until zio-temporal-core is published with the default client dataconverter fix
-    ivy"com.fasterxml.jackson.module::jackson-module-scala:2.14.1",
-    ivy"io.temporal:temporal-sdk:1.18.2",
   )
   object test extends Tests {
     def testFramework = T("zio.test.sbt.ZTestFramework")
     def ivyDeps = Agg(
       ivy"dev.zio::zio-test:${versions.zio}",
       ivy"dev.zio::zio-test-sbt:${versions.zio}",
-      ivy"dev.vhonta::zio-temporal-testkit:${versions.ziotemporal}".exclude("$com.google.protobuf" -> "protobuf-java"),
+      ivy"dev.vhonta::zio-temporal-testkit:${versions.ziotemporal}",
     )
   }
 }
@@ -114,21 +109,13 @@ val aliases: Map[String, Seq[String]] = Map(
   "testall"  -> Seq("__.test"),
 )
 
-// The toplevel alias runner
 def run(ev: eval.Evaluator, alias: String = "") = T.command {
-  if (alias == "") {
-    println("Use './mill run [alias]'.\nAvailable aliases:");
-    aliases.foreach(x => println(x._1 + " " * (15 - x._1.length) + " - Commands: (" + x._2.mkString(", ") + ")"))
-    sys.exit(1)
-  }
   aliases.get(alias) match {
     case Some(t) =>
-      mill.main.MainModule.evaluateTasks(
-        ev,
-        t.flatMap(x => x +: Seq("+")).flatMap(x => x.split(" ")).dropRight(1),
-        mill.define.SelectMode.Separated,
-      )(identity)
-    case None => println(s"${Console.RED}ERROR:${Console.RESET} The task alias \"$alias\" does not exist.")
+      mill.main.MainModule.evaluateTasks(ev, t.flatMap(x => Seq(x, "+")).flatMap(_.split("\\s+")).init, false)(identity)
+    case None =>
+      Console.err.println("Use './mill run [alias]'."); Console.out.println("Available aliases:")
+      aliases.foreach(x => Console.out.println(s"${x._1.padTo(15, ' ')} - Commands: (${x._2.mkString(", ")})"));
+      sys.exit(1)
   }
-  ()
 }

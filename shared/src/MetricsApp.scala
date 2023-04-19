@@ -1,6 +1,6 @@
 import zio.*
 import zio.http.*
-import zio.http.model.Method
+import zio.http.Method
 import zio.metrics.connectors.prometheus.PrometheusPublisher
 import zio.metrics.{Metric, MetricLabel}
 
@@ -27,5 +27,5 @@ object MetricsApp:
     Http.collectZIO[Request]:
       case Method.GET -> !! / "metrics" =>
         ZIO.serviceWithZIO[PrometheusPublisher](
-          _.get.map(Response.text),
+          _.get.map(Response.text)
         ) @@ MetricsApp.httpHitsMetric("GET", "/metrics")

@@ -1,6 +1,5 @@
 import zio.*
 import zio.logging.*
-import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.http.*
 import zio.temporal.*
 import zio.temporal.worker.*
@@ -13,48 +12,49 @@ import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 val httpPort = 8082
 val httpRoutes =
   (MetricsApp()) @@ HttpAppMiddleware.metrics(MetricsApp.pathLabelMapper) @@ HttpAppMiddleware.timeout(5.seconds)
-val config: ServerConfig =
-  ServerConfig.default
+
+val httpConfigLayer = ZLayer.succeed(
+  Server.Config.default
     .port(httpPort)
-    .maxThreads(2)
+)
 
 // Define ZIO-http server
 val server: ZIO[Any, Throwable, Nothing] = Server
   .serve(httpRoutes)
-  .provide( // Add required layers
-    ServerConfig.live(config),
+  .provide( // Add required layers for the http server
+    httpConfigLayer,
     Server.live,
     publisherLayer,
     prometheusLayer,
-    ZLayer.succeed(MetricsConfig(200.millis)), // Metrics pull interval from internal store
+    ZLayer.succeed(MetricsConfig(500.millis)), // Metrics pull interval from internal store
   )
 
 object Main extends ZIOAppDefault:
   // Configure ZIO Logging
-
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
     Runtime.removeDefaultLoggers >>> consoleLogger(
-      ConsoleLoggerConfig(LogFormat.colored, SharedUtils.logFilter),
+      ConsoleLoggerConfig(LogFormat.colored, SharedUtils.logFilter)
     ) ++ logMetrics
 
-  def run: ZIO[ZIOAppArgs with Scope, Any, Any] =
+  def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
     val program =
       for
-        _             <- ZIO.logInfo(s"HTTP Metrics Server started at http://localhost:$httpPort/metrics")
-        workerFactory <- ZIO.service[ZWorkerFactory]
-        _             <- workerFactory.use(server)
+        _ <- ZIO.logInfo(s"HTTP Metrics Server started at http://localhost:$httpPort/metrics")
+        _ <- WorkerModule.worker
+        _ <- ZWorkflowServiceStubs.setup()
+        _ <- ZWorkerFactory.setup
+        _ <- server
       yield ExitCode.success
 
     program
-      .provide(
-        WorkerModule.clientOptions,
-        WorkerModule.stubOptions,
-        WorkerModule.workerFactoryOptions,
-        WorkerModule.worker,
-        ZWorkflowServiceStubs.make,
+      .provideSome[Scope](
+        ZLayer.succeed(SharedUtils.stubOptions),
+        ZLayer.succeed(ZWorkflowClientOptions.default),
+        ZLayer.succeed(ZWorkerFactoryOptions.default),
         ZWorkflowClient.make,
+        ZWorkflowServiceStubs.make,
         ZWorkerFactory.make,
         ZActivityOptions.default,
         activityLayer,
-        Slf4jBridge.initialize,
+        slf4j.bridge.Slf4jBridge.initialize,
       )

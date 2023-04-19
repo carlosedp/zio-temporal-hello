@@ -1,6 +1,6 @@
 import zio.*
 import zio.http.*
-import zio.http.model.Method
+import zio.http.Method
 import zio.temporal.*
 import zio.temporal.workflow.*
 
@@ -23,7 +23,7 @@ object FrontEndApp:
       // GET /echo/:msg
       case Method.GET -> !! / "echo" / msg =>
         for
-          workflowResponse <- WebClient.callEchoWorkflow(msg, "web") @@ MetricsApp.httpHitsMetric("GET", s"/echo")
+          workflowResponse <- WebClient.invokeWorkflow(msg) @@ MetricsApp.httpHitsMetric("GET", s"/echo")
           _                <- ZIO.logDebug(s"Received message \"$workflowResponse\"")
           res              <- ZIO.succeed(Response.text(workflowResponse))
         yield res
@@ -31,5 +31,5 @@ object FrontEndApp:
       // GET /echo
       case Method.GET -> !! / "echo" =>
         ZIO.succeed(
-          Response.text("Send message to be echoed as /echo/yourmessage"),
-        ) // @@ MetricsApp.httpHitsMetric("GET", "/echoblank")
+          Response.text("Send message to be echoed as /echo/yourmessage")
+        )
