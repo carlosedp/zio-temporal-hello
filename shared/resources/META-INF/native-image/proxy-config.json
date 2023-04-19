@@ -1,20 +1,23 @@
 [
   {
-    "interfaces":["EchoActivity","io.temporal.internal.sync.AsyncInternal$AsyncMarker"]
-  },
-  {
-    "interfaces":["EchoWorkflow","io.temporal.internal.sync.StubMarker"]
-  },
-  {
     "interfaces":["io.temporal.client.ActivityCompletionClient"]
   },
   {
     "interfaces":["io.temporal.client.WorkflowClient"]
   },
   {
+    "interfaces":["io.temporal.serviceclient.OperatorServiceStubs"]
+  },
+  {
+    "interfaces":["io.temporal.serviceclient.TestServiceStubs"]
+  },
+  {
     "interfaces":["io.temporal.serviceclient.WorkflowServiceStubs"]
   },
   {
     "interfaces":["zio.temporal.activity.ZActivityStub","EchoActivity"]
+  },
+  {
+    "interfaces":["zio.temporal.workflow.ZWorkflowStub","EchoWorkflow"]
   }
 ]

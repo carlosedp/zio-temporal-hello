@@ -110,7 +110,7 @@ Watch the logs and follow the workflow using the Temporal UI at [http://localhos
 
 The worker publishes Prometheus metrics at [http://localhost:8082/metrics](http://localhost:8082/metrics).
 
-### Generating module binaries (GraalVM Native-Image)
+### Generating Application binaries (GraalVM Native-Image)
 
 The build can also generate native image binaries for almost instant startup and resource consumption. To generate the binaries, do:
 
@@ -167,24 +167,24 @@ Run the images with:
 ```sh
 # Running the worker (Temporal or Temporalite should be running too on another shell)
 # Use your temporal server IP address in the environment variable below
-docker run -d -e TEMPORAL_SERVER="192.168.1.10:7233" -p 8082:8082 --name ziotemporalite-worker docker.io/carlosedp/ziotemporal-worker-native
+docker run -d -e TEMPORAL_SERVER="192.168.1.10:7233" -p 8082:8082 --name ziotemporal-worker docker.io/carlosedp/ziotemporal-worker-native
 
 # Follow the logs with
-docker logs -f ziotemporalite-worker
+docker logs -f ziotemporal-worker
 
 # Run in a similar way the webclient
-docker run -d -e TEMPORAL_SERVER="192.168.1.10:7233" -p 8083:8083 --name ziotemporalite-webclient docker.io/carlosedp/ziotemporal-webclient-native
+docker run -d -e TEMPORAL_SERVER="192.168.1.10:7233" -p 8083:8083 --name ziotemporal-webclient docker.io/carlosedp/ziotemporal-webclient-native
 
 # Follow the logs with
-docker logs -f ziotemporalite-webclient
+docker logs -f ziotemporal-webclient
 ```
 
 And generate requests like the previous section, via web, `tctl` cli or the client module. Eg. `curl http://192.168.1.10:8083/echo/testmsg`.
 
-## Generating GraalVM Native Image config
+## Generating GraalVM Native Image reflection/proxy configs
 
-GraalVM Native image requires reflected and proxied classes to be declared beforehand. This is is eased by the native-image-agent which can be run for each application using the `NATIVECONFIG_GEN=true` environment variable in the `run` task. This appends to the configs in [./shared/resources/META-INF/native-image](./shared/resources/META-INF/native-image).
+GraalVM Native image requires reflected and proxied classes to be declared beforehand. This is is eased by the native-image-agent which can be run for the tests with the `NATIVECONFIG_GEN=true` environment variable in the `shared.test` task. This appends to the configs in [./shared/resources/META-INF/native-image](./shared/resources/META-INF/native-image).
 
-After using new libraries that might require update, run each module as `NATIVECONFIG_GEN=true ./mill worker.run`, `NATIVECONFIG_GEN=true ./mill webclient.run`, etc to regenerate the config files.
+After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill shared.test` to regenerate the config files.
 
 Initialization arguments which go into [native-image.properties](./shared/resources/META-INF/native-image/native-image.properties) are not generated automatically.

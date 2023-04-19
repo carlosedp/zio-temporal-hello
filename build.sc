@@ -33,12 +33,6 @@ trait Common
   override def scalacOptions = T {
     super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard")
   }
-  def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
-  def forkArgs = T {
-    if (useNativeConfig()) Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
-    else Seq.empty
-  }
-
   def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:0.6.0")
   def repositoriesTask = T.task {
     super.repositoriesTask() ++ Seq(Repositories.sonatype("snapshots"), Repositories.sonatypeS01("snapshots"))
@@ -52,7 +46,13 @@ trait Common
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}",
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )
+
   object test extends Tests {
+    def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
+    def forkArgs = T {
+      if (useNativeConfig()) Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
+      else Seq.empty
+    }
     def testFramework = T("zio.test.sbt.ZTestFramework")
     def ivyDeps = Agg(
       ivy"dev.zio::zio-test:${versions.zio}",
@@ -76,6 +76,7 @@ trait SharedCode extends ScalaModule {
 
 object worker extends Common with SharedCode with NativeImageConfig with DockerNative {
   def nativeImageName = "ziotemporalworker"
+
   object dockerNative extends DockerNativeConfig with NativeImageConfig {
     def nativeImageClassPath = runClasspath()
     def baseImage            = "ubuntu:22.04"
