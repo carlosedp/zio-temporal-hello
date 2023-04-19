@@ -13,5 +13,8 @@
   },
   {
     "interfaces":["io.temporal.serviceclient.WorkflowServiceStubs"]
+  },
+  {
+    "interfaces":["zio.temporal.activity.ZActivityStub","EchoActivity"]
   }
 ]

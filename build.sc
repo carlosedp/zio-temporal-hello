@@ -11,7 +11,7 @@ import $ivy.`com.carlosedp::mill-docker-nativeimage::0.5.0`
 import com.carlosedp.milldockernative.DockerNative
 
 object versions {
-  val scala3      = "3.3.0-RC3"
+  val scala3      = "3.3.0-RC4"
   val graalvm     = "graalvm-java17:22.3.1"
   val zio         = "2.0.13"
   val ziohttp     = "3.0.0-RC1"
@@ -31,7 +31,7 @@ trait Common
   def scalaVersion         = versions.scala3
   def nativeImageClassPath = runClasspath()
   override def scalacOptions = T {
-    super.scalacOptions() ++ Seq("-Wunused:imports", "-Wvalue-discard")
+    super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard")
   }
   def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
   def forkArgs = T {
@@ -48,7 +48,7 @@ trait Common
     ivy"dev.zio::zio-http:${versions.ziohttp}",
     ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
     ivy"dev.zio::zio-logging:${versions.ziologging}",
-    ivy"dev.zio::zio-logging-slf4j2-bridge:${versions.ziologging}",
+    // ivy"dev.zio::zio-logging-slf4j2-bridge:${versions.ziologging}",
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}",
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )

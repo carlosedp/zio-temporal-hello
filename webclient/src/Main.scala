@@ -1,6 +1,5 @@
 import zio.*
 import zio.logging.*
-import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.http.*
 import zio.temporal.*
 import zio.temporal.workflow.*
@@ -54,5 +53,5 @@ object Main extends ZIOAppDefault:
       ZLayer.succeed(ZWorkflowClientOptions.default),
       ZWorkflowClient.make,
       ZWorkflowServiceStubs.make,
-      slf4j.bridge.Slf4jBridge.initialize,
+      // slf4j.bridge.Slf4jBridge.initialize,
     )

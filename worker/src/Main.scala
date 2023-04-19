@@ -56,5 +56,5 @@ object Main extends ZIOAppDefault:
         ZWorkerFactory.make,
         ZActivityOptions.default,
         activityLayer,
-        slf4j.bridge.Slf4jBridge.initialize,
+        // slf4j.bridge.Slf4jBridge.initialize,
       )
