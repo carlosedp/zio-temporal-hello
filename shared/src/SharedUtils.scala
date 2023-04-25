@@ -16,13 +16,10 @@ object SharedUtils:
    */
   val logFilter: LogFilter[String] = LogFilter.logLevelByName(
     LogLevel.Debug,
-    "SLF4J-LOGGER"                                -> LogLevel.Warning,
-    "io.grpc.netty"                               -> LogLevel.Warning,
-    "io.grpc.netty.shaded.io.netty.util.internal" -> LogLevel.Warning,
-    "io.netty"                                    -> LogLevel.Warning,
-    "io.temporal"                                 -> LogLevel.Error,
-    "io.temporal.internal.worker.Poller"          -> LogLevel.Error,
-    "zio.temporal.internal"                       -> LogLevel.Info,
+    "SLF4J-LOGGER"  -> LogLevel.Info,
+    "io.grpc.netty" -> LogLevel.Info,
+    "io.netty"      -> LogLevel.Info,
+    "io.temporal"   -> LogLevel.Info,
   )
 
   val stubOptions = ZWorkflowServiceStubsOptions.default.withServiceUrl(

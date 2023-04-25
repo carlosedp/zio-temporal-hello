@@ -11,9 +11,9 @@ import zio.http.netty.NettyConfig.LeakDetectionLevel
 // ZIO-http server config
 val httpPort = 8083
 val httpRoutes =
-  (MetricsApp() ++ FrontEndApp()) @@ HttpAppMiddleware.metrics(MetricsApp.pathLabelMapper) @@ HttpAppMiddleware.timeout(
-    20.seconds
-  )
+  (MetricsApp() ++ FrontEndApp())
+    @@ HttpAppMiddleware.metrics(MetricsApp.pathLabelMapper)
+    @@ HttpAppMiddleware.timeout(20.seconds)
 
 val httpConfigLayer = ZLayer.succeed(
   Server.Config.default

@@ -5,12 +5,11 @@ import io.temporal.client.WorkflowException
 
 object Client:
   def invokeWorkflow(msg: String) = ZIO.serviceWithZIO[ZWorkflowClient]: client =>
+    val snowFlake  = SharedUtils.genSnowflake
+    val clientName = "client"
+    val workflowID = s"$clientName-$snowFlake"
     for
-      snowFlake <- ZIO.succeed(SharedUtils.genSnowflake)
-      clientName = "client"
-      workflowID = s"$clientName-$snowFlake"
-      echoWorkflow <- client
-                        .newWorkflowStub[EchoWorkflow]
+      echoWorkflow <- client.newWorkflowStub[EchoWorkflow]
                         .withTaskQueue(TemporalQueues.echoQueue)
                         .withWorkflowId(workflowID)
                         .withWorkflowRunTimeout(60.seconds)

@@ -11,18 +11,17 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
   def spec = suite("Workflows")(
     test("runs echo workflow"):
       ZTestWorkflowEnvironment.activityOptionsWithZIO[Any]: activityOptions =>
-
         val taskQueue = TemporalQueues.echoQueue
         val sampleIn  = "Msg"
         val sampleOut = s"ACK: $sampleIn"
         for
-          _ <- ZTestWorkflowEnvironment.newWorker(taskQueue) @@
-                 ZWorker.addWorkflow[EchoWorkflowImpl].fromClass @@
-                 ZWorker.addActivityImplementation(new EchoActivityImpl()(activityOptions))
+          _ <- ZTestWorkflowEnvironment.newWorker(taskQueue)
+                 @@ ZWorker.addWorkflow[EchoWorkflowImpl].fromClass
+                 @@ ZWorker.addActivityImplementation(new EchoActivityImpl()(activityOptions))
 
           _ <- ZTestWorkflowEnvironment.setup()
-          sampleWorkflow <- ZTestWorkflowEnvironment.workflowClientWithZIO(
-                              _.newWorkflowStub[EchoWorkflow]
+          sampleWorkflow <- ZTestWorkflowEnvironment.workflowClientWithZIO(client =>
+                              client.newWorkflowStub[EchoWorkflow]
                                 .withTaskQueue(taskQueue)
                                 .withWorkflowId(SharedUtils.genSnowflake)
                                 .withWorkflowRunTimeout(10.second)
