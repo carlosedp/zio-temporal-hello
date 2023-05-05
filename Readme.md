@@ -47,7 +47,7 @@ or use [Temporal cli](https://github.com/temporalio/cli) (recommended for develo
 curl -sSf https://temporal.download/cli.sh | sh
 
 # and run the dev server listening on all IPs (by default, it listens on localhost only)
-$HOME/.temporalio/bin/temporal server start-dev --ip 0.0.0.0
+$HOME/.temporalio/bin/temporal server start-dev --ip 0.0.0.0 --log-format pretty --log-level warn --db-filename /tmp/temporal.db
 ```
 
 Run the workflow worker with:
