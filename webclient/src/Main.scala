@@ -49,8 +49,8 @@ object Main extends ZIOAppDefault:
       publisherLayer,
       prometheusLayer,
       ZLayer.succeed(MetricsConfig(200.millis)), // Metrics pull interval from internal store
-      ZLayer.succeed(SharedUtils.stubOptions),
-      ZLayer.succeed(ZWorkflowClientOptions.default),
+      SharedUtils.stubOptions,
+      ZWorkflowClientOptions.make,
       ZWorkflowClient.make,
       ZWorkflowServiceStubs.make,
       // slf4j.bridge.Slf4jBridge.initialize,

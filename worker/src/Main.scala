@@ -50,9 +50,9 @@ object Main extends ZIOAppDefault:
 
     program
       .provideSome[Scope](
-        ZLayer.succeed(SharedUtils.stubOptions),
-        ZLayer.succeed(ZWorkflowClientOptions.default),
-        ZLayer.succeed(ZWorkerFactoryOptions.default),
+        SharedUtils.stubOptions,
+        ZWorkflowClientOptions.make,
+        ZWorkerFactoryOptions.make,
         ZWorkflowClient.make,
         ZWorkflowServiceStubs.make,
         ZWorkerFactory.make,

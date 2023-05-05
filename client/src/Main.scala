@@ -21,8 +21,8 @@ object Main extends ZIOAppDefault:
 
     program
       .provideSome[ZIOAppArgs](
-        ZLayer.succeed(SharedUtils.stubOptions),
-        ZLayer.succeed(ZWorkflowClientOptions.default),
+        SharedUtils.stubOptions,
+        ZWorkflowClientOptions.make,
         ZWorkflowClient.make,
         ZWorkflowServiceStubs.make,
         // Slf4jBridge.initialize,
