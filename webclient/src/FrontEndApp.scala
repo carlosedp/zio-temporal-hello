@@ -14,14 +14,14 @@ object FrontEndApp:
   def apply(): Http[ZWorkflowClient, Nothing, Request, Response] =
     Http.collectZIO[Request]:
       // GET /
-      case Method.GET -> !! =>
+      case Method.GET -> Root =>
         ZIO.succeed(Response.html(s"""
           Available Endpoints:<br><br>
             - <a href=/metrics>/metrics</a> - Prometheus Metrics<br>
             - <a href=/echo>/echo</a> - Echo Workflow<br>
         """.stripMargin))
       // GET /echo/:msg
-      case Method.GET -> !! / "echo" / msg =>
+      case Method.GET -> Root / "echo" / msg =>
         for
           workflowResponse <- WebClient.invokeWorkflow(msg) @@ MetricsApp.httpHitsMetric("GET", s"/echo")
           _                <- ZIO.logDebug(s"Received message \"$workflowResponse\"")
@@ -29,7 +29,7 @@ object FrontEndApp:
         yield res
 
       // GET /echo
-      case Method.GET -> !! / "echo" =>
+      case Method.GET -> Root / "echo" =>
         ZIO.succeed(
           Response.text("Send message to be echoed as /echo/yourmessage")
         )

@@ -2,7 +2,7 @@ import zio.*
 import zio.temporal.*
 import zio.temporal.worker.*
 
-object WorkerModule:
+object Worker:
   val worker =
     ZIO.logInfo(s"Started sample-worker listening to queue ${TemporalQueues.echoQueue}")
       *> ZWorkerFactory.newWorker(TemporalQueues.echoQueue)

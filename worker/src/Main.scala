@@ -42,7 +42,7 @@ object Main extends ZIOAppDefault:
     val program =
       for
         _ <- ZIO.logInfo(s"HTTP Metrics Server started at http://localhost:$httpPort/metrics")
-        _ <- WorkerModule.worker
+        _ <- Worker.worker
         _ <- ZWorkflowServiceStubs.setup()
         _ <- ZWorkerFactory.setup
         _ <- server
