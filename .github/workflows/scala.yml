@@ -30,14 +30,6 @@ jobs:
       - name: Check Formatting
         run: ./mill -i Alias/run checkfmt
 
-      - name: Setup Nodejs
-        uses: actions/setup-node@v3
-        with:
-          node-version: 19
-
-      - name: Install dependencies
-        run: npm install
-
       - name: Run tests for all projects
         run: ./mill -i Alias/run testall
 
