@@ -1,0 +1,48 @@
+name: Scala CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - uses: coursier/cache-action@v6
+        id: coursier-cache
+
+      - name: Check Formatting
+        run: ./mill -i Alias/run checkfmt
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests for all projects
+        run: ./mill -i Alias/run testall
+
+    # - name: Run code coverage
+    #   run: ./mill coverage
+
+    # - name: Upload coverage to Codecov
+    #   uses: codecov/codecov-action@v3

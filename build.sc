@@ -1,21 +1,24 @@
 import mill._, mill.scalalib._, mill.scalalib.scalafmt._
 import coursier.Repositories
 
-import $ivy.`com.goyeau::mill-scalafix::0.2.11`
+import $ivy.`com.goyeau::mill-scalafix::0.3.1`
 import com.goyeau.mill.scalafix.ScalafixModule
-import $ivy.`io.github.davidgregory084::mill-tpolecat::0.3.2`
-import io.github.davidgregory084.TpolecatModule
-import $ivy.`io.github.alexarchambault.mill::mill-native-image::0.1.24`
+// import $ivy.`io.github.davidgregory084::mill-tpolecat::0.3.2`
+// import io.github.davidgregory084.TpolecatModule
+trait TpolecatModule {} // TODO: Use real mill-tpolecat once released
+import $ivy.`io.github.alexarchambault.mill::mill-native-image::0.1.25`
 import io.github.alexarchambault.millnativeimage.NativeImage
-import $ivy.`com.carlosedp::mill-docker-nativeimage::0.5.0`
+import $ivy.`com.carlosedp::mill-docker-nativeimage::0.6.0`
 import com.carlosedp.milldockernative.DockerNative
+import $ivy.`com.carlosedp::mill-aliases::0.2.1`
+import com.carlosedp.aliases._
 
 object versions {
   val scala3      = "3.3.0"
   val graalvm     = "graalvm-java17:22.3.1"
-  val zio         = "2.0.13"
+  val zio         = "2.0.15"
   val ziohttp     = "3.0.0-RC2"
-  val ziotemporal = "0.2.0-RC3"
+  val ziotemporal = "0.2.0"
   val ziometrics  = "2.0.8"
   val ziologging  = "2.1.13"
   val idgenerator = "1.4.0"
@@ -47,7 +50,7 @@ trait Common
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )
 
-  object test extends Tests {
+  object test extends ScalaTests {
     def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
     def forkArgs = T {
       if (useNativeConfig()) Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
@@ -100,23 +103,12 @@ object client extends Common with SharedCode
 // -----------------------------------------------------------------------------
 // Command Aliases
 // -----------------------------------------------------------------------------
-// Alias commands are run like `./mill run [alias]`
-// Define the alias as a map element containing the alias name and a Seq with the tasks to be executed
-val aliases: Map[String, Seq[String]] = Map(
-  "lint"     -> Seq("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources", "__.fix"),
-  "fmt"      -> Seq("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources"),
-  "checkfmt" -> Seq("mill.scalalib.scalafmt.ScalafmtModule/checkFormatAll __.sources"),
-  "deps"     -> Seq("mill.scalalib.Dependency/showUpdates"),
-  "testall"  -> Seq("__.test"),
-)
-
-def run(ev: eval.Evaluator, alias: String = "") = T.command {
-  aliases.get(alias) match {
-    case Some(t) =>
-      mill.main.MainModule.evaluateTasks(ev, t.flatMap(x => Seq(x, "+")).flatMap(_.split("\\s+")).init, false)(identity)
-    case None =>
-      Console.err.println("Use './mill run [alias]'."); Console.out.println("Available aliases:")
-      aliases.foreach(x => Console.out.println(s"${x._1.padTo(15, ' ')} - Commands: (${x._2.mkString(", ")})"));
-      sys.exit(1)
-  }
+// Alias commands are run with: `./mill Alias/run [alias]`
+// Define the alias name with the `alias` type with a sequence of tasks to be executed
+object MyAliases extends Aliases {
+  def lint     = alias("__.fix", "mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources")
+  def fmt      = alias("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources")
+  def checkfmt = alias("mill.scalalib.scalafmt.ScalafmtModule/checkFormatAll __.sources")
+  def deps     = alias("mill.scalalib.Dependency/showUpdates")
+  def testall  = alias("__.test")
 }
