@@ -1,12 +1,12 @@
 import zio.*
-import zio.logging.*
 import zio.http.*
-import zio.temporal.*
-import zio.temporal.workflow.*
-import zio.metrics.connectors.MetricsConfig
-import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 import zio.http.netty.NettyConfig
 import zio.http.netty.NettyConfig.LeakDetectionLevel
+import zio.logging.*
+import zio.metrics.connectors.MetricsConfig
+import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
+import zio.temporal.*
+import zio.temporal.workflow.*
 
 // ZIO-http server config
 val httpPort = 8083

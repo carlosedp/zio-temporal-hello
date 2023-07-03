@@ -32,7 +32,7 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
     .provideEnv
   )
 
-  private implicit class ProvidedTestkit[E, A](thunk: Spec[ZTestWorkflowEnvironment[Any] with Scope, E]):
+  implicit private class ProvidedTestkit[E, A](thunk: Spec[ZTestWorkflowEnvironment[Any] with Scope, E]):
     def provideEnv: Spec[Scope, E] =
       thunk.provideSome[Scope](
         ZTestEnvironmentOptions.default,

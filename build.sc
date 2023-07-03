@@ -36,7 +36,6 @@ trait Common
   override def scalacOptions = T {
     super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard")
   }
-  def scalafixIvyDeps = Agg(ivy"com.github.liancheng::organize-imports:0.6.0")
   def repositoriesTask = T.task {
     super.repositoriesTask() ++ Seq(Repositories.sonatype("snapshots"), Repositories.sonatypeS01("snapshots"))
   }
@@ -103,10 +102,8 @@ object client extends Common with SharedCode
 // -----------------------------------------------------------------------------
 // Command Aliases
 // -----------------------------------------------------------------------------
-// Alias commands are run with: `./mill Alias/run [alias]`
-// Define the alias name with the `alias` type with a sequence of tasks to be executed
 object MyAliases extends Aliases {
-  def lint     = alias("__.fix", "mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources")
+  def lint     = alias("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources", "__.fix")
   def fmt      = alias("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources")
   def checkfmt = alias("mill.scalalib.scalafmt.ScalafmtModule/checkFormatAll __.sources")
   def deps     = alias("mill.scalalib.Dependency/showUpdates")

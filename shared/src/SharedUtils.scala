@@ -1,8 +1,8 @@
 import com.softwaremill.id.pretty.{PrettyIdGenerator, StringIdGenerator}
 import zio.*
-import zio.temporal.workflow.ZWorkflowServiceStubsOptions
-import zio.temporal.ZLayerAspectSyntax
 import zio.logging.LogFilter
+import zio.temporal.ZLayerAspectSyntax
+import zio.temporal.workflow.ZWorkflowServiceStubsOptions
 
 object SharedUtils:
   /**

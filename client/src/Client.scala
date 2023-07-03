@@ -1,7 +1,7 @@
+import io.temporal.client.WorkflowException
 import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
-import io.temporal.client.WorkflowException
 
 object Client:
   def invokeWorkflow(msg: String) = ZIO.serviceWithZIO[ZWorkflowClient]: client =>

@@ -1,6 +1,5 @@
 import zio.*
 import zio.http.*
-import zio.http.Method
 import zio.metrics.connectors.prometheus.PrometheusPublisher
 import zio.metrics.{Metric, MetricLabel}
 

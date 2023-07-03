@@ -1,7 +1,7 @@
 import zio.*
 import zio.temporal.*
-import zio.temporal.workflow.*
 import zio.temporal.activity.*
+import zio.temporal.workflow.*
 
 // This is our workflow interface
 @workflowInterface
