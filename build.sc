@@ -15,11 +15,11 @@ import com.carlosedp.aliases._
 
 object versions {
   val scala3      = "3.3.0"
-  val graalvm     = "graalvm-java17:22.3.1"
+  val graalvm     = "graalvm-java17:22.3.2"
   val zio         = "2.0.15"
   val ziohttp     = "3.0.0-RC2"
   val ziotemporal = "0.2.0"
-  val ziometrics  = "2.0.8"
+  val ziometrics  = "2.1.0"
   val ziologging  = "2.1.13"
   val idgenerator = "1.4.0"
 }
@@ -43,18 +43,20 @@ trait Common
     ivy"dev.zio::zio:${versions.zio}",
     ivy"dev.zio::zio-http:${versions.ziohttp}",
     ivy"dev.zio::zio-metrics-connectors:${versions.ziometrics}",
+    ivy"dev.zio::zio-metrics-connectors-prometheus:${versions.ziometrics}",
     ivy"dev.zio::zio-logging:${versions.ziologging}",
-    // ivy"dev.zio::zio-logging-slf4j2-bridge:${versions.ziologging}",
+    ivy"dev.zio::zio-logging-slf4j2-bridge:${versions.ziologging}",
     ivy"dev.vhonta::zio-temporal-core:${versions.ziotemporal}",
     ivy"com.softwaremill.common::id-generator:${versions.idgenerator}",
   )
+  def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
+  def forkArgs = T {
+    if (useNativeConfig()) Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
+    else Seq.empty
+  }
 
   object test extends ScalaTests {
-    def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
-    def forkArgs = T {
-      if (useNativeConfig()) Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
-      else Seq.empty
-    }
+    def forkArgs      = Common.this.forkArgs()
     def testFramework = T("zio.test.sbt.ZTestFramework")
     def ivyDeps = Agg(
       ivy"dev.zio::zio-test:${versions.zio}",
