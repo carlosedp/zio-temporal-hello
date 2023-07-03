@@ -185,6 +185,6 @@ And generate requests like the previous section, via web, `tctl` cli or the clie
 
 GraalVM Native image requires reflected and proxied classes to be declared beforehand. This is is eased by the native-image-agent which can be run for the tests with the `NATIVECONFIG_GEN=true` environment variable in the `shared.test` task. This appends to the configs in [./shared/resources/META-INF/native-image](./shared/resources/META-INF/native-image).
 
-After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill shared.test` to regenerate the config files.
+After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill shared.test`, `NATIVECONFIG_GEN=true ./mill worker.run` to regenerate the native-image reflect/proxy config files.
 
 Initialization arguments which go into [native-image.properties](./shared/resources/META-INF/native-image/native-image.properties) are not generated automatically.
