@@ -1,6 +1,6 @@
 import com.softwaremill.id.pretty.{PrettyIdGenerator, StringIdGenerator}
 import zio.*
-import zio.logging.LogFilter
+import zio.logging.{LogFilter, LogFormat, LogAnnotation, LoggerNameExtractor}
 import zio.temporal.ZLayerAspectSyntax
 import zio.temporal.workflow.ZWorkflowServiceStubsOptions
 
@@ -22,6 +22,11 @@ object SharedUtils:
     "io.netty"      -> LogLevel.Info,
     "io.temporal"   -> LogLevel.Warning,
   )
+
+  val logFormat =
+    LogFormat.colored |-| LogFormat.label("source", LoggerNameExtractor.loggerNameAnnotationOrTrace.toLogFormat())
+      + LogFormat.logAnnotation(LogAnnotation.UserId)
+      + LogFormat.logAnnotation(LogAnnotation.TraceId)
 
   /**
    * Set the shared config for ZIO Temporal Workflow Service Stubs

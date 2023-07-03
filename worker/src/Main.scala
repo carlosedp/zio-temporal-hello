@@ -1,6 +1,6 @@
 import zio.*
 import zio.http.*
-import zio.logging.*
+import zio.logging.{consoleLogger, ConsoleLoggerConfig, logMetrics}
 import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
@@ -36,7 +36,10 @@ object Main extends ZIOAppDefault:
   // Configure ZIO Logging
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
     Runtime.removeDefaultLoggers >>> consoleLogger(
-      ConsoleLoggerConfig(LogFormat.colored, SharedUtils.logFilter)
+      ConsoleLoggerConfig(
+        SharedUtils.logFormat,
+        SharedUtils.logFilter,
+      )
     ) ++ logMetrics
 
   def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
