@@ -1,6 +1,7 @@
 import zio.*
 import zio.http.*
 import zio.logging.*
+import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 import zio.temporal.*
@@ -58,5 +59,5 @@ object Main extends ZIOAppDefault:
         ZWorkerFactory.make,
         ZActivityOptions.default,
         activityLayer,
-        // slf4j.bridge.Slf4jBridge.initialize,
+        Slf4jBridge.initialize,
       )

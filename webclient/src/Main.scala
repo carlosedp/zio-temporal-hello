@@ -3,6 +3,7 @@ import zio.http.*
 import zio.http.netty.NettyConfig
 import zio.http.netty.NettyConfig.LeakDetectionLevel
 import zio.logging.*
+import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 import zio.temporal.*
@@ -53,5 +54,5 @@ object Main extends ZIOAppDefault:
       ZWorkflowClientOptions.make,
       ZWorkflowClient.make,
       ZWorkflowServiceStubs.make,
-      // slf4j.bridge.Slf4jBridge.initialize,
+      Slf4jBridge.initialize,
     )

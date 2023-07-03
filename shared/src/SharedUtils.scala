@@ -20,9 +20,12 @@ object SharedUtils:
     "SLF4J-LOGGER"  -> LogLevel.Info,
     "io.grpc.netty" -> LogLevel.Info,
     "io.netty"      -> LogLevel.Info,
-    "io.temporal"   -> LogLevel.Info,
+    "io.temporal"   -> LogLevel.Warning,
   )
 
+  /**
+   * Set the shared config for ZIO Temporal Workflow Service Stubs
+   */
   val stubOptions =
     ZWorkflowServiceStubsOptions.make
       @@ ZWorkflowServiceStubsOptions.withServiceUrl(scala.util.Properties.envOrElse(

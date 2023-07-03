@@ -15,9 +15,9 @@ object FrontEndApp:
       // GET /
       case Method.GET -> Root =>
         ZIO.succeed(Response.html("""
-                                     |Available Endpoints:<br><br>
-                                     |  - <a href=/metrics>/metrics</a> - Prometheus Metrics<br>
-                                     |  - <a href=/echo>/echo</a> - Echo Workflow<br>
+                                    |Available Endpoints:<br><br>
+                                    |  - <a href=/metrics>/metrics</a> - Prometheus Metrics<br>
+                                    |  - <a href=/echo>/echo</a> - Echo Workflow<br>
         """.stripMargin))
       // GET /echo/:msg
       case Method.GET -> Root / "echo" / msg =>
