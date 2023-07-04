@@ -55,8 +55,8 @@ trait Common
     else Seq.empty
   }
 
-  object test extends ScalaTests {
-    def forkArgs      = Common.this.forkArgs()
+  object test extends ScalaTests { parent =>
+    def forkArgs      = parent.forkArgs()
     def testFramework = T("zio.test.sbt.ZTestFramework")
     def ivyDeps = Agg(
       ivy"dev.zio::zio-test:${versions.zio}",
