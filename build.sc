@@ -30,7 +30,7 @@ trait Common
   with ScalafmtModule
   with ScalafixModule
   with NativeImageConfig
-  with DockerNative {
+  with DockerNative { parent =>
   def scalaVersion         = versions.scala3
   def nativeImageClassPath = runClasspath()
   override def scalacOptions = T {
@@ -51,13 +51,13 @@ trait Common
   )
   def useNativeConfig = T.input(T.env.get("NATIVECONFIG_GEN").contains("true"))
   def forkArgs = T {
-    if (useNativeConfig()) Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
+    if (useNativeConfig())
+      Seq("-agentlib:native-image-agent=config-merge-dir=shared/resources/META-INF/native-image")
     else Seq.empty
   }
 
-  object test extends ScalaTests { parent =>
-    def forkArgs      = parent.forkArgs()
-    def testFramework = T("zio.test.sbt.ZTestFramework")
+  object test extends ScalaTests with TestModule.ZioTest {
+    def forkArgs = parent.forkArgs()
     def ivyDeps = Agg(
       ivy"dev.zio::zio-test:${versions.zio}",
       ivy"dev.zio::zio-test-sbt:${versions.zio}",
