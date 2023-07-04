@@ -48,6 +48,8 @@ object Main extends ZIOAppDefault:
         _ <- ZIO.logInfo(s"HTTP Metrics Server started at http://localhost:$httpPort/metrics")
         _ <- Worker.worker
         _ <- ZWorkflowServiceStubs.setup()
+        // Here we setup the worker factory, which will start and progress to the zio-http server which will run forever
+        // If the zio-http server is not used, the worker factory should run forever with `ZWorkerFactory.serve` instead.
         _ <- ZWorkerFactory.setup
         _ <- server
       yield ExitCode.success

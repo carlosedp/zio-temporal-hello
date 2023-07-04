@@ -1,7 +1,6 @@
 import zio.*
 import zio.temporal.*
-import zio.temporal.testkit.ZTestEnvironmentOptions
-import zio.temporal.testkit.ZTestWorkflowEnvironment
+import zio.temporal.testkit.*
 import zio.temporal.worker.*
 import zio.temporal.workflow.*
 import zio.test.*
@@ -10,31 +9,29 @@ import zio.test.TestAspect.*
 object EchoWorkflowSpec extends ZIOSpecDefault:
   def spec = suite("Workflows")(
     test("runs echo workflow"):
-      ZTestWorkflowEnvironment.activityOptionsWithZIO[Any]: activityOptions =>
+      ZTestWorkflowEnvironment.activityOptions[Any].flatMap(implicit options =>
         val taskQueue = TemporalQueues.echoQueue
         val sampleIn  = "Msg"
         val sampleOut = s"ACK: $sampleIn"
         for
+          // Create the worker
           _ <- ZTestWorkflowEnvironment.newWorker(taskQueue)
                  @@ ZWorker.addWorkflow[EchoWorkflowImpl].fromClass
-                 @@ ZWorker.addActivityImplementation(new EchoActivityImpl()(activityOptions))
-
+                 @@ ZWorker.addActivityImplementation(new EchoActivityImpl())
+          // Setup the workflow test environment
           _ <- ZTestWorkflowEnvironment.setup()
-          sampleWorkflow <- ZTestWorkflowEnvironment.workflowClientWithZIO(client =>
-                              client.newWorkflowStub[EchoWorkflow]
-                                .withTaskQueue(taskQueue)
-                                .withWorkflowId(SharedUtils.genSnowflake)
-                                .withWorkflowRunTimeout(10.second)
-                                .build
-                            )
-          result <- ZWorkflowStub.execute(sampleWorkflow.getEcho(sampleIn, "testClient"))
+          // Create the workflow stub
+          echoWorkflow <- ZTestWorkflowEnvironment
+                            .newWorkflowStub[EchoWorkflow]
+                            .withTaskQueue(taskQueue)
+                            .withWorkflowId(SharedUtils.genSnowflake)
+                            // Set workflow timeout
+                            .withWorkflowRunTimeout(10.second)
+                            .build
+          result <- ZWorkflowStub.execute(echoWorkflow.getEcho(sampleIn, "testClient"))
         yield assertTrue(result == sampleOut)
-    .provideEnv
-  )
-
-  implicit private class ProvidedTestkit[E, A](thunk: Spec[ZTestWorkflowEnvironment[Any] with Scope, E]):
-    def provideEnv: Spec[Scope, E] =
-      thunk.provideSome[Scope](
-        ZTestEnvironmentOptions.default,
-        ZTestWorkflowEnvironment.make[Any],
       )
+  ).provideSome[Scope](
+    ZTestEnvironmentOptions.default,
+    ZTestWorkflowEnvironment.make[Any],
+  ) @@ TestAspect.withLiveClock @@ TestAspect.silentLogging

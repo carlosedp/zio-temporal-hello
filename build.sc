@@ -73,11 +73,13 @@ trait NativeImageConfig extends NativeImage {
     (if (sys.props.get("os.name").contains("Linux")) Seq("--static") else Seq.empty)
 }
 
+// This module hosts the shared code between the worker, client and web client
 object shared extends Common
 trait SharedCode extends ScalaModule {
   override def moduleDeps: Seq[JavaModule] = Seq(shared)
 }
 
+// This module hosts the temporal workflow worker
 object worker extends Common with SharedCode with NativeImageConfig with DockerNative {
   def nativeImageName = "ziotemporalworker"
 
@@ -89,6 +91,7 @@ object worker extends Common with SharedCode with NativeImageConfig with DockerN
   }
 }
 
+// This module hosts the web client
 object webclient extends Common with SharedCode with NativeImageConfig with DockerNative {
   def nativeImageName = "ziotemporalwebclient"
   object dockerNative extends DockerNativeConfig with NativeImageConfig {
@@ -99,8 +102,13 @@ object webclient extends Common with SharedCode with NativeImageConfig with Dock
   }
 }
 
+// This module hosts the command-line client
 object client extends Common with SharedCode
 
+// This module hosts end-to-end tests
+object e2e extends Common {
+  def moduleDeps: Seq[JavaModule] = Seq(shared, worker, client, webclient)
+}
 // -----------------------------------------------------------------------------
 // Command Aliases
 // -----------------------------------------------------------------------------
