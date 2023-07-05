@@ -80,28 +80,35 @@ Then, submit an API request to the `echo` path which will be sent to the Tempora
 ACK: testmsg%
 ```
 
-Another option is using [Temporal.io tctl](https://github.com/temporalio/tctl) command line utility which can among many other functions, start and observe a workflow:
+You can also use the temporal CLI to start or show the temporal workflow execution:
 
 ```sh
-❯ tctl workflow start --workflow_type EchoWorkflow --taskqueue echo-queue --workflow_id testID01 --input '"CLI Msg"'
-Started Workflow Id: testID01, run Id: dcb60763-f14b-4763-9a36-7a08423214ad
+❯ temporal workflow start --type EchoWorkflow --task-queue echo-queue --workflow-id testID01 --input '"CLI Msg"'
+Running execution:
+  WorkflowId  testID01
+  RunId       2cbb72f6-19eb-49ce-85bb-798f0dcb4475
+  Type        EchoWorkflow
+  Namespace   default
+  TaskQueue   echo-queue
+  Args        ["CLI Msg"]
 
-❯ tctl workflow observe --workflow_id testID01
+
+❯ temporal workflow show -w testID01
 Progress:
-  1, 2023-03-09T14:36:09Z, WorkflowExecutionStarted
-  2, 2023-03-09T14:36:09Z, WorkflowTaskScheduled
-  3, 2023-03-09T14:36:09Z, WorkflowTaskStarted
-  4, 2023-03-09T14:36:09Z, WorkflowTaskCompleted
-  5, 2023-03-09T14:36:09Z, ActivityTaskScheduled
-  6, 2023-03-09T14:36:09Z, ActivityTaskStarted
-  7, 2023-03-09T14:36:09Z, ActivityTaskCompleted
-  8, 2023-03-09T14:36:09Z, WorkflowTaskScheduled
-  9, 2023-03-09T14:36:09Z, WorkflowTaskStarted
-  10, 2023-03-09T14:36:09Z, WorkflowTaskCompleted
-  11, 2023-03-09T14:36:09Z, WorkflowExecutionCompleted
+  ID          Time                     Type
+   1  2023-07-05T23:32:50Z  WorkflowExecutionStarted
+   2  2023-07-05T23:32:50Z  WorkflowTaskScheduled
+   3  2023-07-05T23:32:50Z  WorkflowTaskStarted
+   4  2023-07-05T23:32:50Z  WorkflowTaskCompleted
+   5  2023-07-05T23:32:50Z  ActivityTaskScheduled
+   6  2023-07-05T23:32:50Z  ActivityTaskStarted
+   7  2023-07-05T23:32:50Z  ActivityTaskCompleted
+   8  2023-07-05T23:32:50Z  WorkflowTaskScheduled
+   9  2023-07-05T23:32:50Z  WorkflowTaskStarted
+  10  2023-07-05T23:32:51Z  WorkflowTaskCompleted
+  11  2023-07-05T23:32:51Z  WorkflowExecutionCompleted
 
 Result:
-  Run Time: 1 seconds
   Status: COMPLETED
   Output: ["ACK: CLI Msg"]
 ```
@@ -185,6 +192,6 @@ And generate requests like the previous section, via web, `tctl` cli or the clie
 
 GraalVM Native image requires reflected and proxied classes to be declared beforehand. This is is eased by the native-image-agent which can be run for the tests with the `NATIVECONFIG_GEN=true` environment variable in the `shared.test` task. This appends to the configs in [./shared/resources/META-INF/native-image](./shared/resources/META-INF/native-image).
 
-After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill shared.test`, `NATIVECONFIG_GEN=true ./mill worker.run` to regenerate the native-image reflect/proxy config files.
+After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill e2e.test`, `NATIVECONFIG_GEN=true ./mill shared.test`, `NATIVECONFIG_GEN=true ./mill worker.run` and create a workflow run manually (via cli or client) to regenerate the native-image reflect/proxy config files.
 
 Initialization arguments which go into [native-image.properties](./shared/resources/META-INF/native-image/native-image.properties) are not generated automatically.
