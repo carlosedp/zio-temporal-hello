@@ -1,5 +1,14 @@
 [
 {
+  "name":"E2ESpec",
+  "queryAllPublicConstructors":true
+},
+{
+  "name":"E2ESpec$",
+  "queryAllPublicConstructors":true,
+  "fields":[{"name":"MODULE$"}]
+},
+{
   "name":"EchoActivity",
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"echo","parameterTypes":["java.lang.String","java.lang.String"] }]
@@ -353,11 +362,32 @@
   ]
 },
 {
+  "name":"io.grpc.netty.shaded.io.netty.channel.epoll.EpollDomainSocketChannel"
+},
+{
+  "name":"io.grpc.netty.shaded.io.netty.channel.epoll.EpollEventLoopGroup",
+  "methods":[{"name":"<init>","parameterTypes":["int","java.util.concurrent.ThreadFactory"] }]
+},
+{
+  "name":"io.grpc.netty.shaded.io.netty.channel.epoll.EpollServerSocketChannel",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.grpc.netty.shaded.io.netty.channel.epoll.EpollSocketChannel",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"io.grpc.netty.shaded.io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket"
 },
 {
   "name":"io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.grpc.netty.shaded.io.netty.channel.unix.DatagramSocketAddress"
+},
+{
+  "name":"io.grpc.netty.shaded.io.netty.channel.unix.DomainDatagramSocketAddress"
 },
 {
   "name":"io.grpc.netty.shaded.io.netty.channel.unix.PeerCredentials"
@@ -389,6 +419,10 @@
 {
   "name":"io.grpc.netty.shaded.io.netty.util.ReferenceCountUtil",
   "queryAllDeclaredMethods":true
+},
+{
+  "name":"io.grpc.netty.shaded.io.netty.util.internal.NativeLibraryUtil",
+  "methods":[{"name":"loadLibrary","parameterTypes":["java.lang.String","boolean"] }]
 },
 {
   "name":"io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueColdProducerFields",
@@ -921,7 +955,10 @@
 },
 {
   "name":"io.temporal.api.common.v1.SearchAttributes",
-  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+  "methods":[
+    {"name":"getDefaultInstance","parameterTypes":[] }, 
+    {"name":"newBuilder","parameterTypes":[] }
+  ]
 },
 {
   "name":"io.temporal.api.common.v1.WorkerVersionCapabilities",
