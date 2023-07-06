@@ -71,18 +71,14 @@ trait NativeImageConfig extends NativeImage {
   def nativeImageGraalVmJvmId = T(versions.graalvm)
   def nativeImageOptions = super.nativeImageOptions() ++
     // GraalVM initializes all classes at runtime, so lets ignore all configs from jars since some change this behavior
-    Seq(
-      "--exclude-config",
-      "/.*.jar",
-      ".*.properties",
-    ) ++
+    Seq("--exclude-config", "/.*.jar", ".*.properties") ++
     (if (sys.props.get("os.name").contains("Linux")) Seq("--static") else Seq.empty)
 }
 
 // This module hosts the shared code between the worker, client and web client
 object shared extends Common
 trait SharedCode extends ScalaModule {
-  override def moduleDeps: Seq[JavaModule] = Seq(shared)
+  override def moduleDeps = Seq(shared)
 }
 
 // This module hosts the temporal workflow worker
@@ -100,6 +96,7 @@ object worker extends Common with SharedCode with NativeImageConfig with DockerN
 // This module hosts the web client
 object webclient extends Common with SharedCode with NativeImageConfig with DockerNative {
   def nativeImageName = "ziotemporalwebclient"
+
   object dockerNative extends DockerNativeConfig with NativeImageConfig {
     def nativeImageClassPath = runClasspath()
     def baseImage            = "ubuntu:22.04"
@@ -113,7 +110,7 @@ object client extends Common with SharedCode
 
 // This module hosts end-to-end tests
 object e2e extends Common {
-  def moduleDeps: Seq[JavaModule] = Seq(shared, worker, client, webclient)
+  def moduleDeps = Seq(shared, worker, client, webclient)
 }
 // -----------------------------------------------------------------------------
 // Command Aliases
