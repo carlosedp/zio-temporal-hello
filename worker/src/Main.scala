@@ -30,6 +30,7 @@ val server: ZIO[Any, Throwable, Nothing] = Server
     publisherLayer,
     prometheusLayer,
     ZLayer.succeed(MetricsConfig(500.millis)), // Metrics pull interval from internal store
+    // ZLayer.Debug.tree,
   )
 
 object Main extends ZIOAppDefault:
@@ -54,15 +55,15 @@ object Main extends ZIOAppDefault:
         _ <- server
       yield ExitCode.success
 
-    program
-      .provideSome[Scope](
-        SharedUtils.stubOptions,
-        ZWorkflowClientOptions.make,
-        ZWorkerFactoryOptions.make,
-        ZWorkflowClient.make,
-        ZWorkflowServiceStubs.make,
-        ZWorkerFactory.make,
-        ZActivityOptions.default,
-        activityLayer,
-        Slf4jBridge.initialize,
-      )
+    program.provideSome[Scope](
+      SharedUtils.stubOptions,
+      ZWorkflowClientOptions.make,
+      ZWorkerFactoryOptions.make,
+      ZWorkflowClient.make,
+      ZWorkflowServiceStubs.make,
+      ZWorkerFactory.make,
+      ZActivityOptions.default,
+      activityLayer,
+      Slf4jBridge.initialize,
+      // ZLayer.Debug.tree,
+    )
