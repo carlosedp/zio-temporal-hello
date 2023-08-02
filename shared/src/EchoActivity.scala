@@ -11,7 +11,7 @@ trait EchoActivity:
   def echo(msg: String, client: String): String
 
 class EchoActivityImpl(
-  implicit options: ZActivityOptions[Any]
+    implicit options: ZActivityOptions[Any]
 ) extends EchoActivity:
   override def echo(msg: String, client: String = "default"): String =
     ZActivity.run:
@@ -37,9 +37,9 @@ class EchoActivityImpl(
       percent <- Random.nextIntBetween(0, 100)
       _       <- ZIO.logDebug(s"Worker: Generated percent is $percent")
       _ <- ZIO.when(percent > successPercent):
-             ZIO.logError("Worker: eventuallyFail - Failed to process message") *> ZIO.fail(
-               Exception(s"Worker: ERROR: $msg")
-             )
+        ZIO.logError("Worker: eventuallyFail - Failed to process message") *> ZIO.fail(
+          Exception(s"Worker: ERROR: $msg")
+        )
       _ <- ZIO.logInfo("Worker: Success processing message")
-      r  = msg
+      r = msg
     yield r

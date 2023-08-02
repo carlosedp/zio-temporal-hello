@@ -3,9 +3,8 @@ import coursier.Repositories
 
 import $ivy.`com.goyeau::mill-scalafix::0.3.1`
 import com.goyeau.mill.scalafix.ScalafixModule
-// import $ivy.`io.github.davidgregory084::mill-tpolecat::0.3.2`
-// import io.github.davidgregory084.TpolecatModule
-trait TpolecatModule {} // TODO: Use real mill-tpolecat once released
+import $ivy.`io.github.davidgregory084::mill-tpolecat::0.3.5`
+import io.github.davidgregory084.TpolecatModule
 import $ivy.`io.github.alexarchambault.mill::mill-native-image::0.1.25`
 import io.github.alexarchambault.millnativeimage.NativeImage
 import $ivy.`com.carlosedp::mill-docker-nativeimage::0.6.0`
@@ -25,12 +24,12 @@ object versions {
 }
 
 trait Common
-  extends ScalaModule
-  with TpolecatModule
-  with ScalafmtModule
-  with ScalafixModule
-  with NativeImageConfig
-  with DockerNative { parent =>
+    extends ScalaModule
+    with TpolecatModule
+    with ScalafmtModule
+    with ScalafixModule
+    with NativeImageConfig
+    with DockerNative { parent =>
   def scalaVersion         = versions.scala3
   def nativeImageClassPath = runClasspath()
   override def scalacOptions = T {

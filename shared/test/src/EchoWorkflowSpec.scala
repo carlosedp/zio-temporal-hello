@@ -16,18 +16,18 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
         for
           // Create the worker
           _ <- ZTestWorkflowEnvironment.newWorker(taskQueue)
-                 @@ ZWorker.addWorkflow[EchoWorkflowImpl].fromClass
-                 @@ ZWorker.addActivityImplementation(new EchoActivityImpl())
+            @@ ZWorker.addWorkflow[EchoWorkflowImpl].fromClass
+            @@ ZWorker.addActivityImplementation(new EchoActivityImpl())
           // Setup the workflow test environment
           _ <- ZTestWorkflowEnvironment.setup()
           // Create the workflow stub
           echoWorkflow <- ZTestWorkflowEnvironment
-                            .newWorkflowStub[EchoWorkflow]
-                            .withTaskQueue(taskQueue)
-                            .withWorkflowId(SharedUtils.genSnowflake)
-                            // Set workflow timeout
-                            .withWorkflowRunTimeout(10.second)
-                            .build
+            .newWorkflowStub[EchoWorkflow]
+            .withTaskQueue(taskQueue)
+            .withWorkflowId(SharedUtils.genSnowflake)
+            // Set workflow timeout
+            .withWorkflowRunTimeout(10.second)
+            .build
           result <- ZWorkflowStub.execute(echoWorkflow.getEcho(sampleIn, "testClient"))
         yield assertTrue(result == sampleOut)
       )

@@ -22,10 +22,10 @@ object FrontEndApp:
       // GET /echo/:msg
       case Method.GET -> Root / "echo" / msg =>
         for
-          response              <- WebClient.invokeWorkflow(msg) @@ MetricsApp.httpHitsMetric("GET", "/echo")
+          response <- WebClient.invokeWorkflow(msg) @@ MetricsApp.httpHitsMetric("GET", "/echo")
           (workflowResponse, id) = response
-          _                     <- ZIO.logDebug(s"Received message \"$workflowResponse\" from workflowID $id")
-          res                   <- ZIO.succeed(Response.text(workflowResponse))
+          _   <- ZIO.logDebug(s"Received message \"$workflowResponse\" from workflowID $id")
+          res <- ZIO.succeed(Response.text(workflowResponse))
         yield res
 
       // GET /echo

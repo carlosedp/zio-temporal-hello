@@ -13,8 +13,8 @@ object echoActivitySpec extends ZIOSpecDefault:
           _ <- ZTestActivityEnvironment.addActivityImplementation(new EchoActivityImpl)
           // Get the activity stub
           stub <- ZTestActivityEnvironment.newActivityStub[EchoActivity]
-                    .withStartToCloseTimeout(10.second)
-                    .build
+            .withStartToCloseTimeout(10.second)
+            .build
           // Invoke the activity
           result = stub.echo("testMsg", "testClient")
         // Assert the result

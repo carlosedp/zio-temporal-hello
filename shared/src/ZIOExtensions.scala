@@ -24,7 +24,7 @@ extension [R, E, A](z: ZIO[R, E, A])
    */
   def measureTime(description: String = ""): ZIO[R, E, (A, Double, String)] =
     for
-      r       <- z.timed
+      r <- z.timed
       (t, res) = r
     yield (res, t.toNanos / 1000000.0, description)
 
@@ -39,8 +39,8 @@ extension [R, E, A](z: ZIO[R, E, A])
    */
   def measureTimeConsole(description: String = z.toString): ZIO[R, Any, A] =
     for
-      res      <- z.measureTime(description)
+      res <- z.measureTime(description)
       (r, t, d) = res // Let's not depend on `-source:future`
       logMsg    = s"⏲ Execution of \"$d\" took $t milis."
-      _        <- ZIO.logDebug(logMsg)
+      _ <- ZIO.logDebug(logMsg)
     yield r
