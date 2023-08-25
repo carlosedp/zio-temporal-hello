@@ -20,7 +20,5 @@ object Client:
       // the processed message or an error message
       res <- ZWorkflowStub.execute(echoWorkflow.getEcho(msg, clientName)).measureTimeConsole("getEcho").catchAll:
         case e: WorkflowException =>
-          ZIO.logError(s"Client: Exceeded retries, error: $e") *> ZIO.succeed(
-            "Exceeded retries"
-          )
+          ZIO.logError(s"Client: Exceeded retries, error: $e") *> ZIO.succeed("Exceeded retries")
     yield res

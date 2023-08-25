@@ -1,9 +1,8 @@
 import zio.*
 import zio.http.*
 import zio.http.netty.NettyConfig
-import zio.http.netty.NettyConfig.LeakDetectionLevel
-import zio.logging.{consoleLogger, ConsoleLoggerConfig, logMetrics}
 import zio.logging.slf4j.bridge.Slf4jBridge
+import zio.logging.{ConsoleLoggerConfig, consoleLogger, logMetrics}
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 import zio.temporal.*
@@ -19,12 +18,6 @@ val httpRoutes =
 val httpConfigLayer = ZLayer.succeed(
   Server.Config.default
     .port(httpPort)
-)
-
-val nettyConfigLayer = ZLayer.succeed(
-  NettyConfig.default
-    .leakDetection(LeakDetectionLevel.SIMPLE)
-    .maxThreads(4)
 )
 
 object Main extends ZIOAppDefault:
@@ -48,7 +41,7 @@ object Main extends ZIOAppDefault:
 
     program.provide(
       httpConfigLayer,
-      nettyConfigLayer,
+      ZLayer.succeed(NettyConfig.default),
       Server.customized,
       publisherLayer,
       prometheusLayer,

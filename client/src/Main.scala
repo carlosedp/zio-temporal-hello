@@ -1,6 +1,6 @@
 import zio.*
-import zio.logging.{consoleLogger, ConsoleLoggerConfig}
 import zio.logging.slf4j.bridge.Slf4jBridge
+import zio.logging.{ConsoleLoggerConfig, consoleLogger}
 import zio.temporal.*
 import zio.temporal.workflow.*
 
@@ -14,7 +14,7 @@ object Main extends ZIOAppDefault:
       )
     )
 
-  def run =
+  def run: ZIO[Environment & ZIOAppArgs & Scope, Any, Any] =
     val program =
       for
         args <- getArgs

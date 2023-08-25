@@ -7,10 +7,18 @@ import zio.temporal.workflow.*
 @workflowInterface
 trait EchoWorkflow:
 
+  /**
+   * Echoes a message back to the caller. The message could randomly fail.
+   *
+   * @param msg
+   * @param client
+   * @return
+   *   the message echoed back with an ACK prefix
+   */
   @workflowMethod
   def getEcho(msg: String, client: String): String
 
-// And here the workflow implementation
+// And here the workflow implementation that uses the activity
 class EchoWorkflowImpl extends EchoWorkflow:
   private val echoActivity = ZWorkflow
     .newActivityStub[EchoActivity]

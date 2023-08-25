@@ -1,6 +1,6 @@
 import com.softwaremill.id.pretty.{PrettyIdGenerator, StringIdGenerator}
 import zio.*
-import zio.logging.{LogFilter, LogFormat, LogAnnotation, LoggerNameExtractor}
+import zio.logging.{LogAnnotation, LogFilter, LogFormat, LoggerNameExtractor}
 import zio.temporal.ZLayerAspectSyntax
 import zio.temporal.workflow.ZWorkflowServiceStubsOptions
 
@@ -33,7 +33,9 @@ object SharedUtils:
    */
   val stubOptions =
     ZWorkflowServiceStubsOptions.make
-      @@ ZWorkflowServiceStubsOptions.withServiceUrl(scala.util.Properties.envOrElse(
-        "TEMPORAL_SERVER",
-        "127.0.0.1:7233",
-      ))
+      @@ ZWorkflowServiceStubsOptions.withServiceUrl(
+        scala.util.Properties.envOrElse(
+          "TEMPORAL_SERVER",
+          "127.0.0.1:7233",
+        )
+      )

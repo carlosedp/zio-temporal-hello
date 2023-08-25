@@ -9,17 +9,17 @@ import $ivy.`io.github.alexarchambault.mill::mill-native-image::0.1.25`
 import io.github.alexarchambault.millnativeimage.NativeImage
 import $ivy.`com.carlosedp::mill-docker-nativeimage::0.6.0`
 import com.carlosedp.milldockernative.DockerNative
-import $ivy.`com.carlosedp::mill-aliases::0.2.1`
+import $ivy.`com.carlosedp::mill-aliases::0.4.1`
 import com.carlosedp.aliases._
 
 object versions {
   val scala3      = "3.3.0"
   val graalvm     = "graalvm-java17:22.3.2"
-  val zio         = "2.0.15"
+  val zio         = "2.0.16"
   val ziohttp     = "3.0.0-RC2"
-  val ziotemporal = "0.2.0"
+  val ziotemporal = "0.3.0"
   val ziometrics  = "2.1.0"
-  val ziologging  = "2.1.13"
+  val ziologging  = "2.1.14"
   val idgenerator = "1.4.0"
 }
 

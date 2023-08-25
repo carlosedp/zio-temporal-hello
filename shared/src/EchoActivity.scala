@@ -7,12 +7,19 @@ val activityLayer: URLayer[ZActivityOptions[Any], EchoActivity] =
 
 @activityInterface
 trait EchoActivity:
-  @activityMethod
+  /**
+   * Echoes a message back to the caller. The message could randomly fail.
+   *
+   * @param msg
+   * @param client
+   * @return
+   *   the message echoed back with an ACK prefix
+   */
   def echo(msg: String, client: String): String
 
 class EchoActivityImpl(
     implicit options: ZActivityOptions[Any]
-) extends EchoActivity:
+  ) extends EchoActivity:
   override def echo(msg: String, client: String = "default"): String =
     ZActivity.run:
       for
@@ -41,5 +48,4 @@ class EchoActivityImpl(
           Exception(s"Worker: ERROR: $msg")
         )
       _ <- ZIO.logInfo("Worker: Success processing message")
-      r = msg
-    yield r
+    yield msg
