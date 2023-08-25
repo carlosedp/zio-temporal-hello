@@ -28,5 +28,6 @@ object E2ESpec extends ZIOSpecDefault:
   ) @@ TestAspect.withLiveClock
     @@ TestAspect.silentLogging
     @@ TestAspect.timeout(5.seconds)
+    @@ TestAspect.ignore // TODO: This test depends on a running Temporal server
 
   // Generate test to HTTP server and check metrics
