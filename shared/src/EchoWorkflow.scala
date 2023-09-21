@@ -20,17 +20,23 @@ trait EchoWorkflow:
 
 // And here the workflow implementation that uses the activity
 class EchoWorkflowImpl extends EchoWorkflow:
+  private val defaultRetryOptions = ZRetryOptions.default
+    .withMaximumAttempts(3)
+    .withInitialInterval(300.millis)
+    .withBackoffCoefficient(1)
+
   private val echoActivity = ZWorkflow
     .newActivityStub[EchoActivity]
     .withStartToCloseTimeout(5.seconds)
-    .withRetryOptions(
-      ZRetryOptions.default
-        .withMaximumAttempts(3)
-        .withInitialInterval(300.millis)
-        .withBackoffCoefficient(1)
-    )
+    .withRetryOptions(defaultRetryOptions)
+    .build
+  private val timestampActivity = ZWorkflow
+    .newActivityStub[TimestampActivity]
+    .withStartToCloseTimeout(5.seconds)
+    .withRetryOptions(defaultRetryOptions)
     .build
 
   override def getEcho(msg: String, client: String = "default"): String =
-    ZIO.logInfo(s"Worker: Received message in the workflow: \"$msg\"") // TODO: This doesn't print
-    ZActivityStub.execute(echoActivity.echo(msg, client))
+    val message        = ZActivityStub.execute(echoActivity.echo(msg, client))
+    val timestampedMsg = ZActivityStub.execute(timestampActivity.timestamp(message))
+    timestampedMsg

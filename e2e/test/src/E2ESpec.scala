@@ -23,7 +23,8 @@ object E2ESpec extends ZIOSpecDefault:
         ZWorkflowServiceStubs.make,
         ZWorkerFactory.make,
         ZActivityOptions.default,
-        activityLayer,
+        echoActivityLayer,
+        timestampActivityLayer,
       )
   ) @@ TestAspect.withLiveClock
     @@ TestAspect.silentLogging

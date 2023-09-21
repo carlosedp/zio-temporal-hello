@@ -64,7 +64,8 @@ object Main extends ZIOAppDefault:
       ZWorkflowServiceStubs.make,
       ZWorkerFactory.make,
       ZActivityOptions.default,
-      activityLayer,
+      echoActivityLayer,
+      timestampActivityLayer,
       Slf4jBridge.initialize,
       // ZLayer.Debug.tree,
     )

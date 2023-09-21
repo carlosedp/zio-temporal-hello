@@ -2,7 +2,7 @@ import zio.*
 import zio.temporal.*
 import zio.temporal.activity.*
 
-val activityLayer: URLayer[ZActivityOptions[Any], EchoActivity] =
+val echoActivityLayer: URLayer[ZActivityOptions[Any], EchoActivity] =
   ZLayer.fromFunction(new EchoActivityImpl()(_: ZActivityOptions[Any]))
 
 @activityInterface
