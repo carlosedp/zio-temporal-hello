@@ -7,36 +7,39 @@ import zio.temporal.workflow.*
 @workflowInterface
 trait EchoWorkflow:
 
-  /**
-   * Echoes a message back to the caller. The message could randomly fail.
-   *
-   * @param msg
-   * @param client
-   * @return
-   *   the message echoed back with an ACK prefix
-   */
-  @workflowMethod
-  def getEcho(msg: String, client: String): String
+    /**
+     * Echoes a message back to the caller. The message could randomly fail.
+     *
+     * @param msg
+     * @param client
+     * @return
+     *   the message echoed back with an ACK prefix
+     */
+    @workflowMethod
+    def getEcho(msg: String, client: String): String
+end EchoWorkflow
 
 // And here the workflow implementation that uses the activity
 class EchoWorkflowImpl extends EchoWorkflow:
-  private val defaultRetryOptions = ZRetryOptions.default
-    .withMaximumAttempts(3)
-    .withInitialInterval(300.millis)
-    .withBackoffCoefficient(1)
+    private val defaultRetryOptions = ZRetryOptions.default
+        .withMaximumAttempts(3)
+        .withInitialInterval(300.millis)
+        .withBackoffCoefficient(1)
 
-  private val echoActivity = ZWorkflow
-    .newActivityStub[EchoActivity]
-    .withStartToCloseTimeout(5.seconds)
-    .withRetryOptions(defaultRetryOptions)
-    .build
-  private val timestampActivity = ZWorkflow
-    .newActivityStub[TimestampActivity]
-    .withStartToCloseTimeout(5.seconds)
-    .withRetryOptions(defaultRetryOptions)
-    .build
+    private val echoActivity = ZWorkflow
+        .newActivityStub[EchoActivity]
+        .withStartToCloseTimeout(5.seconds)
+        .withRetryOptions(defaultRetryOptions)
+        .build
+    private val timestampActivity = ZWorkflow
+        .newActivityStub[TimestampActivity]
+        .withStartToCloseTimeout(5.seconds)
+        .withRetryOptions(defaultRetryOptions)
+        .build
 
-  override def getEcho(msg: String, client: String = "default"): String =
-    val message        = ZActivityStub.execute(echoActivity.echo(msg, client))
-    val timestampedMsg = ZActivityStub.execute(timestampActivity.timestamp(message))
-    timestampedMsg
+    override def getEcho(msg: String, client: String = "default"): String =
+        val message        = ZActivityStub.execute(echoActivity.echo(msg, client))
+        val timestampedMsg = ZActivityStub.execute(timestampActivity.timestamp(message))
+        timestampedMsg
+    end getEcho
+end EchoWorkflowImpl

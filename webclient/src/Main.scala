@@ -11,44 +11,46 @@ import zio.temporal.workflow.*
 // ZIO-http server config
 val httpPort = 8083
 val httpRoutes =
-  (MetricsApp() ++ FrontEndApp())
-    @@ HttpAppMiddleware.metrics(MetricsApp.pathLabelMapper)
-    @@ HttpAppMiddleware.timeout(20.seconds)
+    (MetricsApp() ++ FrontEndApp())
+        @@ HttpAppMiddleware.metrics(MetricsApp.pathLabelMapper)
+        @@ HttpAppMiddleware.timeout(20.seconds)
 
 val httpConfigLayer = ZLayer.succeed(
-  Server.Config.default
-    .port(httpPort)
+    Server.Config.default
+        .port(httpPort)
 )
 
 object Main extends ZIOAppDefault:
-  // Configure ZIO Logging
-  override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
-    Runtime.removeDefaultLoggers >>> consoleLogger(
-      ConsoleLoggerConfig(
-        SharedUtils.logFormat,
-        SharedUtils.logFilter,
-      )
-    ) ++ logMetrics
+    // Configure ZIO Logging
+    override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
+        Runtime.removeDefaultLoggers >>> consoleLogger(
+            ConsoleLoggerConfig(
+                SharedUtils.logFormat,
+                SharedUtils.logFilter,
+            )
+        ) ++ logMetrics
 
-  // Run the application
-  def run: ZIO[Scope, Any, ExitCode] =
-    val program =
-      for
-        _ <- ZIO.logInfo(s"HTTP Metrics Server started at http://localhost:$httpPort/metrics")
-        _ <- ZIO.logInfo(s"HTTP Server started at http://localhost:$httpPort")
-        _ <- Server.serve(httpRoutes)
-      yield ExitCode.success
+    // Run the application
+    def run: ZIO[Scope, Any, ExitCode] =
+        val program =
+            for
+                _ <- ZIO.logInfo(s"HTTP Metrics Server started at http://localhost:$httpPort/metrics")
+                _ <- ZIO.logInfo(s"HTTP Server started at http://localhost:$httpPort")
+                _ <- Server.serve(httpRoutes)
+            yield ExitCode.success
 
-    program.provide(
-      httpConfigLayer,
-      ZLayer.succeed(NettyConfig.default),
-      Server.customized,
-      publisherLayer,
-      prometheusLayer,
-      ZLayer.succeed(MetricsConfig(200.millis)), // Metrics pull interval from internal store
-      SharedUtils.stubOptions,
-      ZWorkflowClientOptions.make,
-      ZWorkflowClient.make,
-      ZWorkflowServiceStubs.make,
-      Slf4jBridge.initialize,
-    )
+        program.provide(
+            httpConfigLayer,
+            ZLayer.succeed(NettyConfig.default),
+            Server.customized,
+            publisherLayer,
+            prometheusLayer,
+            ZLayer.succeed(MetricsConfig(200.millis)), // Metrics pull interval from internal store
+            SharedUtils.stubOptions,
+            ZWorkflowClientOptions.make,
+            ZWorkflowClient.make,
+            ZWorkflowServiceStubs.make,
+            Slf4jBridge.initialize,
+        )
+    end run
+end Main
