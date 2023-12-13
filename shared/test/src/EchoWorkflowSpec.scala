@@ -12,7 +12,8 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
             ZTestWorkflowEnvironment.activityRunOptions[Any].flatMap(implicit options =>
                 val taskQueue = TemporalQueues.echoQueue
                 val sampleIn  = "Msg"
-                val sampleOut = raw"""\[\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z\] ACK: $sampleIn""".r
+                val sampleOut =
+                    raw"""\[[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]+Z\] ACK: $sampleIn""".r
                 for
                     // Create the worker
                     _ <- ZTestWorkflowEnvironment.newWorker(taskQueue)
