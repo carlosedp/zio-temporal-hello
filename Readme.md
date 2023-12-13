@@ -1,6 +1,8 @@
 # ZIO - Temporal Sample Application
 
-This is a sample "hello" app written in Scala 3, [ZIO Functional Framework](https://zio.dev/) and the [Temporal](https://temporal.io/) platform.
+[![Scala CI](https://github.com/carlosedp/zio-temporal-hello/actions/workflows/scala.yml/badge.svg)](https://github.com/carlosedp/zio-temporal-hello/actions/workflows/scala.yml)
+
+This is a sample app written in Scala 3, [ZIO Functional Framework](https://zio.dev/) and the [Temporal](https://temporal.io/) platform.
 
 The idea is to set a modern template project using the latest versions of the following libraries:
 
