@@ -13,8 +13,7 @@ import zio.temporal.workflow.*
 val httpPort = 8082
 val httpRoutes =
     MetricsApp()
-        @@ HttpAppMiddleware.metrics(MetricsApp.pathLabelMapper)
-        @@ HttpAppMiddleware.timeout(5.seconds)
+        @@ Middleware.timeout(5.seconds)
 
 val httpConfigLayer = ZLayer.succeed(
     Server.Config.default
@@ -63,7 +62,7 @@ object Main extends ZIOAppDefault:
             ZWorkflowClient.make,
             ZWorkflowServiceStubs.make,
             ZWorkerFactory.make,
-            ZActivityOptions.default,
+            ZActivityRunOptions.default,
             echoActivityLayer,
             timestampActivityLayer,
             Slf4jBridge.initialize,

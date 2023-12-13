@@ -26,15 +26,17 @@ class EchoWorkflowImpl extends EchoWorkflow:
         .withBackoffCoefficient(1)
 
     private val echoActivity = ZWorkflow
-        .newActivityStub[EchoActivity]
-        .withStartToCloseTimeout(5.seconds)
-        .withRetryOptions(defaultRetryOptions)
-        .build
+        .newActivityStub[EchoActivity](
+            ZActivityOptions
+                .withStartToCloseTimeout(5.seconds)
+                .withRetryOptions(defaultRetryOptions)
+        )
     private val timestampActivity = ZWorkflow
-        .newActivityStub[TimestampActivity]
-        .withStartToCloseTimeout(5.seconds)
-        .withRetryOptions(defaultRetryOptions)
-        .build
+        .newActivityStub[TimestampActivity](
+            ZActivityOptions
+                .withStartToCloseTimeout(5.seconds)
+                .withRetryOptions(defaultRetryOptions)
+        )
 
     override def getEcho(msg: String, client: String = "default"): String =
         val message        = ZActivityStub.execute(echoActivity.echo(msg, client))

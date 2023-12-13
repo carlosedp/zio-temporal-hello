@@ -18,14 +18,12 @@ object MetricsApp:
             .fromConst(1)
             .tagged(MetricLabel("client", client))
 
-    // Map calls to "/greet/some_name" to "/greet/:person" for metric aggregation
-    def pathLabelMapper: PartialFunction[Request, String] =
-        case Method.GET -> Root / _ => "/"
+    def apply(): HttpApp[PrometheusPublisher] =
+        Routes(
+            Method.GET / "metrics" -> handler(
+                ZIO.serviceWithZIO[PrometheusPublisher](_.get.map(Response.text))
+                    @@ MetricsApp.httpHitsMetric("GET", "/metrics")
+            )
+        ).toHttpApp
 
-    def apply(): Http[PrometheusPublisher, Nothing, Request, Response] =
-        Http.collectZIO[Request]:
-            case Method.GET -> Root / "metrics" =>
-                ZIO.serviceWithZIO[PrometheusPublisher](
-                    _.get.map(Response.text)
-                ) @@ MetricsApp.httpHitsMetric("GET", "/metrics")
 end MetricsApp

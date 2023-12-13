@@ -11,7 +11,7 @@ extension [R, E, A](z: ZIO[R, E, A])
      * {{{
      *   for
      *     res <- my\Effect().measureTime("description")
-     *     (e, t, d) = res
+     *     (effectResult, timeMs, description) = res
      *   ...
      *   yield ()
      * }}}

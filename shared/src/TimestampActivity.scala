@@ -6,8 +6,8 @@ import zio.*
 import zio.temporal.*
 import zio.temporal.activity.*
 
-val timestampActivityLayer: URLayer[ZActivityOptions[Any], TimestampActivity] =
-    ZLayer.fromFunction(new TimestampActivityImpl()(_: ZActivityOptions[Any]))
+val timestampActivityLayer: URLayer[ZActivityRunOptions[Any], TimestampActivity] =
+    ZLayer.fromFunction(new TimestampActivityImpl()(_: ZActivityRunOptions[Any]))
 
 @activityInterface
 trait TimestampActivity:
@@ -21,7 +21,7 @@ trait TimestampActivity:
     def timestamp(msg: String): String
 
 class TimestampActivityImpl(
-    implicit options: ZActivityOptions[Any]
+    implicit options: ZActivityRunOptions[Any]
   ) extends TimestampActivity:
     override def timestamp(msg: String): String =
         val now       = ZonedDateTime.now(ZoneOffset.UTC)
@@ -31,4 +31,3 @@ class TimestampActivityImpl(
                 timestampedMsg <- ZIO.succeed(s"[$timestamp] $msg")
                 _              <- ZIO.logDebug(s"Worker: Timestamped message: $timestampedMsg")
             yield timestampedMsg
-end TimestampActivityImpl

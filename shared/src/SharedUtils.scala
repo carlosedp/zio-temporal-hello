@@ -1,7 +1,6 @@
 import com.softwaremill.id.pretty.{PrettyIdGenerator, StringIdGenerator}
 import zio.*
 import zio.logging.{LogAnnotation, LogFilter, LogFormat, LoggerNameExtractor}
-import zio.temporal.ZLayerAspectSyntax
 import zio.temporal.workflow.ZWorkflowServiceStubsOptions
 
 object SharedUtils:

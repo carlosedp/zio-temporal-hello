@@ -5,15 +5,13 @@ import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.logging.{ConsoleLoggerConfig, consoleLogger, logMetrics}
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
-import zio.temporal.*
 import zio.temporal.workflow.*
 
 // ZIO-http server config
 val httpPort = 8083
 val httpRoutes =
     (MetricsApp() ++ FrontEndApp())
-        @@ HttpAppMiddleware.metrics(MetricsApp.pathLabelMapper)
-        @@ HttpAppMiddleware.timeout(20.seconds)
+        @@ Middleware.timeout(20.seconds)
 
 val httpConfigLayer = ZLayer.succeed(
     Server.Config.default
@@ -45,11 +43,12 @@ object Main extends ZIOAppDefault:
             Server.customized,
             publisherLayer,
             prometheusLayer,
-            ZLayer.succeed(MetricsConfig(200.millis)), // Metrics pull interval from internal store
-            SharedUtils.stubOptions,
-            ZWorkflowClientOptions.make,
             ZWorkflowClient.make,
+            ZWorkflowClientOptions.make,
             ZWorkflowServiceStubs.make,
+            ZWorkflowServiceStubsOptions.make,
+            ZLayer.succeed(MetricsConfig(200.millis)), // Metrics pull interval from internal store
+            // SharedUtils.stubOptions,
             Slf4jBridge.initialize,
         )
     end run

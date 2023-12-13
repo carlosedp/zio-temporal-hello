@@ -23,7 +23,7 @@ object E2ESpec extends ZIOSpecDefault:
                 ZWorkerFactoryOptions.make,
                 ZWorkflowServiceStubs.make,
                 ZWorkerFactory.make,
-                ZActivityOptions.default,
+                ZActivityRunOptions.default,
                 echoActivityLayer,
                 timestampActivityLayer,
             )

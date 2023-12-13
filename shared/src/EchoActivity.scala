@@ -2,8 +2,8 @@ import zio.*
 import zio.temporal.*
 import zio.temporal.activity.*
 
-val echoActivityLayer: URLayer[ZActivityOptions[Any], EchoActivity] =
-    ZLayer.fromFunction(new EchoActivityImpl()(_: ZActivityOptions[Any]))
+val echoActivityLayer: URLayer[ZActivityRunOptions[Any], EchoActivity] =
+    ZLayer.fromFunction(new EchoActivityImpl()(_: ZActivityRunOptions[Any]))
 
 @activityInterface
 trait EchoActivity:
@@ -18,7 +18,7 @@ trait EchoActivity:
     def echo(msg: String, client: String): String
 
 class EchoActivityImpl(
-    implicit options: ZActivityOptions[Any]
+    implicit options: ZActivityRunOptions[Any]
   ) extends EchoActivity:
     override def echo(msg: String, client: String = "default"): String =
         ZActivity.run:

@@ -21,18 +21,19 @@ object WebClient:
             val clientName = "client"
             val workflowID = s"$clientName-$snowFlake"
             for
-                echoWorkflow <- client.newWorkflowStub[EchoWorkflow]
-                    .withTaskQueue(TemporalQueues.echoQueue)
-                    .withWorkflowId(workflowID)
-                    .withWorkflowExecutionTimeout(60.seconds)
-                    .withWorkflowRunTimeout(10.seconds)
-                    .withRetryOptions(
-                        ZRetryOptions.default
-                            .withMaximumAttempts(3)
-                            .withInitialInterval(300.millis)
-                            .withBackoffCoefficient(1)
-                    )
-                    .build
+                echoWorkflow <- client.newWorkflowStub[EchoWorkflow](
+                    ZWorkflowOptions
+                        .withWorkflowId(workflowID)
+                        .withTaskQueue(TemporalQueues.echoQueue)
+                        .withWorkflowExecutionTimeout(60.seconds)
+                        .withWorkflowRunTimeout(10.seconds)
+                        .withRetryOptions(
+                            ZRetryOptions.default
+                                .withMaximumAttempts(3)
+                                .withInitialInterval(300.millis)
+                                .withBackoffCoefficient(1)
+                        )
+                )
                 _ <- ZIO.logInfo(s"Will submit message \"$msg\" with workflowID $workflowID")
 
                 // Here we execute the workflow and catch any error returning a success to the caller with

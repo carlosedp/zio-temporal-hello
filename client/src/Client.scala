@@ -9,11 +9,12 @@ object Client:
         val clientName = "client"
         val workflowID = s"$clientName-$snowFlake"
         for
-            echoWorkflow <- client.newWorkflowStub[EchoWorkflow]
-                .withTaskQueue(TemporalQueues.echoQueue)
-                .withWorkflowId(workflowID)
-                .withWorkflowRunTimeout(60.seconds)
-                .build
+            echoWorkflow <- client.newWorkflowStub[EchoWorkflow](
+                ZWorkflowOptions
+                    .withWorkflowId(workflowID)
+                    .withTaskQueue(TemporalQueues.echoQueue)
+                    .withWorkflowRunTimeout(60.seconds)
+            )
             _ <- ZIO.logInfo(s"Will submit message \"$msg\" with workflowID $workflowID")
 
             // Here we execute the workflow and catch any error returning a success to the caller with
@@ -22,4 +23,5 @@ object Client:
                 case e: WorkflowException =>
                     ZIO.logError(s"Client: Exceeded retries, error: $e") *> ZIO.succeed("Exceeded retries")
         yield res
+        end for
 end Client
