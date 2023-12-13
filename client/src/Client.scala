@@ -22,5 +22,4 @@ object Client:
                 case e: WorkflowException =>
                     ZIO.logError(s"Client: Exceeded retries, error: $e") *> ZIO.succeed("Exceeded retries")
         yield res
-        end for
 end Client

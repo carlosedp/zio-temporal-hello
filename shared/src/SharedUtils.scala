@@ -11,7 +11,6 @@ object SharedUtils:
     def genSnowflake: String =
         lazy val generator: StringIdGenerator = PrettyIdGenerator.singleNode
         generator.nextId()
-    end genSnowflake
 
     /**
      * Set the shared config for ZIO Log filter

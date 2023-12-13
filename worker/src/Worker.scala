@@ -9,4 +9,3 @@ object Worker:
             @@ ZWorker.addActivityImplementationService[EchoActivity]
             @@ ZWorker.addActivityImplementationService[TimestampActivity]
             @@ ZWorker.addWorkflow[EchoWorkflowImpl].fromClass
-end Worker

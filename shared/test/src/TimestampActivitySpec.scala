@@ -21,7 +21,6 @@ object timestampActivitySpec extends ZIOSpecDefault:
                     result = stub.timestamp(testMsg)
                 // Assert the result
                 yield assertTrue(sampleOut.matches(result))
-                end for
             )
     ).provide(
         ZTestEnvironmentOptions.default,

@@ -17,7 +17,6 @@ trait EchoWorkflow:
      */
     @workflowMethod
     def getEcho(msg: String, client: String): String
-end EchoWorkflow
 
 // And here the workflow implementation that uses the activity
 class EchoWorkflowImpl extends EchoWorkflow:
@@ -41,5 +40,4 @@ class EchoWorkflowImpl extends EchoWorkflow:
         val message        = ZActivityStub.execute(echoActivity.echo(msg, client))
         val timestampedMsg = ZActivityStub.execute(timestampActivity.timestamp(message))
         timestampedMsg
-    end getEcho
 end EchoWorkflowImpl

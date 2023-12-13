@@ -16,7 +16,6 @@ trait EchoActivity:
      *   the message echoed back with an ACK prefix
      */
     def echo(msg: String, client: String): String
-end EchoActivity
 
 class EchoActivityImpl(
     implicit options: ZActivityOptions[Any]
@@ -51,6 +50,5 @@ class EchoActivityImpl(
                 )
             _ <- ZIO.logInfo("Worker: Success processing message")
         yield msg
-        end for
     end eventuallyFail
 end EchoActivityImpl

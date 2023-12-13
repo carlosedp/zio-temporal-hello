@@ -19,7 +19,6 @@ trait TimestampActivity:
      *   the message echoed back with a timestamp
      */
     def timestamp(msg: String): String
-end TimestampActivity
 
 class TimestampActivityImpl(
     implicit options: ZActivityOptions[Any]
@@ -32,5 +31,4 @@ class TimestampActivityImpl(
                 timestampedMsg <- ZIO.succeed(s"[$timestamp] $msg")
                 _              <- ZIO.logDebug(s"Worker: Timestamped message: $timestampedMsg")
             yield timestampedMsg
-    end timestamp
 end TimestampActivityImpl
