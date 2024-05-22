@@ -19,7 +19,6 @@ object timestampActivitySpec extends ZIOSpecDefault:
                         ZActivityOptions
                             .withStartToCloseTimeout(10.second)
                     )
-
                     // Invoke the activity
                     result = stub.timestamp(testMsg)
                 // Assert the result
