@@ -14,7 +14,7 @@ object SharedUtils:
     /**
      * Set the shared config for ZIO Log filter
      */
-    val logFilter: LogFilter[String] = LogFilter.logLevelByName(
+    val logFilter = LogFilter.LogLevelByNameConfig(
         LogLevel.Debug,
         "SLF4J-LOGGER"  -> LogLevel.Info,
         "io.grpc.netty" -> LogLevel.Info,
@@ -23,7 +23,8 @@ object SharedUtils:
     )
 
     val logFormat =
-        LogFormat.colored |-| LogFormat.label("source", LoggerNameExtractor.loggerNameAnnotationOrTrace.toLogFormat())
+        LogFormat.colored
+            + LogFormat.label("source", LoggerNameExtractor.loggerNameAnnotationOrTrace.toLogFormat())
             + LogFormat.logAnnotation(LogAnnotation.UserId)
             + LogFormat.logAnnotation(LogAnnotation.TraceId)
 

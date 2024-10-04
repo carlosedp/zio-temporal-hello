@@ -4,7 +4,7 @@ import zio.http.template.*
 import zio.temporal.workflow.ZWorkflowClient
 
 object FrontEndApp:
-    def apply(): HttpApp[ZWorkflowClient] = Routes(
+    def apply() = Routes(
         // GET /
         Method.GET / "" ->
             handler(Response.html(Dom.raw(
@@ -25,7 +25,7 @@ object FrontEndApp:
         // otherwise display a form to send a message
         Method.GET / "echo" ->
             handler: (req: Request) =>
-                req.url.queryParams.get("msg") match
+                req.queryParam("msg") match
                     case Some(value) => handleMessage(value)
                     case None => ZIO.succeed(Response.html(Dom.raw(
                             """
@@ -39,7 +39,7 @@ object FrontEndApp:
                               |</html>
                             """.stripMargin
                         ))),
-    ).toHttpApp
+    )
 
     /**
      * Send a message to the echo workflow and return the response

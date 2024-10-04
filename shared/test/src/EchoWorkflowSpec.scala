@@ -4,7 +4,6 @@ import zio.temporal.testkit.*
 import zio.temporal.worker.*
 import zio.temporal.workflow.*
 import zio.test.*
-import zio.test.TestAspect.*
 
 object EchoWorkflowSpec extends ZIOSpecDefault:
     def spec = suite("Workflows")(

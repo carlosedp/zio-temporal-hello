@@ -36,10 +36,7 @@ object Main extends ZIOAppDefault:
     // Configure ZIO Logging
     override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
         Runtime.removeDefaultLoggers >>> consoleLogger(
-            ConsoleLoggerConfig(
-                SharedUtils.logFormat,
-                SharedUtils.logFilter,
-            )
+            ConsoleLoggerConfig(SharedUtils.logFormat, SharedUtils.logFilter)
         ) ++ logMetrics
 
     def run: ZIO[ZIOAppArgs & Scope, Any, Any] =

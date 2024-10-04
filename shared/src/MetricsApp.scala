@@ -18,12 +18,12 @@ object MetricsApp:
             .fromConst(1)
             .tagged(MetricLabel("client", client))
 
-    def apply(): HttpApp[PrometheusPublisher] =
+    def apply() =
         Routes(
             Method.GET / "metrics" -> handler(
                 ZIO.serviceWithZIO[PrometheusPublisher](_.get.map(Response.text))
                     @@ MetricsApp.httpHitsMetric("GET", "/metrics")
             )
-        ).toHttpApp
+        )
 
 end MetricsApp

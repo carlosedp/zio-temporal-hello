@@ -1,3 +1,5 @@
+// package build
+
 import mill._, mill.scalalib._, mill.scalalib.scalafmt._
 import coursier.Repositories
 
@@ -9,17 +11,17 @@ import $ivy.`io.github.alexarchambault.mill::mill-native-image::0.1.26`
 import io.github.alexarchambault.millnativeimage.NativeImage
 import $ivy.`com.carlosedp::mill-docker-nativeimage::0.6.1`
 import com.carlosedp.milldockernative.DockerNative
-import $ivy.`com.carlosedp::mill-aliases::0.4.1`
+import $ivy.`com.carlosedp::mill-aliases::0.5.0`
 import com.carlosedp.aliases._
 
 object versions {
-    val scala3      = "3.3.1"
+    val scala3      = "3.3.4"
     val graalvm     = "graalvm-java17:22.3.2"
-    val zio         = "2.0.20"
-    val ziohttp     = "3.0.0-RC4"
+    val zio         = "2.1.9"
+    val ziohttp     = "3.0.1"
     val ziotemporal = "0.6.1"
-    val ziometrics  = "2.3.0"
-    val ziologging  = "2.1.16"
+    val ziometrics  = "2.3.1"
+    val ziologging  = "2.3.1"
     val idgenerator = "1.4.0"
 }
 
