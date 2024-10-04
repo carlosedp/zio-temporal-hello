@@ -7,7 +7,7 @@ import zio.temporal.worker.*
 import zio.temporal.workflow.*
 import zio.test.*
 
-import shared.{SharedUtils, TemporalQueues, EchoWorkflowInterface}
+import shared.{SharedUtils, TemporalQueues, EchoWorkflow}
 
 object EchoWorkflowSpec extends ZIOSpecDefault:
     def spec = suite("Workflows"):
@@ -27,7 +27,7 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
                     _ <- ZTestWorkflowEnvironment.setup()
                     // Create the workflow stub
                     echoWorkflow <- ZTestWorkflowEnvironment
-                        .newWorkflowStub[EchoWorkflowInterface](
+                        .newWorkflowStub[EchoWorkflow](
                             ZWorkflowOptions
                                 .withWorkflowId(SharedUtils.genSnowflake)
                                 .withTaskQueue(taskQueue)

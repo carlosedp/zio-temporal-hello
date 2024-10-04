@@ -12,7 +12,7 @@ object Client:
         val clientName = "client"
         val workflowID = s"$clientName-$snowFlake"
         for
-            echoWorkflow <- client.newWorkflowStub[EchoWorkflowInterface](
+            echoWorkflow <- client.newWorkflowStub[EchoWorkflow](
                 ZWorkflowOptions
                     .withWorkflowId(workflowID)
                     .withTaskQueue(TemporalQueues.echoQueue)

@@ -1,13 +1,13 @@
 package worker
 
-import shared.EchoWorkflowInterface
+import shared.EchoWorkflow
 import zio.*
 import zio.temporal.*
 import zio.temporal.activity.*
 import zio.temporal.workflow.*
 
 // Here is the workflow implementation that uses the activities
-class EchoWorkflowImpl extends EchoWorkflowInterface:
+class EchoWorkflowImpl extends EchoWorkflow:
     private val defaultRetryOptions = ZRetryOptions.default
         .withMaximumAttempts(3)
         .withInitialInterval(300.millis)

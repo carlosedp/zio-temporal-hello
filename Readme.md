@@ -19,15 +19,15 @@ The idea is to set a modern template project using the latest versions of the fo
 
 The app have multiple modules:
 
-The main module is the [`worker`](./worker/src/) which runs the workers that executes the workflows and activities attaching and polling the Temporal queue.
+The main module is the [`worker`](./worker/src/) which runs the workers that executes the workflows and activities attaching and polling the Temporal queue. It contains the implementation for the workflow and the activities that are executed by the worker.
 
 One is a command line (CLI) [`client`](./client/src/) that when executed, generates the call to the Temporal workflow.
 
 Another one is a [`webclient`](./webclient/src/) that starts an HTTP server listening to REST API and proviidng calls to the Temporal workflows.
 
-Since the workflows and activities are shared between the clients and worker, it's code is in the [`shared`](./shared/src/) directory.
+Both clients use the shared code to define the workflow interface and also use the definitions in that package to interact with the Temporal server. The code is in the [`shared`](./shared/src/) directory.
 
-The app uses `zio-http` to publish Prometheus metrics from `zio-metrics` library.
+The app uses `zio-http` for the webclient and also to publish Prometheus metrics from `zio-metrics` library.
 
 For a simple app with only workflows and integrated worker/client, check the [simple](https://github.com/carlosedp/zio-temporal-hello/tree/simple) tag. This is similar to the example from Temporal Java [tutorial](https://learn.temporal.io/getting_started/java/hello_world_in_java).
 

@@ -4,7 +4,7 @@ import zio.temporal.*
 
 // This is our workflow interface
 @workflowInterface
-trait EchoWorkflowInterface:
+trait EchoWorkflow:
 
     /**
      * Echoes a message back to the caller. The message could randomly fail.
