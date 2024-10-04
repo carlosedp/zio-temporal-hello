@@ -119,6 +119,12 @@ Watch the logs and follow the workflow using the Temporal UI at [http://localhos
 
 The worker publishes Prometheus metrics at [http://localhost:8082/metrics](http://localhost:8082/metrics).
 
+There is also a Python client (to show that clients can be in any language) in the [sample_client.py](./sample_client.py) file. To run it, setup your environment with the `setup_python.sh` script and run the client with:
+
+```sh
+python3 sample_client.py
+```
+
 ### Generating Application binaries (GraalVM Native-Image)
 
 The build can also generate native image binaries for almost instant startup and resource consumption. To generate the binaries, do:
@@ -188,12 +194,12 @@ docker run -d -e TEMPORAL_SERVER="192.168.1.10:7233" -p 8083:8083 --name ziotemp
 docker logs -f ziotemporal-webclient
 ```
 
-And generate requests like the previous section, via web, `tctl` cli or the client module. Eg. `curl http://192.168.1.10:8083/echo/testmsg`.
+And generate requests like the previous section, via web, `temporal` cli or the client modules. Eg. `curl http://192.168.1.10:8083/echo/testmsg`.
 
 ## Generating GraalVM Native Image reflection/proxy configs
 
 GraalVM Native image requires reflected and proxied classes to be declared beforehand. This is is eased by the native-image-agent which can be run for the tests with the `NATIVECONFIG_GEN=true` environment variable in the `shared.test` task. This appends to the configs in [./shared/resources/META-INF/native-image](./shared/resources/META-INF/native-image).
 
-After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill e2e.test`, `NATIVECONFIG_GEN=true ./mill shared.test`, `NATIVECONFIG_GEN=true ./mill worker.run` and create a workflow run manually (via cli or client) to regenerate the native-image reflect/proxy config files.
+After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill e2e.test`, `NATIVECONFIG_GEN=true ./mill __.test`, `NATIVECONFIG_GEN=true ./mill worker.run` and create a workflow run manually (via cli or client) to regenerate the native-image reflect/proxy config files.
 
 Initialization arguments which go into [native-image.properties](./shared/resources/META-INF/native-image/native-image.properties) are not generated automatically.
