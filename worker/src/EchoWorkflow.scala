@@ -1,11 +1,10 @@
 package worker
 
+import shared.EchoWorkflowInterface
 import zio.*
 import zio.temporal.*
 import zio.temporal.activity.*
 import zio.temporal.workflow.*
-
-import shared.EchoWorkflowInterface
 
 // Here is the workflow implementation that uses the activities
 class EchoWorkflowImpl extends EchoWorkflowInterface:

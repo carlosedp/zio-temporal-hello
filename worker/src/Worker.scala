@@ -1,10 +1,9 @@
 package worker
 
+import shared.*
 import zio.*
 import zio.temporal.*
 import zio.temporal.worker.*
-
-import shared.*
 
 object Worker:
     val worker =

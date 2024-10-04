@@ -1,11 +1,10 @@
 package client
 
 import io.temporal.client.WorkflowException
+import shared.*
 import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
-
-import shared.*
 
 object Client:
     def invokeWorkflow(msg: String) = ZIO.serviceWithZIO[ZWorkflowClient]: client =>

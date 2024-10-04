@@ -1,5 +1,6 @@
 package worker
 
+import shared.*
 import zio.*
 import zio.http.*
 import zio.logging.slf4j.bridge.Slf4jBridge
@@ -10,8 +11,6 @@ import zio.temporal.*
 import zio.temporal.activity.*
 import zio.temporal.worker.*
 import zio.temporal.workflow.*
-
-import shared.*
 
 // ZIO-http server config
 val httpPort = 8082

@@ -1,9 +1,8 @@
 import io.temporal.client.WorkflowException
+import shared.*
 import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
-
-import shared.*
 
 object WebClient:
     /**
@@ -20,7 +19,7 @@ object WebClient:
     def invokeWorkflow(msg: String): ZIO[ZWorkflowClient, Nothing, (String, String)] =
         ZIO.serviceWithZIO[ZWorkflowClient]: client =>
             val snowFlake  = SharedUtils.genSnowflake
-            val clientName = "client"
+            val clientName = "webclient"
             val workflowID = s"$clientName-$snowFlake"
             for
                 echoWorkflow <- client.newWorkflowStub[EchoWorkflowInterface](

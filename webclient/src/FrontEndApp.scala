@@ -1,9 +1,8 @@
+import shared.MetricsApp
 import zio.*
 import zio.http.*
 import zio.http.template.*
 import zio.temporal.workflow.ZWorkflowClient
-
-import shared.MetricsApp
 
 object FrontEndApp:
     def apply() = Routes(
