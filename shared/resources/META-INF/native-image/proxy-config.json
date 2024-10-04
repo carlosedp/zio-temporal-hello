@@ -15,9 +15,24 @@
     "interfaces":["io.temporal.serviceclient.WorkflowServiceStubs"]
   },
   {
+    "interfaces":["worker.EchoActivity","io.temporal.internal.sync.AsyncInternal$AsyncMarker"]
+  },
+  {
+    "interfaces":["worker.TimestampActivity","io.temporal.internal.sync.AsyncInternal$AsyncMarker"]
+  },
+  {
     "interfaces":["zio.temporal.activity.ZActivityStub","EchoActivity"]
   },
   {
+    "interfaces":["zio.temporal.activity.ZActivityStub","worker.EchoActivity"]
+  },
+  {
+    "interfaces":["zio.temporal.activity.ZActivityStub","worker.TimestampActivity"]
+  },
+  {
     "interfaces":["zio.temporal.workflow.ZWorkflowStub","EchoWorkflow"]
+  },
+  {
+    "interfaces":["zio.temporal.workflow.ZWorkflowStub","shared.EchoWorkflow"]
   }
 ]

@@ -3,7 +3,7 @@
 import mill._, mill.scalalib._, mill.scalalib.scalafmt._
 import coursier.Repositories
 
-import $ivy.`com.goyeau::mill-scalafix::0.3.1`
+import $ivy.`com.goyeau::mill-scalafix::0.4.2`
 import com.goyeau.mill.scalafix.ScalafixModule
 import $ivy.`io.github.davidgregory084::mill-tpolecat::0.3.5`
 import io.github.davidgregory084.TpolecatModule
@@ -16,7 +16,7 @@ import com.carlosedp.aliases._
 
 object versions {
     val scala3      = "3.3.4"
-    val graalvm     = "graalvm-java17:22.3.2"
+    val graalvm     = "graalvm-java21"
     val zio         = "2.1.9"
     val ziohttp     = "3.0.1"
     val ziotemporal = "0.6.1"
@@ -68,8 +68,8 @@ trait Common
 }
 
 trait NativeImageConfig extends NativeImage {
-    def nativeImageMainClass    = "Main"
     def nativeImageGraalVmJvmId = T(versions.graalvm)
+    def nativeImageMainClass    = ""
     def baseImage               = T("ubuntu:22.04")
     // GraalVM initializes all classes at runtime, so lets ignore all configs from jars since some change this behavior
     def nativeImageOptions = Seq("--exclude-config", "/.*.jar", ".*.properties") ++
@@ -84,7 +84,8 @@ trait SharedCode extends ScalaModule {
 
 // This module hosts the temporal workflow worker
 object worker extends Common with SharedCode with NativeImageConfig with DockerNative {
-    def nativeImageName = "ziotemporalworker"
+    def nativeImageName      = "ziotemporalworker"
+    def nativeImageMainClass = "worker.Main"
 
     object dockerNative extends DockerNativeConfig with NativeImageConfig {
         def nativeImageClassPath = runClasspath()
@@ -96,7 +97,8 @@ object worker extends Common with SharedCode with NativeImageConfig with DockerN
 
 // This module hosts the web client
 object webclient extends Common with SharedCode with NativeImageConfig with DockerNative {
-    def nativeImageName = "ziotemporalwebclient"
+    def nativeImageName      = "ziotemporalwebclient"
+    def nativeImageMainClass = "webclient.Main"
 
     object dockerNative extends DockerNativeConfig with NativeImageConfig {
         def nativeImageClassPath = runClasspath()

@@ -8,10 +8,7 @@
 },
 {
   "name":"io.grpc.netty.shaded.io.netty.channel.DefaultFileRegion",
-  "fields":[
-    {"name":"file"}, 
-    {"name":"transferred"}
-  ]
+  "fields":[{"name":"file"}, {"name":"transferred"}]
 },
 {
   "name":"io.grpc.netty.shaded.io.netty.channel.epoll.LinuxSocket"
@@ -21,19 +18,7 @@
 },
 {
   "name":"io.grpc.netty.shaded.io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket",
-  "fields":[
-    {"name":"count"}, 
-    {"name":"memoryAddress"}, 
-    {"name":"recipientAddr"}, 
-    {"name":"recipientAddrLen"}, 
-    {"name":"recipientPort"}, 
-    {"name":"recipientScopeId"}, 
-    {"name":"segmentSize"}, 
-    {"name":"senderAddr"}, 
-    {"name":"senderAddrLen"}, 
-    {"name":"senderPort"}, 
-    {"name":"senderScopeId"}
-  ]
+  "fields":[{"name":"count"}, {"name":"memoryAddress"}, {"name":"recipientAddr"}, {"name":"recipientAddrLen"}, {"name":"recipientPort"}, {"name":"recipientScopeId"}, {"name":"segmentSize"}, {"name":"senderAddr"}, {"name":"senderAddrLen"}, {"name":"senderPort"}, {"name":"senderScopeId"}]
 },
 {
   "name":"io.grpc.netty.shaded.io.netty.channel.epoll.NativeStaticallyReferencedJniMethods"
@@ -70,10 +55,7 @@
 },
 {
   "name":"io.netty.channel.DefaultFileRegion",
-  "fields":[
-    {"name":"file"}, 
-    {"name":"transferred"}
-  ]
+  "fields":[{"name":"file"}, {"name":"transferred"}]
 },
 {
   "name":"io.netty.channel.epoll.LinuxSocket"
@@ -83,19 +65,7 @@
 },
 {
   "name":"io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket",
-  "fields":[
-    {"name":"count"}, 
-    {"name":"memoryAddress"}, 
-    {"name":"recipientAddr"}, 
-    {"name":"recipientAddrLen"}, 
-    {"name":"recipientPort"}, 
-    {"name":"recipientScopeId"}, 
-    {"name":"segmentSize"}, 
-    {"name":"senderAddr"}, 
-    {"name":"senderAddrLen"}, 
-    {"name":"senderPort"}, 
-    {"name":"senderScopeId"}
-  ]
+  "fields":[{"name":"count"}, {"name":"memoryAddress"}, {"name":"recipientAddr"}, {"name":"recipientAddrLen"}, {"name":"recipientPort"}, {"name":"recipientScopeId"}, {"name":"segmentSize"}, {"name":"senderAddr"}, {"name":"senderAddrLen"}, {"name":"senderPort"}, {"name":"senderScopeId"}]
 },
 {
   "name":"io.netty.channel.epoll.NativeStaticallyReferencedJniMethods"
@@ -158,17 +128,11 @@
 },
 {
   "name":"java.lang.String",
-  "methods":[
-    {"name":"lastIndexOf","parameterTypes":["int"] }, 
-    {"name":"substring","parameterTypes":["int"] }
-  ]
+  "methods":[{"name":"lastIndexOf","parameterTypes":["int"] }, {"name":"substring","parameterTypes":["int"] }]
 },
 {
   "name":"java.lang.System",
-  "methods":[
-    {"name":"getProperty","parameterTypes":["java.lang.String"] }, 
-    {"name":"setProperty","parameterTypes":["java.lang.String","java.lang.String"] }
-  ]
+  "methods":[{"name":"getProperty","parameterTypes":["java.lang.String"] }, {"name":"setProperty","parameterTypes":["java.lang.String","java.lang.String"] }]
 },
 {
   "name":"java.net.InetSocketAddress",
@@ -179,14 +143,8 @@
 },
 {
   "name":"java.nio.Buffer",
-  "fields":[
-    {"name":"limit"}, 
-    {"name":"position"}
-  ],
-  "methods":[
-    {"name":"limit","parameterTypes":[] }, 
-    {"name":"position","parameterTypes":[] }
-  ]
+  "fields":[{"name":"limit"}, {"name":"position"}],
+  "methods":[{"name":"limit","parameterTypes":[] }, {"name":"position","parameterTypes":[] }]
 },
 {
   "name":"java.nio.DirectByteBuffer"
@@ -205,19 +163,14 @@
 },
 {
   "name":"sun.management.VMManagementImpl",
-  "fields":[
-    {"name":"compTimeMonitoringSupport"}, 
-    {"name":"currentThreadCpuTimeSupport"}, 
-    {"name":"objectMonitorUsageSupport"}, 
-    {"name":"otherThreadCpuTimeSupport"}, 
-    {"name":"remoteDiagnosticCommandsSupport"}, 
-    {"name":"synchronizerUsageSupport"}, 
-    {"name":"threadAllocatedMemorySupport"}, 
-    {"name":"threadContentionMonitoringSupport"}
-  ]
+  "fields":[{"name":"compTimeMonitoringSupport"}, {"name":"currentThreadCpuTimeSupport"}, {"name":"objectMonitorUsageSupport"}, {"name":"otherThreadCpuTimeSupport"}, {"name":"remoteDiagnosticCommandsSupport"}, {"name":"synchronizerUsageSupport"}, {"name":"threadAllocatedMemorySupport"}, {"name":"threadContentionMonitoringSupport"}]
 },
 {
   "name":"sun.nio.ch.FileChannelImpl",
   "fields":[{"name":"fd"}]
+},
+{
+  "name":"worker.Main",
+  "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
 }
 ]
