@@ -1,25 +1,14 @@
+package worker
+
 import zio.*
 import zio.temporal.*
 import zio.temporal.activity.*
 import zio.temporal.workflow.*
 
-// This is our workflow interface
-@workflowInterface
-trait EchoWorkflow:
+import shared.EchoWorkflowInterface
 
-    /**
-     * Echoes a message back to the caller. The message could randomly fail.
-     *
-     * @param msg
-     * @param client
-     * @return
-     *   the message echoed back with an ACK prefix
-     */
-    @workflowMethod
-    def getEcho(msg: String, client: String): String
-
-// And here the workflow implementation that uses the activity
-class EchoWorkflowImpl extends EchoWorkflow:
+// Here is the workflow implementation that uses the activities
+class EchoWorkflowImpl extends EchoWorkflowInterface:
     private val defaultRetryOptions = ZRetryOptions.default
         .withMaximumAttempts(3)
         .withInitialInterval(300.millis)

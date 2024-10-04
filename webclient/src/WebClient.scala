@@ -3,6 +3,8 @@ import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
 
+import shared.*
+
 object WebClient:
     /**
      * This is the main entry point for the web client. It will create a new
@@ -21,7 +23,7 @@ object WebClient:
             val clientName = "client"
             val workflowID = s"$clientName-$snowFlake"
             for
-                echoWorkflow <- client.newWorkflowStub[EchoWorkflow](
+                echoWorkflow <- client.newWorkflowStub[EchoWorkflowInterface](
                     ZWorkflowOptions
                         .withWorkflowId(workflowID)
                         .withTaskQueue(TemporalQueues.echoQueue)

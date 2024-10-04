@@ -1,7 +1,11 @@
+package client
+
 import io.temporal.client.WorkflowException
 import zio.*
 import zio.temporal.*
 import zio.temporal.workflow.*
+
+import shared.*
 
 object Client:
     def invokeWorkflow(msg: String) = ZIO.serviceWithZIO[ZWorkflowClient]: client =>
@@ -9,7 +13,7 @@ object Client:
         val clientName = "client"
         val workflowID = s"$clientName-$snowFlake"
         for
-            echoWorkflow <- client.newWorkflowStub[EchoWorkflow](
+            echoWorkflow <- client.newWorkflowStub[EchoWorkflowInterface](
                 ZWorkflowOptions
                     .withWorkflowId(workflowID)
                     .withTaskQueue(TemporalQueues.echoQueue)

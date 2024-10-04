@@ -1,3 +1,5 @@
+package worker
+
 import zio.*
 import zio.temporal.*
 import zio.temporal.testkit.*
@@ -5,8 +7,10 @@ import zio.temporal.worker.*
 import zio.temporal.workflow.*
 import zio.test.*
 
+import shared.{SharedUtils, TemporalQueues, EchoWorkflowInterface}
+
 object EchoWorkflowSpec extends ZIOSpecDefault:
-    def spec = suite("Workflows")(
+    def spec = suite("Workflows"):
         test("runs echo workflow"):
             ZTestWorkflowEnvironment.activityRunOptions[Any].flatMap(implicit options =>
                 val taskQueue = TemporalQueues.echoQueue
@@ -23,7 +27,7 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
                     _ <- ZTestWorkflowEnvironment.setup()
                     // Create the workflow stub
                     echoWorkflow <- ZTestWorkflowEnvironment
-                        .newWorkflowStub[EchoWorkflow](
+                        .newWorkflowStub[EchoWorkflowInterface](
                             ZWorkflowOptions
                                 .withWorkflowId(SharedUtils.genSnowflake)
                                 .withTaskQueue(taskQueue)
@@ -34,7 +38,7 @@ object EchoWorkflowSpec extends ZIOSpecDefault:
                 yield assertTrue(sampleOut.matches(result))
                 end for
             )
-    ).provideSome[Scope](
+    .provideSome[Scope](
         ZTestEnvironmentOptions.default,
         ZTestWorkflowEnvironment.make[Any],
     ) @@ TestAspect.silentLogging

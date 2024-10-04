@@ -1,8 +1,12 @@
+package client
+
 import zio.*
 import zio.logging.slf4j.bridge.Slf4jBridge
 import zio.logging.{ConsoleLoggerConfig, consoleLogger}
 import zio.temporal.*
 import zio.temporal.workflow.*
+
+import shared.SharedUtils
 
 object Main extends ZIOAppDefault:
     // Configure ZIO Logging

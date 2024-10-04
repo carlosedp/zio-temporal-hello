@@ -1,3 +1,5 @@
+package shared
+
 import zio.*
 import zio.http.*
 import zio.metrics.connectors.prometheus.PrometheusPublisher

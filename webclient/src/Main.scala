@@ -7,6 +7,8 @@ import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 import zio.temporal.workflow.*
 
+import shared.{SharedUtils, MetricsApp}
+
 // ZIO-http server config
 val httpPort = 8083
 val httpRoutes =

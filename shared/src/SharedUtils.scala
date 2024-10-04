@@ -1,3 +1,5 @@
+package shared
+
 import com.softwaremill.id.pretty.{PrettyIdGenerator, StringIdGenerator}
 import zio.*
 import zio.logging.{LogAnnotation, LogFilter, LogFormat, LoggerNameExtractor}
@@ -31,12 +33,14 @@ object SharedUtils:
     /**
      * Set the shared config for ZIO Temporal Workflow Service Stubs
      */
+    val temporalServer = scala.util.Properties.envOrElse(
+        "TEMPORAL_SERVER",
+        "127.0.0.1:7233",
+    )
+
     val stubOptions =
         ZWorkflowServiceStubsOptions.make
             @@ ZWorkflowServiceStubsOptions.withServiceUrl(
-                scala.util.Properties.envOrElse(
-                    "TEMPORAL_SERVER",
-                    "127.0.0.1:7233",
-                )
+                temporalServer
             )
 end SharedUtils
