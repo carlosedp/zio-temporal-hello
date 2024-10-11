@@ -15,9 +15,9 @@ import $ivy.`com.carlosedp::mill-aliases::0.5.0`
 import com.carlosedp.aliases._
 
 object versions {
-    val scala3      = "3.3.4"
+    val scala3      = "3.5.1"
     val graalvm     = "graalvm-java21"
-    val zio         = "2.1.9"
+    val zio         = "2.1.11"
     val ziohttp     = "3.0.1"
     val ziotemporal = "0.6.1"
     val ziometrics  = "2.3.1"
@@ -34,8 +34,13 @@ trait Common
     with DockerNative { parent =>
     def scalaVersion         = versions.scala3
     def nativeImageClassPath = runClasspath()
-    def scalacOptions = T {
-        super.scalacOptions() ++ Seq("-Wunused:all", "-Wvalue-discard", "-Wnonunit-statement")
+    def scalacOptions = T { // replace with -Xkind-projector
+        super.scalacOptions().filterNot(Set("-Ykind-projector")) ++ Seq(
+            "-Wunused:all",
+            "-Wvalue-discard",
+            "-Wnonunit-statement",
+            "-Xkind-projector",
+        )
     }
     def repositoriesTask = T.task {
         super.repositoriesTask() ++ Seq(Repositories.sonatype("snapshots"), Repositories.sonatypeS01("snapshots"))
@@ -119,7 +124,7 @@ object e2e extends Common {
 // Command Aliases
 // -----------------------------------------------------------------------------
 object MyAliases extends Aliases {
-    def lint     = alias("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources", "__.fix")
+    def lint     = alias("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources", "__.fix", "__.compile")
     def fmt      = alias("mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources")
     def checkfmt = alias("mill.scalalib.scalafmt.ScalafmtModule/checkFormatAll __.sources")
     def deps     = alias("mill.scalalib.Dependency/showUpdates")
