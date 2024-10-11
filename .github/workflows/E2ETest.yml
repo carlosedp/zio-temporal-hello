@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
       - uses: coursier/cache-action@v6
         id: coursier-cache
 
-      - name: Start Temporal Server
+      - name: Run Temporal Server and E2E Tests
         run: |
           $HOME/.temporalio/bin/temporal server start-dev --headless --log-level=warn --log-format=pretty  --ip 0.0.0.0 --db-filename /tmp/temporal.db &
           ./mill e2e.test
