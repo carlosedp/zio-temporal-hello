@@ -1,0 +1,37 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Temporal CLI
+        run: |
+          curl -sSf https://temporal.download/cli.sh | sh
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - uses: coursier/cache-action@v6
+        id: coursier-cache
+
+      - name: Start Temporal Server
+        run: |
+          $HOME/.temporalio/bin/temporal server start-dev --headless --log-level=warn --log-format=pretty  --ip 0.0.0.0 --db-filename /tmp/temporal.db &
+          ./mill e2e.test
