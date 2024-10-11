@@ -1,9 +1,10 @@
 package worker
 
-import shared.*
 import zio.*
 import zio.temporal.*
 import zio.temporal.activity.*
+
+import shared.*
 
 val echoActivityLayer: URLayer[ZActivityRunOptions[Any], EchoActivity] =
     ZLayer.fromFunction(new EchoActivityImpl()(_: ZActivityRunOptions[Any]))

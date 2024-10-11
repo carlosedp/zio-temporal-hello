@@ -1,4 +1,3 @@
-import shared.{MetricsApp, SharedUtils}
 import zio.*
 import zio.http.*
 import zio.http.netty.NettyConfig
@@ -7,6 +6,8 @@ import zio.logging.{ConsoleLoggerConfig, consoleLogger, logMetrics}
 import zio.metrics.connectors.MetricsConfig
 import zio.metrics.connectors.prometheus.{prometheusLayer, publisherLayer}
 import zio.temporal.workflow.*
+
+import shared.{MetricsApp, SharedUtils}
 
 // ZIO-http server config
 val httpPort = 8083
@@ -23,10 +24,7 @@ object Main extends ZIOAppDefault:
     // Configure ZIO Logging
     override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
         Runtime.removeDefaultLoggers >>> consoleLogger(
-            ConsoleLoggerConfig(
-                SharedUtils.logFormat,
-                SharedUtils.logFilter,
-            )
+            ConsoleLoggerConfig(SharedUtils.logFormat, SharedUtils.logFilter)
         ) ++ logMetrics
 
     // Run the application
