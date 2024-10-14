@@ -142,7 +142,10 @@ Produced artifacts:
 Finished generating 'ziotemporalworker' in 3m 47s.
 "ref:362fb41c:/home/carlosedp/repos/zio-temporal-hello/out/worker/nativeImage.dest/ziotemporalworker"
 
-# For the webclient:
+# For the client:
+./mill show client.nativeImage
+
+# and the webclient:
 ./mill show webclient.nativeImage
 
 # The binary name will be printed at the end:
@@ -200,6 +203,6 @@ And generate requests like the previous section, via web, `temporal` cli or the 
 
 GraalVM Native image requires reflected and proxied classes to be declared beforehand. This is is eased by the native-image-agent which can be run for the tests with the `NATIVECONFIG_GEN=true` environment variable in the `shared.test` task. This appends to the configs in [./shared/resources/META-INF/native-image](./shared/resources/META-INF/native-image).
 
-After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill e2e.test`, `NATIVECONFIG_GEN=true ./mill __.test`, `NATIVECONFIG_GEN=true ./mill worker.run` and create a workflow run manually (via cli or client) to regenerate the native-image reflect/proxy config files.
+After using new libraries or updating them, run `NATIVECONFIG_GEN=true ./mill e2e.test`, `NATIVECONFIG_GEN=true ./mill __.test`, `NATIVECONFIG_GEN=true ./mill worker.run`, `NATIVECONFIG_GEN=true ./mill client.run` and create a workflow run manually (via cli or client) to regenerate the native-image reflect/proxy config files.
 
 Initialization arguments which go into [native-image.properties](./shared/resources/META-INF/native-image/native-image.properties) are not generated automatically.

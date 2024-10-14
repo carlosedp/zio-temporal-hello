@@ -84,7 +84,7 @@ trait NativeImageConfig extends NativeImage {
 // This module hosts the shared code between the worker, client and web client
 object shared extends Common
 trait SharedCode extends ScalaModule {
-  override def moduleDeps = Seq(shared)
+  override def moduleDeps = super.moduleDeps ++ Seq(shared)
 }
 
 // This module hosts the temporal workflow worker
@@ -114,7 +114,10 @@ object webclient extends Common with SharedCode with NativeImageConfig with Dock
 }
 
 // This module hosts the command-line client
-object client extends Common with SharedCode
+object client extends Common with SharedCode with NativeImageConfig {
+  def nativeImageName      = "ziotemporalclient"
+  def nativeImageMainClass = "client.Main"
+}
 
 // This module hosts end-to-end tests
 object e2e extends Common {

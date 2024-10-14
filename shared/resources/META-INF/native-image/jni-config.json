@@ -4,6 +4,10 @@
   "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
 },
 {
+  "name":"client.Main",
+  "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
+},
+{
   "name":"io.grpc.netty.shaded.io.netty.channel.ChannelException"
 },
 {
