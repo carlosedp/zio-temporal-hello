@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.54.1
+    ports:
+      - 9090:9090
+    volumes:
+      - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prom_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    restart: unless-stopped
+    networks:
+      - temporal-network
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:11.2.2
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    networks:
+      - temporal-network
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    volumes:
+      - ./configs/grafana:/etc/grafana/provisioning/datasources
+
+networks:
+  temporal-network:
+    driver: bridge
+    name: temporal-network
+
+volumes:
+  prom_data:

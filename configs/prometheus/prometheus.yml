@@ -1,0 +1,37 @@
+global:
+  scrape_interval: 5s
+  scrape_timeout: 5s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+      scheme: http
+      timeout: 10s
+      api_version: v1
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Job for scraping Temporal Worker
+  - job_name: "worker"
+
+    # locally reachable address if prometheus is in host network
+    # docker container names if prometheus is in the same docker network as the targets
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets: ["host.docker.internal:8082"]
+
+  # Job for scraping Temporal Web Client
+  - job_name: "webclient"
+    metrics_path: /metrics
+    scheme: http
+
+    # locally reachable address if prometheus is in host network
+    # docker container names if prometheus is in the same docker network as the targets
+    static_configs:
+      - targets: ["host.docker.internal:8083"]
