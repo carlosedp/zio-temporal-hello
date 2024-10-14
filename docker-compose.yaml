@@ -15,6 +15,7 @@ services:
       - temporal-network
     expose:
       - 9200
+
   postgresql:
     container_name: temporal-postgresql
     environment:
@@ -25,6 +26,7 @@ services:
       - temporal-network
     expose:
       - 5432
+
   temporal:
     container_name: temporal
     depends_on:
@@ -36,7 +38,7 @@ services:
       - POSTGRES_USER=temporal
       - POSTGRES_PWD=temporal
       - POSTGRES_SEEDS=postgresql
-      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development-sql.yaml
+      - DYNAMIC_CONFIG_FILE_PATH=/etc/temporal/config/dynamicconfig/development-sql.yaml
       - ENABLE_ES=true
       - ES_SEEDS=elasticsearch
       - ES_VERSION=v7
@@ -46,7 +48,8 @@ services:
     ports:
       - 7233:7233
     volumes:
-      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
+      - ./configs/temporal:/etc/temporal/config/dynamicconfig
+
   temporal-admin-tools:
     container_name: temporal-admin-tools
     depends_on:
@@ -70,6 +73,27 @@ services:
       - temporal-network
     ports:
       - 8233:8080
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.54.1
+    ports:
+      - 9090:9090
+    volumes:
+      - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - temporal-network
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:11.2.2
+    ports:
+      - 3000:3000
+    networks:
+      - temporal-network
+
 networks:
   temporal-network:
     driver: bridge

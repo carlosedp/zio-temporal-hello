@@ -1,4 +1,4 @@
 package shared
 
 object TemporalQueues:
-    val echoQueue: String = "echo-queue"
+  val echoQueue: String = "echo-queue"
