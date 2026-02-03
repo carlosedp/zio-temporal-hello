@@ -28,7 +28,7 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - uses: coursier/cache-action@v7
+      - uses: coursier/cache-action@v8
         id: coursier-cache
 
       - name: Run Temporal Server and E2E Tests
